@@ -26,11 +26,11 @@ export const LoginForm = ({ activateAuth }) => {
 		setDisabled(true);
 		setError(null);
 
-		const variables = { email: email.value, password: password.value };
+		const variables = { usernameOrEmail: email.value, password: password.value };
 
 		authUser({ variables }).then(({ data }) => {
-			const { token } = data.authUser;
-			activateAuth(token);
+			const { accessToken } = data.login.tokens;
+			activateAuth(accessToken);
 		}).catch(e => {
 			setError(e.message);
 			setDisabled(false);

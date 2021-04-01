@@ -21,10 +21,10 @@ const Provider = ({ children }) => {
 		activateAuth: (token) => {
 			const decodedToken = jwt.decode(token) || {};
 			const userData = {
-				email: decodedToken.email,
-				isAdmin: decodedToken.isAdmin,
-				isActive: decodedToken.isActive,
-				uuid: decodedToken.uuid
+				email: decodedToken.identity.email,
+				isAdmin: decodedToken.identity.role === 'admin',
+				isActive: decodedToken.identity.isActive,
+				uuid: decodedToken.identity.id
 			};
 			storeUserDataOnSessionStorage(userData);
 			setUserData(userData);

@@ -19,6 +19,7 @@ const regexPassword = new RegExp(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z!*^?+
  * @return {Boolean}                - True means data is valid
  */
 const validateLoginForm = (email, password) => {
+	return true;
 	let dataIsValid = true;
 
 	if (!email || !password) {
