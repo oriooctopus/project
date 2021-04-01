@@ -1,0 +1,10 @@
+query listAllUsers {
+  listAllUsers {
+    email
+    isAdmin
+    isActive
+    registrationDate
+    lastLogin
+    uuid
+  }
+}

@@ -13,7 +13,7 @@ import { NavBar } from './components/NavBar';
 import { Footer } from './components/Footer';
 import { Spinner } from './components/Spinner';
 
-import RestaurantDetails from 'src/pages/RestaurantDetails';
+import RestaurantDetails from './pages/RestaurantDetails';
 
 const Home = React.lazy(() => import('./pages/Home'));
 const UserAdministration = React.lazy(() =>

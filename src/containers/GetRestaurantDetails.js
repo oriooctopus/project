@@ -5,8 +5,8 @@ import { Spinner } from 'components/Spinner';
 import { ErrorAlert } from 'components/ErrorAlert';
 import RestaurantDetails from 'components/RestaurantDetails';
 
-import { RESTAURANT_DETAILS } from '../gql/queries/restaurants';
-import test from '../gql/queries/users.graphql';
+import { RESTAURANT_DETAILS } from 'gql/queries/restaurants';
+import test from 'gql/queries/users.graphql';
 
 const GetRestaurantDetails = () => {
   console.log('does this work', test);

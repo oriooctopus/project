@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 
 import { PageTitle } from '../components/PageTitle';
 
-import GetRestaurantDetails from 'src/containers/GetRestaurantDetails';
+import GetRestaurantDetails from 'containers/GetRestaurantDetails';
 
 const RestaurantDetail = () => {
   return (
