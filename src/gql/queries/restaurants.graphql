@@ -1,0 +1,25 @@
+query restaurantDetails($id: Int!) {
+  restaurant(id: $id) {
+    id
+    averageRating
+    description
+    location
+    imageUrl
+    reviews {
+      ...review
+    }
+    title
+    totalReviews
+  }
+}
+
+fragment review on Review {
+  id
+  content
+  date
+  rating
+  restaurantId
+  userProfile {
+    ...userProfileCard
+  }
+}

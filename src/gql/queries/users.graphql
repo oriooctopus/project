@@ -1,10 +1,10 @@
-query listAllUsers {
-  listAllUsers {
-    email
-    isAdmin
-    isActive
-    registrationDate
-    lastLogin
-    uuid
+query currentUser {
+  currentUser {
+    id
+    role
   }
+}
+
+fragment userProfileCard on UserProfile {
+  fullName
 }

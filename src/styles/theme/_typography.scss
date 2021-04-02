@@ -1,0 +1,84 @@
+@import 'styles/shared.scss';
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+body,
+p {
+  font-family: $font-primary;
+  margin: 0;
+}
+
+h1 {
+  font-size: px(42);
+  font-weight: 500;
+  line-height: px(52);
+}
+
+h2 {
+  font-size: px(32);
+  font-weight: 500;
+  line-height: px(42);
+}
+
+h3 {
+  font-size: px(24);
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  line-height: px(32);
+}
+
+h4 {
+  font-size: px(24);
+  font-weight: 700;
+  line-height: px(32);
+}
+
+h5,
+.large-body {
+  font-size: px(18);
+  font-weight: 500;
+  line-height: px(26);
+}
+
+p,
+span,
+a {
+  font-size: px(14);
+  font-weight: 300;
+  line-height: px(28);
+}
+
+.metadata,
+.small-body {
+  font-family: $font-secondary;
+  font-size: px(10);
+  font-weight: normal;
+  // letter-spacing: 0.1em;
+  line-height: px(12);
+  // opacity: $opacity-lighter;
+}
+
+.text-center {
+  text-align: center;
+}
+
+b {
+  font-weight: bold;
+}
+
+@include breakpoint(medium-tablet) {
+  h1,
+  .numbered-col {
+    font-size: px(48);
+    line-height: px(58);
+  }
+
+  h2 {
+    font-size: px(40);
+    line-height: px(48);
+  }
+}

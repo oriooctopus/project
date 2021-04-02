@@ -13,7 +13,9 @@ import { NavBar } from './components/NavBar';
 import { Footer } from './components/Footer';
 import { Spinner } from './components/Spinner';
 
-import RestaurantDetails from './pages/RestaurantDetails';
+import RestaurantDetails from 'src/containers/GetRestaurantDetails';
+
+import styles from 'styles/main.scss';
 
 const Home = React.lazy(() => import('./pages/Home'));
 const UserAdministration = React.lazy(() =>
@@ -27,8 +29,8 @@ export const App = () => {
 
   return (
     <StrictMode>
-      <div className="container-fluid bg-dark">
-        <div className="container">
+      <div>
+        <div className="">
           <Suspense fallback={<Spinner />}>
             <NavBar />
             <main className="pb-4">

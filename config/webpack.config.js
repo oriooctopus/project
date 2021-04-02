@@ -574,6 +574,7 @@ module.exports = function (webpackEnv) {
                 /\.json$/,
                 /\.graphql$/,
                 /\.gql$/,
+                // /\.svg/,
               ],
               options: {
                 name: 'static/media/[name].[hash:8].[ext]',

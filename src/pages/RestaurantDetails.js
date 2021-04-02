@@ -1,15 +1,9 @@
 import React, { Fragment } from 'react';
 
-import { PageTitle } from '../components/PageTitle';
-
 import GetRestaurantDetails from 'containers/GetRestaurantDetails';
 
-const RestaurantDetail = () => {
-  return (
-    <Fragment>
-      <GetRestaurantDetails />
-    </Fragment>
-  );
+const RestaurantDetail = ({ restaurantId }) => {
+  return <GetRestaurantDetails restaurantId={restaurantId} />;
 };
 
 export default RestaurantDetail;

@@ -1,0 +1,43 @@
+$black: #232323;
+$white: #ffffff;
+$inherit: inherit;
+
+$brand-light-gray: #f4f6f5;
+$dark-blue: #174062;
+$dark-gray: #3c4650;
+$gray: #f7f7f7;
+$green: #6dc840;
+$light-black: #1b1818;
+$light-blue: #cee5f8;
+$light-brown: #ebd5ba;
+$light-gray: #c4c4c4;
+$light-green: #ebf2e6;
+$light-purple: #faf8fd;
+$light-turquoise: #e6f5f0;
+$purple: #5c1d62;
+$rich-gray: #465a69;
+
+$color-map: (
+  'black': $black,
+  'brandLightGray': $brand-light-gray,
+  'darkBlue': $dark-blue,
+  'darkGray': $dark-gray,
+  'gray': $gray,
+  'green': $green,
+  'lightBlack': $light-black,
+  'lightBlue': $light-blue,
+  'lightBrown': $light-brown,
+  'lightGray': $light-gray,
+  'lightGreen': $light-green,
+  'lightPurple': $light-purple,
+  'lightTurquoise': $light-turquoise,
+  'purple': $purple,
+  'richGray': $rich-gray,
+  'white': $white,
+);
+
+@each $color, $value in $color-map {
+  :export {
+    #{$color}: $value;
+  }
+}

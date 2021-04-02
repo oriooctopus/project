@@ -1,0 +1,11 @@
+@import 'styles/shared';
+
+.restaurantReviews {
+  column-count: 3;
+
+  .review {
+    display: inline-block;
+    margin-bottom: px(20);
+    width: 100%;
+  }
+}

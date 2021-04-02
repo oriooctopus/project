@@ -1,0 +1,33 @@
+@import '../utils/mixins';
+
+$font-primary: Helvetica;
+$font-secondary: Helvetica;
+
+$desktop-container-main-width: 1440px;
+$desktop-container-inner-width: 1200px;
+
+$bootstrap-grid-gutter-width: px(20);
+
+$breakpoints: (
+  small-mobile: 320px,
+  mobile: 415px,
+  small-tablet: 580px,
+  medium-tablet: 768px,
+  large-tablet: 1024px,
+  desktop: 1280px,
+  large-desktop: 1400px,
+);
+
+// Don't access this directly, instead use the z function
+$z-layers: (
+  local-1: 1,
+  local-2: 2,
+  local-3: 3,
+  local-4: 4,
+  local-5: 5,
+  modal: 100,
+);
+
+$opacity-hover: 0.8;
+$opacity-lighter: 0.89;
+$card-box-shadow: 0px 4px 15px 2px rgba(0, 0, 0, 0.2);

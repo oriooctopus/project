@@ -1,0 +1,49 @@
+@import 'reset-css/sass/_reset';
+@import 'shared';
+@import 'localReset';
+@import 'config/bootstrap';
+@import 'theme/typography';
+@import 'theme/docusaurus-overrides';
+
+body {
+  font-family: $font-primary;
+}
+
+html {
+  color: $black;
+  font-size: 10px;
+}
+
+section {
+  padding-top: px(50);
+  padding-bottom: px(50);
+
+  > *:not(:last-child) {
+    padding-bottom: px(50);
+  }
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background: inherit;
+}
+
+.desktop-only {
+  display: none;
+}
+
+@include breakpoint(medium-tablet) {
+  .main-wrapper section {
+    padding-top: px(100);
+    padding-bottom: px(100);
+  }
+
+  .mobile-only {
+    display: none;
+  }
+
+  .desktop-only {
+    display: inherit;
+  }
+}

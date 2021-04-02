@@ -1,0 +1,41 @@
+@import 'styles/shared';
+
+.restaurantHero {
+  background-image: linear-gradient(
+      to left,
+      rgba(0, 0, 0, 0.3),
+      rgba(0, 0, 0, 0.65)
+    ),
+    var(--url);
+  color: $white;
+  margin: auto;
+  padding: px(50);
+  width: 100%;
+
+  .ratingsContainer {
+    align-items: center;
+    background-color: $green;
+    border-radius: px(5);
+    display: inline-flex;
+    justify-content: center;
+    margin-top: px(10);
+    padding: px(2) px(12);
+
+    .ratingText {
+      color: $white;
+      margin-left: px(5);
+    }
+  }
+
+  .location {
+    .locatedAt {
+      opacity: $opacity-lighter;
+    }
+
+    margin-top: px(60);
+  }
+}
+
+@include breakpoint(medium-tablet) {
+  max-width: #{'min(50vw, #{px(800)})'};
+}

@@ -1,0 +1,45 @@
+@import 'styles/shared';
+
+:root {
+  --ifm-color-primary: #{purple};
+}
+
+.DocSearch-Button {
+  --docsearch-text-color: #{$rich-gray};
+  background-color: transparent !important;
+  border-bottom: 1px solid $rich-gray;
+  border-radius: 0;
+  box-shadow: none !important;
+  height: auto;
+  margin: 0;
+  padding: px(20) px(15);
+  width: 100%;
+
+  svg {
+    height: px(25);
+    width: px(25);
+  }
+
+  .DocSearch-Button-Placeholder {
+    display: none;
+  }
+
+  .DocSearch-Button-Keys {
+    display: none;
+  }
+}
+
+.DocSearch-Container {
+  z-index: z(modal);
+  .DocSearch-Modal {
+    font-size: px(13);
+
+    .DocSearch-Dropdown span {
+      line-height: 1.5;
+    }
+
+    .DocSearch-HitsFooter a {
+      display: none;
+    }
+  }
+}

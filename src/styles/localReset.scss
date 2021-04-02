@@ -1,0 +1,12 @@
+a,
+button {
+  color: $inherit;
+  text-decoration: none;
+  line-height: $inherit;
+  font-size: $inherit;
+  font-weight: $inherit;
+
+  &:hover {
+    text-decoration: none;
+  }
+}

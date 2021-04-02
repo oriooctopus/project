@@ -68,7 +68,14 @@ function getWebpackAliases(options = {}) {
   return {
     src: paths.appSrc,
     gql: paths.appGraphql,
+    styles: paths.appStyles,
+    atoms: paths.appAtoms,
+    molecules: paths.appMolecules,
+    organisms: paths.appOrganisms,
     components: paths.appComponents,
+    types: paths.appTypes,
+    generated: paths.appGenerated,
+    templates: paths.appTemplates,
     pages: paths.appPages,
     containers: paths.appContainers,
   };

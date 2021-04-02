@@ -1,0 +1,35 @@
+@import './variables';
+
+$grid-columns: 12;
+$grid-gutter-width: $bootstrap-grid-gutter-width;
+
+$grid-gutter-widths: (
+  xs: $grid-gutter-width,
+  sm: $grid-gutter-width,
+  md: $grid-gutter-width,
+  lg: $grid-gutter-width,
+  xl: $grid-gutter-width,
+);
+
+$grid-breakpoints: (
+  // Extra small screen / phone
+  xs: 0,
+  // Small screen / phone
+  sm: map-get($breakpoints, mobile),
+  // Medium screen / tablet
+  md: map-get($breakpoints, medium-tablet),
+  // Large screen / desktop
+  lg: map-get($breakpoints, large-tablet),
+  // Extra large screen / wide desktop
+  xl: $desktop-container-main-width
+);
+
+$container-max-widths: (
+  sm: 540px,
+  md: 720px,
+  lg: 960px,
+  xl: 1200px,
+  xxl: 1200px,
+);
+
+@import 'bootstrap/scss/bootstrap-grid.scss';

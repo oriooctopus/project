@@ -1,0 +1,54 @@
+/*
+ * src: https://rimdev.io/making-media-query-mixins-with-sass/
+ * Use nesting to include multiple conditions
+ *  .class {
+ *    @include breakpoint(medium-tablet) {
+ *      @include breakpoint(desktop, max) {
+ *        * {
+ *          font-size: 50px !important;
+ *        }
+ *      }
+ *    }
+ *  }
+ */
+@mixin breakpoint($breakpoint, $direction: min) {
+  $breakpoint-value: map-get($breakpoints, $breakpoint);
+
+  @if $direction == max {
+    @media (max-width: ($breakpoint-value - 1)) {
+      @content;
+    }
+  } @else {
+    @media (min-width: ($breakpoint-value)) {
+      @content;
+    }
+  }
+}
+
+@function z($layer) {
+  @if not map-has-key($z-layers, $layer) {
+    @warn "No layer found for `#{$layer}` in $z-layers map. Property omitted.";
+  }
+
+  @return map-get($z-layers, $layer);
+}
+
+@function px($px) {
+  @return $px * 0.1rem;
+}
+
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flex-center-vert {
+  display: flex;
+  align-items: center;
+}
+
+@mixin flex-center-horiz {
+  display: flex;
+  justify-content: center;
+}
