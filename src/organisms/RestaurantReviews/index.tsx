@@ -4,7 +4,7 @@ import { ReviewCardFragment } from 'generated/graphql';
 import Review from 'organisms/ReviewCard';
 import Container from 'atoms/Container';
 import styles from './index.module.scss';
-import clsx from 'clsx';
+import Masonry from 'atoms/Masonry';
 
 type RestaurantReviewsProps = {
   reviews: ReviewCardFragment[];
@@ -13,10 +13,12 @@ type RestaurantReviewsProps = {
 const RestaurantReviews = ({ reviews }: RestaurantReviewsProps) => {
   return (
     <section>
-      <Container className={styles.restaurantReviews}>
-        {reviews?.map((review: ReviewCardFragment) => (
-          <Review className={clsx(styles.review)} {...review} />
-        ))}
+      <Container>
+        <Masonry>
+          {reviews?.map((review: ReviewCardFragment) => (
+            <Review className={styles.review} {...review} />
+          ))}
+        </Masonry>
       </Container>
     </section>
   );

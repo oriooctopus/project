@@ -1,0 +1,14 @@
+@import 'styles/shared';
+
+.grid {
+  display: flex;
+  margin-left: calc(
+    #{$bootstrap-grid-gutter-width} * -1
+  ); /* gutter size offset */
+  width: auto;
+}
+
+.gridColumn {
+  padding-left: $bootstrap-grid-gutter-width; /* gutter size */
+  background-clip: padding-box;
+}
