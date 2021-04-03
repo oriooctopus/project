@@ -1,5 +1,4 @@
 import React from 'react';
-import { useQuery } from '@apollo/client';
 
 import { Spinner } from 'components/Spinner';
 import { ErrorAlert } from 'components/ErrorAlert';
@@ -14,6 +13,7 @@ type GetRestaurantDetailsProps = {
 const GetRestaurantDetails = ({
   restaurantId,
 }: GetRestaurantDetailsProps) => {
+  console.log('does this happen?', restaurantId);
   const { loading, error, data } = useRestaurantDetailsQuery({
     fetchPolicy: 'no-cache',
     variables: { id: Number(restaurantId) },

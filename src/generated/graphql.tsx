@@ -1,14 +1,10 @@
 import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
 export type Maybe<T> = T | null;
-export type Exact<T extends { [key: string]: unknown }> = {
-  [K in keyof T]: T[K];
-};
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> &
-  { [SubKey in K]?: Maybe<T[SubKey]> };
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> &
-  { [SubKey in K]: Maybe<T[SubKey]> };
-const defaultOptions = {};
+export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
+export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
+const defaultOptions =  {}
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -37,6 +33,7 @@ export type AddReviewCommentInput = {
 
 export type AddReviewInput = {
   content: Scalars['String'];
+  rating: Scalars['Int'];
   restaurantId: Scalars['Int'];
 };
 
@@ -104,6 +101,8 @@ export type Counter = {
   amount: Scalars['Int'];
 };
 
+
+
 export type DeleteReviewCommentInput = {
   id: Scalars['Int'];
   restaurantId: Scalars['Int'];
@@ -163,6 +162,7 @@ export type File = {
   size: Scalars['Int'];
   path: Scalars['String'];
 };
+
 
 export type FilterUserInput = {
   searchText?: Maybe<Scalars['String']>;
@@ -227,93 +227,116 @@ export type Mutation = {
   contact?: Maybe<Scalars['String']>;
 };
 
+
 export type MutationRefreshTokensArgs = {
   refreshToken: Scalars['String'];
 };
+
 
 export type MutationAddServerCounterArgs = {
   amount: Scalars['Int'];
 };
 
+
 export type MutationAddRestaurantArgs = {
   input: AddRestaurantInput;
 };
+
 
 export type MutationDeleteRestaurantArgs = {
   id: Scalars['Int'];
 };
 
+
 export type MutationEditRestaurantArgs = {
   input: EditRestaurantInput;
 };
+
 
 export type MutationAddReviewArgs = {
   input: AddReviewInput;
 };
 
+
 export type MutationDeleteReviewArgs = {
   input: DeleteReviewInput;
 };
+
 
 export type MutationEditReviewArgs = {
   input: EditReviewInput;
 };
 
+
 export type MutationAddReviewCommentArgs = {
   input: AddReviewCommentInput;
 };
+
 
 export type MutationDeleteReviewCommentArgs = {
   input: DeleteReviewCommentInput;
 };
 
+
 export type MutationEditReviewCommentArgs = {
   input: EditReviewCommentInput;
 };
+
 
 export type MutationAddStripeSubscriptionArgs = {
   input: StripeSubscriptionInput;
 };
 
+
 export type MutationUpdateStripeSubscriptionCardArgs = {
   input: StripeSubscriptionInput;
 };
+
 
 export type MutationLoginArgs = {
   input: LoginUserInput;
 };
 
+
 export type MutationForgotPasswordArgs = {
   input: ForgotPasswordInput;
 };
+
 
 export type MutationResetPasswordArgs = {
   input: ResetPasswordInput;
 };
 
+
 export type MutationRegisterArgs = {
   input: RegisterUserInput;
 };
+
 
 export type MutationAddUserArgs = {
   input: AddUserInput;
 };
 
+
 export type MutationEditUserArgs = {
   input: EditUserInput;
 };
+
 
 export type MutationDeleteUserArgs = {
   id: Scalars['Int'];
 };
 
+
 export type MutationUploadFilesArgs = {
   files: Array<Maybe<Scalars['FileUpload']>>;
 };
 
+
 export type MutationRemoveFileArgs = {
   id: Scalars['Int'];
 };
+
 
 export type MutationContactArgs = {
   input: ContactInput;
@@ -347,19 +370,24 @@ export type Query = {
   report?: Maybe<Array<Maybe<Report>>>;
 };
 
+
 export type QueryRestaurantsArgs = {
-  limit?: Maybe<Scalars['Int']>;
   after?: Maybe<Scalars['Int']>;
+  limit?: Maybe<Scalars['Int']>;
+  ratingsMinimum?: Maybe<Scalars['Int']>;
 };
+
 
 export type QueryRestaurantArgs = {
   id: Scalars['Int'];
 };
 
+
 export type QueryUsersArgs = {
   orderBy?: Maybe<OrderByUserInput>;
   filter?: Maybe<FilterUserInput>;
 };
+
 
 export type QueryUserArgs = {
   id: Scalars['Int'];
@@ -388,12 +416,15 @@ export type ResetPasswordInput = {
 export type Restaurant = {
   __typename?: 'Restaurant';
   id: Scalars['Int'];
+  canAddReview: Scalars['Boolean'];
   title: Scalars['String'];
   description: Scalars['String'];
+  highestReview: Review;
   imageUrl: Scalars['String'];
+  lowestReview: Review;
   location: Scalars['String'];
   reviews?: Maybe<Array<Maybe<Review>>>;
-  averageRating: Scalars['Int'];
+  averageRating: Scalars['Float'];
   totalReviews: Scalars['Int'];
 };
 
@@ -418,6 +449,7 @@ export type Restaurants = {
 
 export type Review = {
   __typename?: 'Review';
+  createdAt: Scalars['String'];
   id: Scalars['Int'];
   content: Scalars['String'];
   date: Scalars['String'];
@@ -472,25 +504,31 @@ export type Subscription = {
   usersUpdated?: Maybe<UpdateUserPayload>;
 };
 
+
 export type SubscriptionRestaurantUpdatedArgs = {
   id: Scalars['Int'];
 };
+
 
 export type SubscriptionRestaurantsUpdatedArgs = {
   endCursor: Scalars['Int'];
 };
 
+
 export type SubscriptionReviewUpdatedArgs = {
   restaurantId: Scalars['Int'];
 };
+
 
 export type SubscriptionReviewCommentUpdatedArgs = {
   reviewId: Scalars['Int'];
 };
 
+
 export type SubscriptionUsersUpdatedArgs = {
   filter?: Maybe<FilterUserInput>;
 };
+
 
 export type Tokens = {
   __typename?: 'Tokens';
@@ -559,87 +597,208 @@ export type UserProfile = {
   fullName?: Maybe<Scalars['String']>;
 };
 
+export type CreateReviewMutationVariables = Exact<{
+  content: Scalars['String'];
+  rating: Scalars['Int'];
+  restaurantId: Scalars['Int'];
+}>;
+
+
+export type CreateReviewMutation = (
+  { __typename?: 'Mutation' }
+  & { addReview?: Maybe<(
+    { __typename?: 'Review' }
+    & Pick<Review, 'id'>
+  )> }
+);
+
 export type RestaurantDetailsQueryVariables = Exact<{
   id: Scalars['Int'];
 }>;
 
-export type RestaurantDetailsQuery = { __typename?: 'Query' } & {
-  restaurant?: Maybe<
-    { __typename?: 'Restaurant' } & Pick<
-      Restaurant,
-      | 'id'
-      | 'averageRating'
-      | 'description'
-      | 'location'
-      | 'imageUrl'
-      | 'title'
-      | 'totalReviews'
-    > & {
-        reviews?: Maybe<
-          Array<Maybe<{ __typename?: 'Review' } & ReviewCardFragment>>
-        >;
-      }
-  >;
-};
 
-export type ReviewCardFragment = { __typename?: 'Review' } & Pick<
-  Review,
-  'id' | 'content' | 'date' | 'rating' | 'restaurantId'
-> & {
-    userProfile: {
-      __typename?: 'UserProfile';
-    } & UserProfileCardFragment;
-  };
+export type RestaurantDetailsQuery = (
+  { __typename?: 'Query' }
+  & { restaurant?: Maybe<(
+    { __typename?: 'Restaurant' }
+    & RestaurantFragment
+  )> }
+);
 
-export type CurrentUserQueryVariables = Exact<{
-  [key: string]: never;
+export type RestaurantsQueryVariables = Exact<{
+  after?: Maybe<Scalars['Int']>;
+  limit: Scalars['Int'];
+  ratingsMinimum?: Maybe<Scalars['Int']>;
 }>;
 
-export type CurrentUserQuery = { __typename?: 'Query' } & {
-  currentUser?: Maybe<
-    { __typename?: 'User' } & Pick<User, 'id' | 'role'>
-  >;
-};
 
-export type UserProfileCardFragment = {
-  __typename?: 'UserProfile';
-} & Pick<UserProfile, 'fullName'>;
+export type RestaurantsQuery = (
+  { __typename?: 'Query' }
+  & { restaurants?: Maybe<(
+    { __typename?: 'Restaurants' }
+    & Pick<Restaurants, 'totalCount'>
+    & { edges?: Maybe<Array<Maybe<(
+      { __typename?: 'RestaurantEdges' }
+      & { node?: Maybe<(
+        { __typename?: 'Restaurant' }
+        & RestaurantFragment
+      )> }
+    )>>> }
+  )> }
+);
+
+export type RestaurantFragment = (
+  { __typename?: 'Restaurant' }
+  & Pick<Restaurant, 'id' | 'averageRating' | 'canAddReview' | 'description' | 'imageUrl' | 'location' | 'title' | 'totalReviews'>
+  & { highestReview: (
+    { __typename?: 'Review' }
+    & ReviewFragment
+  ), lowestReview: (
+    { __typename?: 'Review' }
+    & ReviewFragment
+  ), reviews?: Maybe<Array<Maybe<(
+    { __typename?: 'Review' }
+    & ReviewFragment
+  )>>> }
+);
+
+export type ReviewFragment = (
+  { __typename?: 'Review' }
+  & Pick<Review, 'id' | 'content' | 'date' | 'rating' | 'restaurantId'>
+  & { userProfile: (
+    { __typename?: 'UserProfile' }
+    & UserProfileCardFragment
+  ), reviewComment?: Maybe<(
+    { __typename?: 'ReviewComment' }
+    & ReviewCommentFragment
+  )> }
+);
+
+export type ReviewCommentFragment = (
+  { __typename?: 'ReviewComment' }
+  & Pick<ReviewComment, 'comment'>
+);
+
+export type ReviewRestaurantQueryVariables = Exact<{
+  id: Scalars['Int'];
+}>;
+
+
+export type ReviewRestaurantQuery = (
+  { __typename?: 'Query' }
+  & { restaurant?: Maybe<(
+    { __typename?: 'Restaurant' }
+    & Pick<Restaurant, 'id' | 'title'>
+  )> }
+);
+
+export type CurrentUserQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type CurrentUserQuery = (
+  { __typename?: 'Query' }
+  & { currentUser?: Maybe<(
+    { __typename?: 'User' }
+    & Pick<User, 'id' | 'role'>
+  )> }
+);
+
+export type UserProfileCardFragment = (
+  { __typename?: 'UserProfile' }
+  & Pick<UserProfile, 'fullName'>
+);
 
 export const UserProfileCardFragmentDoc = gql`
-  fragment userProfileCard on UserProfile {
-    fullName
+    fragment userProfileCard on UserProfile {
+  fullName
+}
+    `;
+export const ReviewCommentFragmentDoc = gql`
+    fragment reviewComment on ReviewComment {
+  comment
+}
+    `;
+export const ReviewFragmentDoc = gql`
+    fragment review on Review {
+  id
+  content
+  date
+  rating
+  restaurantId
+  userProfile {
+    ...userProfileCard
   }
-`;
-export const ReviewCardFragmentDoc = gql`
-  fragment review on Review {
+  reviewComment {
+    ...reviewComment
+  }
+}
+    ${UserProfileCardFragmentDoc}
+${ReviewCommentFragmentDoc}`;
+export const RestaurantFragmentDoc = gql`
+    fragment restaurant on Restaurant {
+  id
+  averageRating
+  canAddReview
+  description
+  highestReview {
+    ...review
+  }
+  imageUrl
+  location
+  lowestReview {
+    ...review
+  }
+  reviews {
+    ...review
+  }
+  title
+  totalReviews
+}
+    ${ReviewFragmentDoc}`;
+export const CreateReviewDocument = gql`
+    mutation createReview($content: String!, $rating: Int!, $restaurantId: Int!) {
+  addReview(
+    input: {content: $content, rating: $rating, restaurantId: $restaurantId}
+  ) {
     id
-    content
-    date
-    rating
-    restaurantId
-    userProfile {
-      ...userProfileCard
-    }
   }
-  ${UserProfileCardFragmentDoc}
-`;
-export const RestaurantDetailsDocument = gql`
-  query restaurantDetails($id: Int!) {
-    restaurant(id: $id) {
-      id
-      averageRating
-      description
-      location
-      imageUrl
-      reviews {
-        ...review
+}
+    `;
+export type CreateReviewMutationFn = Apollo.MutationFunction<CreateReviewMutation, CreateReviewMutationVariables>;
+
+/**
+ * __useCreateReviewMutation__
+ *
+ * To run a mutation, you first call `useCreateReviewMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateReviewMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createReviewMutation, { data, loading, error }] = useCreateReviewMutation({
+ *   variables: {
+ *      content: // value for 'content'
+ *      rating: // value for 'rating'
+ *      restaurantId: // value for 'restaurantId'
+ *   },
+ * });
+ */
+export function useCreateReviewMutation(baseOptions?: Apollo.MutationHookOptions<CreateReviewMutation, CreateReviewMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateReviewMutation, CreateReviewMutationVariables>(CreateReviewDocument, options);
       }
-      title
-      totalReviews
-    }
+export type CreateReviewMutationHookResult = ReturnType<typeof useCreateReviewMutation>;
+export type CreateReviewMutationResult = Apollo.MutationResult<CreateReviewMutation>;
+export type CreateReviewMutationOptions = Apollo.BaseMutationOptions<CreateReviewMutation, CreateReviewMutationVariables>;
+export const RestaurantDetailsDocument = gql`
+    query restaurantDetails($id: Int!) {
+  restaurant(id: $id) {
+    ...restaurant
   }
-  ${ReviewCardFragmentDoc}
-`;
+}
+    ${RestaurantFragmentDoc}`;
 
 /**
  * __useRestaurantDetailsQuery__
@@ -657,48 +816,103 @@ export const RestaurantDetailsDocument = gql`
  *   },
  * });
  */
-export function useRestaurantDetailsQuery(
-  baseOptions: Apollo.QueryHookOptions<
-    RestaurantDetailsQuery,
-    RestaurantDetailsQueryVariables
-  >,
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<
-    RestaurantDetailsQuery,
-    RestaurantDetailsQueryVariables
-  >(RestaurantDetailsDocument, options);
-}
-export function useRestaurantDetailsLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<
-    RestaurantDetailsQuery,
-    RestaurantDetailsQueryVariables
-  >,
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<
-    RestaurantDetailsQuery,
-    RestaurantDetailsQueryVariables
-  >(RestaurantDetailsDocument, options);
-}
-export type RestaurantDetailsQueryHookResult = ReturnType<
-  typeof useRestaurantDetailsQuery
->;
-export type RestaurantDetailsLazyQueryHookResult = ReturnType<
-  typeof useRestaurantDetailsLazyQuery
->;
-export type RestaurantDetailsQueryResult = Apollo.QueryResult<
-  RestaurantDetailsQuery,
-  RestaurantDetailsQueryVariables
->;
-export const CurrentUserDocument = gql`
-  query currentUser {
-    currentUser {
-      id
-      role
+export function useRestaurantDetailsQuery(baseOptions: Apollo.QueryHookOptions<RestaurantDetailsQuery, RestaurantDetailsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<RestaurantDetailsQuery, RestaurantDetailsQueryVariables>(RestaurantDetailsDocument, options);
+      }
+export function useRestaurantDetailsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<RestaurantDetailsQuery, RestaurantDetailsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<RestaurantDetailsQuery, RestaurantDetailsQueryVariables>(RestaurantDetailsDocument, options);
+        }
+export type RestaurantDetailsQueryHookResult = ReturnType<typeof useRestaurantDetailsQuery>;
+export type RestaurantDetailsLazyQueryHookResult = ReturnType<typeof useRestaurantDetailsLazyQuery>;
+export type RestaurantDetailsQueryResult = Apollo.QueryResult<RestaurantDetailsQuery, RestaurantDetailsQueryVariables>;
+export const RestaurantsDocument = gql`
+    query restaurants($after: Int, $limit: Int!, $ratingsMinimum: Int) {
+  restaurants(after: $after, limit: $limit, ratingsMinimum: $ratingsMinimum) {
+    totalCount
+    edges {
+      node {
+        ...restaurant
+      }
     }
   }
-`;
+}
+    ${RestaurantFragmentDoc}`;
+
+/**
+ * __useRestaurantsQuery__
+ *
+ * To run a query within a React component, call `useRestaurantsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useRestaurantsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useRestaurantsQuery({
+ *   variables: {
+ *      after: // value for 'after'
+ *      limit: // value for 'limit'
+ *      ratingsMinimum: // value for 'ratingsMinimum'
+ *   },
+ * });
+ */
+export function useRestaurantsQuery(baseOptions: Apollo.QueryHookOptions<RestaurantsQuery, RestaurantsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<RestaurantsQuery, RestaurantsQueryVariables>(RestaurantsDocument, options);
+      }
+export function useRestaurantsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<RestaurantsQuery, RestaurantsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<RestaurantsQuery, RestaurantsQueryVariables>(RestaurantsDocument, options);
+        }
+export type RestaurantsQueryHookResult = ReturnType<typeof useRestaurantsQuery>;
+export type RestaurantsLazyQueryHookResult = ReturnType<typeof useRestaurantsLazyQuery>;
+export type RestaurantsQueryResult = Apollo.QueryResult<RestaurantsQuery, RestaurantsQueryVariables>;
+export const ReviewRestaurantDocument = gql`
+    query reviewRestaurant($id: Int!) {
+  restaurant(id: $id) {
+    id
+    title
+  }
+}
+    `;
+
+/**
+ * __useReviewRestaurantQuery__
+ *
+ * To run a query within a React component, call `useReviewRestaurantQuery` and pass it any options that fit your needs.
+ * When your component renders, `useReviewRestaurantQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useReviewRestaurantQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useReviewRestaurantQuery(baseOptions: Apollo.QueryHookOptions<ReviewRestaurantQuery, ReviewRestaurantQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ReviewRestaurantQuery, ReviewRestaurantQueryVariables>(ReviewRestaurantDocument, options);
+      }
+export function useReviewRestaurantLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ReviewRestaurantQuery, ReviewRestaurantQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ReviewRestaurantQuery, ReviewRestaurantQueryVariables>(ReviewRestaurantDocument, options);
+        }
+export type ReviewRestaurantQueryHookResult = ReturnType<typeof useReviewRestaurantQuery>;
+export type ReviewRestaurantLazyQueryHookResult = ReturnType<typeof useReviewRestaurantLazyQuery>;
+export type ReviewRestaurantQueryResult = Apollo.QueryResult<ReviewRestaurantQuery, ReviewRestaurantQueryVariables>;
+export const CurrentUserDocument = gql`
+    query currentUser {
+  currentUser {
+    id
+    role
+  }
+}
+    `;
 
 /**
  * __useCurrentUserQuery__
@@ -715,37 +929,14 @@ export const CurrentUserDocument = gql`
  *   },
  * });
  */
-export function useCurrentUserQuery(
-  baseOptions?: Apollo.QueryHookOptions<
-    CurrentUserQuery,
-    CurrentUserQueryVariables
-  >,
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<CurrentUserQuery, CurrentUserQueryVariables>(
-    CurrentUserDocument,
-    options,
-  );
-}
-export function useCurrentUserLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<
-    CurrentUserQuery,
-    CurrentUserQueryVariables
-  >,
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<
-    CurrentUserQuery,
-    CurrentUserQueryVariables
-  >(CurrentUserDocument, options);
-}
-export type CurrentUserQueryHookResult = ReturnType<
-  typeof useCurrentUserQuery
->;
-export type CurrentUserLazyQueryHookResult = ReturnType<
-  typeof useCurrentUserLazyQuery
->;
-export type CurrentUserQueryResult = Apollo.QueryResult<
-  CurrentUserQuery,
-  CurrentUserQueryVariables
->;
+export function useCurrentUserQuery(baseOptions?: Apollo.QueryHookOptions<CurrentUserQuery, CurrentUserQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<CurrentUserQuery, CurrentUserQueryVariables>(CurrentUserDocument, options);
+      }
+export function useCurrentUserLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<CurrentUserQuery, CurrentUserQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<CurrentUserQuery, CurrentUserQueryVariables>(CurrentUserDocument, options);
+        }
+export type CurrentUserQueryHookResult = ReturnType<typeof useCurrentUserQuery>;
+export type CurrentUserLazyQueryHookResult = ReturnType<typeof useCurrentUserLazyQuery>;
+export type CurrentUserQueryResult = Apollo.QueryResult<CurrentUserQuery, CurrentUserQueryVariables>;

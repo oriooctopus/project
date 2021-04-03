@@ -1,0 +1,15 @@
+mutation createReview(
+  $content: String!
+  $rating: Int!
+  $restaurantId: Int!
+) {
+  addReview(
+    input: {
+      content: $content
+      rating: $rating
+      restaurantId: $restaurantId
+    }
+  ) {
+    id
+  }
+}

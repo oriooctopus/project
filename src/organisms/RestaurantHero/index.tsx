@@ -5,11 +5,11 @@ import { ReactComponent as ReviewStar } from 'src/img/icons/review-star.svg';
 import Container from 'atoms/Container';
 
 type RestaurantHeroProps = {
-  averageRating: number,
-  image: string,
-  location: string,
-  title: string,
-  totalReviews: number,
+  averageRating: number;
+  image: string;
+  location: string;
+  title: string;
+  totalReviews: number;
 };
 
 const RestaurantHero = ({
@@ -25,7 +25,7 @@ const RestaurantHero = ({
   console.log('maybe', ReviewStar);
   console.log('styles', styles);
   // TODO: Move to graphql
-  // const formattedAverageRating = averageRating.toFixed(2);
+  const formattedAverageRating = averageRating.toFixed(2);
   return (
     <header className={styles.restaurantHero} style={style}>
       <Container>
@@ -33,7 +33,7 @@ const RestaurantHero = ({
         <div className={styles.ratingsContainer}>
           <ReviewStar />
           <span className={styles.ratingText}>
-            {averageRating} stars from {totalReviews} reviews
+            {formattedAverageRating} stars from {totalReviews} reviews
           </span>
         </div>
         <div className={styles.location}>

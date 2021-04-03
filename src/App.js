@@ -14,13 +14,12 @@ import { Footer } from './components/Footer';
 import { Spinner } from './components/Spinner';
 
 import RestaurantDetails from 'src/containers/GetRestaurantDetails';
+import ReviewRestaurant from 'src/pages/ReviewRestaurant';
+import Restaurants from 'pages/Restaurants';
 
-import styles from 'styles/main.scss';
+import 'styles/main.scss';
 
 const Home = React.lazy(() => import('./pages/Home'));
-const UserAdministration = React.lazy(() =>
-  import('./pages/UserAdministration'),
-);
 
 export const App = () => {
   const { isAuth } = useContext(AuthContext);
@@ -73,7 +72,9 @@ export const App = () => {
                   />
                 )}
 
-                <UserAdministration path="/user-administration" />
+                <ReviewRestaurant path="/review/add/:restaurantId" />
+                <Restaurants path="/restaurants" />
+
                 <RestaurantDetails path="/restaurant/:restaurantId" />
                 <Logout path="/logout" />
               </Router>

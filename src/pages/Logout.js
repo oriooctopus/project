@@ -5,13 +5,16 @@ import { SubmitButton } from '../components/SubmitButton';
 import { PageTitle } from '../components/PageTitle';
 
 export const Logout = () => {
-	const { removeAuth } = useContext(AuthContext);
-	return (
-		<Fragment>
-			<PageTitle text='Log out' />
-			<div className="mt-5">
-				<SubmitButton onClick={removeAuth}>Close session</SubmitButton>
-			</div>
-		</Fragment>
-	);
+  const { removeAuth } = useContext(AuthContext);
+  return (
+    <Fragment>
+      <PageTitle text="Log out" />
+      <div className="mt-5">
+        <SubmitButton onClick={() => {}}>
+          {/* <SubmitButton onClick={thremoveAu}> */}
+          Close session
+        </SubmitButton>
+      </div>
+    </Fragment>
+  );
 };

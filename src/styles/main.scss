@@ -29,6 +29,12 @@ button {
   background: inherit;
 }
 
+textarea {
+  min-height: px(250);
+  padding: px(10);
+  width: 100%;
+}
+
 .desktop-only {
   display: none;
 }

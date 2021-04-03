@@ -4,7 +4,7 @@
  * @param {string} data - data to store
  */
 function saveSession(name, data) {
-	sessionStorage.setItem(name, data);
+  localStorage.setItem(name, data);
 }
 
 /**
@@ -12,14 +12,14 @@ function saveSession(name, data) {
  * @param {string} name - key for data to recover
  */
 function recoverSession(name) {
-	return sessionStorage.getItem(name);
+  return localStorage.getItem(name);
 }
 
 /**
  * Delete all data in Session Storage
  */
 function deleteSession() {
-	sessionStorage.clear();
+  localStorage.clear();
 }
 
 /**
@@ -27,13 +27,13 @@ function deleteSession() {
  * @param {string|number|Array|Object} data - data to store
  */
 function storeUserDataOnSessionStorage(data) {
-	const replacer = (key, value) => {
-		if (typeof value === 'boolean' || typeof value === 'number') {
-			return String(value);
-		}
-		return value;
-	};
-	sessionStorage.setItem('userData', JSON.stringify(data, replacer));
+  const replacer = (key, value) => {
+    if (typeof value === 'boolean' || typeof value === 'number') {
+      return String(value);
+    }
+    return value;
+  };
+  localStorage.setItem('userData', JSON.stringify(data, replacer));
 }
 
 /**
@@ -41,30 +41,31 @@ function storeUserDataOnSessionStorage(data) {
  * @return {Object}
  */
 function recoverUserDataFromSessionStorage() {
-	const reviver = (key, value) => {
-		if (value === 'true') {
-			return true;
-		}
-		if (value === 'false') {
-			return false;
-		}
-		return value;
-	};
-	return JSON.parse(sessionStorage.getItem('userData'), reviver) || {};
+  const reviver = (key, value) => {
+    if (value === 'true') {
+      return true;
+    }
+    if (value === 'false') {
+      return false;
+    }
+    return value;
+  };
+  return JSON.parse(localStorage.getItem('userData'), reviver) || {};
 }
 
 /**
  * Delete user data in Session Storage
  */
 function deleteUserDataFromSessionStorage() {
-	sessionStorage.removeItem('userData');
+  debugger;
+  localStorage.removeItem('userData');
 }
 
 module.exports = {
-	saveSession,
-	recoverSession,
-	deleteSession,
-	storeUserDataOnSessionStorage,
-	recoverUserDataFromSessionStorage,
-	deleteUserDataFromSessionStorage
+  saveSession,
+  recoverSession,
+  deleteSession,
+  storeUserDataOnSessionStorage,
+  recoverUserDataFromSessionStorage,
+  deleteUserDataFromSessionStorage,
 };

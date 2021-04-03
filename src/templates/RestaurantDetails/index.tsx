@@ -1,12 +1,13 @@
 import React from 'react';
 import RestaurantHero from 'organisms/RestaurantHero';
-import Layout from 'components/Layout';
+import Layout from 'atoms/Layout';
+import Container from 'atoms/Container';
+import ReviewCard from 'organisms/ReviewCard';
 
-import {
-  Restaurant,
-  RestaurantDetailsQuery,
-} from 'generated/graphql';
+import { RestaurantDetailsQuery } from 'generated/graphql';
 import RestaurantReviews from 'organisms/RestaurantReviews';
+
+// import styles from './styles';
 
 // image, title, location, ratings, average rating, number of reviews
 const RestaurantDetails = ({
@@ -19,7 +20,9 @@ const RestaurantDetails = ({
   const {
     averageRating,
     imageUrl,
+    highestReview,
     location,
+    lowestReview,
     reviews,
     totalReviews,
     title,
@@ -34,8 +37,24 @@ const RestaurantDetails = ({
         totalReviews={totalReviews}
         title={title}
       />
-      {/* @ts-ignore */}
-      {reviews && <RestaurantReviews reviews={reviews} />}
+      <section>
+        <Container>
+          <div className="row">
+            <div className="col-md-6">
+              <h4>Highest Review</h4>
+              <ReviewCard {...highestReview} />
+            </div>
+            <div className="col-md-6">
+              <h4>Lowest Review</h4>
+              <ReviewCard {...lowestReview} />
+            </div>
+          </div>
+        </Container>
+      </section>
+      {title && (
+        // @ts-ignore
+        <RestaurantReviews reviews={reviews} title="All Reviews" />
+      )}
     </Layout>
   );
 };

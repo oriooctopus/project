@@ -35,6 +35,7 @@ h4 {
   font-size: px(24);
   font-weight: 700;
   line-height: px(32);
+  margin-bottom: px(10);
 }
 
 h5,
@@ -46,6 +47,8 @@ h5,
 
 p,
 span,
+textarea,
+button,
 a {
   font-size: px(14);
   font-weight: 300;
@@ -57,9 +60,7 @@ a {
   font-family: $font-secondary;
   font-size: px(10);
   font-weight: normal;
-  // letter-spacing: 0.1em;
   line-height: px(12);
-  // opacity: $opacity-lighter;
 }
 
 .text-center {
@@ -70,9 +71,12 @@ b {
   font-weight: bold;
 }
 
+i {
+  font-style: italic;
+}
+
 @include breakpoint(medium-tablet) {
-  h1,
-  .numbered-col {
+  h1 {
     font-size: px(48);
     line-height: px(58);
   }

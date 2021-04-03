@@ -1,16 +1,42 @@
 query restaurantDetails($id: Int!) {
   restaurant(id: $id) {
-    id
-    averageRating
-    description
-    location
-    imageUrl
-    reviews {
-      ...review
-    }
-    title
-    totalReviews
+    ...restaurant
   }
+}
+
+query restaurants($after: Int, $limit: Int!, $ratingsMinimum: Int) {
+  restaurants(
+    after: $after
+    limit: $limit
+    ratingsMinimum: $ratingsMinimum
+  ) {
+    totalCount
+    edges {
+      node {
+        ...restaurant
+      }
+    }
+  }
+}
+
+fragment restaurant on Restaurant {
+  id
+  averageRating
+  canAddReview
+  description
+  highestReview {
+    ...review
+  }
+  imageUrl
+  location
+  lowestReview {
+    ...review
+  }
+  reviews {
+    ...review
+  }
+  title
+  totalReviews
 }
 
 fragment review on Review {
@@ -21,5 +47,19 @@ fragment review on Review {
   restaurantId
   userProfile {
     ...userProfileCard
+  }
+  reviewComment {
+    ...reviewComment
+  }
+}
+
+fragment reviewComment on ReviewComment {
+  comment
+}
+
+query reviewRestaurant($id: Int!) {
+  restaurant(id: $id) {
+    id
+    title
   }
 }

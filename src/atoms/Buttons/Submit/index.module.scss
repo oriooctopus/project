@@ -1,0 +1,16 @@
+@import 'styles/shared.scss';
+
+.root {
+  background-color: $green;
+  border-radius: px(4);
+  color: white;
+  height: px(40);
+  margin-top: px(15);
+  width: px(200);
+
+  &:disabled {
+    background-color: $gray;
+    color: $rich-gray;
+    cursor: pointer;
+  }
+}

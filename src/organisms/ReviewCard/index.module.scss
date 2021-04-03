@@ -4,4 +4,9 @@
   border-radius: px(3);
   box-shadow: $card-box-shadow;
   padding: px(10);
+
+  .response {
+    display: block;
+    margin-top: px(20);
+  }
 }

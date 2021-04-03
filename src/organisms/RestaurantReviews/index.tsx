@@ -1,22 +1,27 @@
 import React from 'react';
 
-import { ReviewCardFragment } from 'generated/graphql';
-import Review from 'organisms/ReviewCard';
+import { ReviewFragment } from 'generated/graphql';
+import ReviewCard from 'organisms/ReviewCard';
 import Container from 'atoms/Container';
 import styles from './index.module.scss';
 import Masonry from 'atoms/Masonry';
 
 type RestaurantReviewsProps = {
-  reviews: ReviewCardFragment[];
+  reviews: ReviewFragment[];
+  title?: string;
 };
 
-const RestaurantReviews = ({ reviews }: RestaurantReviewsProps) => {
+const RestaurantReviews = ({
+  reviews,
+  title,
+}: RestaurantReviewsProps) => {
   return (
     <section>
       <Container>
+        {title && <h4>{title}</h4>}
         <Masonry>
-          {reviews?.map((review: ReviewCardFragment) => (
-            <Review className={styles.review} {...review} />
+          {reviews?.map((review: ReviewFragment) => (
+            <ReviewCard className={styles.review} {...review} />
           ))}
         </Masonry>
       </Container>

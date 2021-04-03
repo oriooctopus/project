@@ -24,7 +24,7 @@ export const NavBar = () => {
     >
       <Link
         className="navbar-item text-light font-weight-bold pt-2"
-        to="/"
+        to="/restaurants"
       >
         <MdHome size={SIZE} title="Home" />
       </Link>
