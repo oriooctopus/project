@@ -13,7 +13,7 @@ import { NavBar } from './legacyComponents/NavBar';
 import { Footer } from './legacyComponents/Footer';
 import { Spinner } from './legacyComponents/Spinner';
 
-import RestaurantDetails from 'src/containers/GetRestaurantDetails';
+import RestaurantDetails from 'src/pages/GetRestaurantDetails';
 import ReviewRestaurant from 'src/pages/ReviewRestaurant';
 import Restaurants from 'pages/Restaurants';
 import EditReview from 'pages/EditReview';
