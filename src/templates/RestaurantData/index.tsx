@@ -1,7 +1,7 @@
 import React from 'react';
 import Layout from 'components/atoms/Layout';
 import Container from 'components/atoms/Container';
-import SubmitRestaurantBox from 'components/molecules/SubmitRestaurantBox';
+import SubmitRestaurantBox from 'components/organisms/SubmitRestaurantBox';
 import styles from './index.module.scss';
 
 type RestaurantDataProps = {
