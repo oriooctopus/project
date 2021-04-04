@@ -27,8 +27,8 @@ export type AddRestaurantInput = {
 };
 
 export type AddReviewCommentInput = {
-  content: Scalars['String'];
-  restaurantId: Scalars['Int'];
+  comment: Scalars['String'];
+  reviewId: Scalars['Int'];
 };
 
 export type AddReviewInput = {
@@ -103,16 +103,6 @@ export type Counter = {
 
 
 
-export type DeleteReviewCommentInput = {
-  id: Scalars['Int'];
-  restaurantId: Scalars['Int'];
-};
-
-export type DeleteReviewInput = {
-  id: Scalars['Int'];
-  restaurantId: Scalars['Int'];
-};
-
 export type EditRestaurantInput = {
   id: Scalars['Int'];
   title: Scalars['String'];
@@ -121,8 +111,7 @@ export type EditRestaurantInput = {
 
 export type EditReviewCommentInput = {
   id: Scalars['Int'];
-  content: Scalars['String'];
-  restaurantId: Scalars['Int'];
+  comment: Scalars['String'];
 };
 
 export type EditReviewInput = {
@@ -259,7 +248,7 @@ export type MutationAddReviewArgs = {
 
 
 export type MutationDeleteReviewArgs = {
-  input: DeleteReviewInput;
+  id: Scalars['Int'];
 };
 
 
@@ -274,7 +263,7 @@ export type MutationAddReviewCommentArgs = {
 
 
 export type MutationDeleteReviewCommentArgs = {
-  input: DeleteReviewCommentInput;
+  id: Scalars['Int'];
 };
 
 
@@ -619,6 +608,32 @@ export type CreateReviewMutation = (
   )> }
 );
 
+export type DeleteReviewMutationVariables = Exact<{
+  id: Scalars['Int'];
+}>;
+
+
+export type DeleteReviewMutation = (
+  { __typename?: 'Mutation' }
+  & { deleteReview?: Maybe<(
+    { __typename?: 'Review' }
+    & Pick<Review, 'id'>
+  )> }
+);
+
+export type DeleteReviewCommentMutationVariables = Exact<{
+  id: Scalars['Int'];
+}>;
+
+
+export type DeleteReviewCommentMutation = (
+  { __typename?: 'Mutation' }
+  & { deleteReviewComment?: Maybe<(
+    { __typename?: 'ReviewComment' }
+    & Pick<ReviewComment, 'id'>
+  )> }
+);
+
 export type EditReviewMutationVariables = Exact<{
   id: Scalars['Int'];
   content: Scalars['String'];
@@ -644,6 +659,9 @@ export type RestaurantDetailsQuery = (
   & { restaurant?: Maybe<(
     { __typename?: 'Restaurant' }
     & RestaurantFragment
+  )>, currentUser?: Maybe<(
+    { __typename?: 'User' }
+    & Pick<User, 'role'>
   )> }
 );
 
@@ -715,7 +733,7 @@ export type ReviewFragment = (
 
 export type ReviewCommentFragment = (
   { __typename?: 'ReviewComment' }
-  & Pick<ReviewComment, 'comment'>
+  & Pick<ReviewComment, 'id' | 'comment'>
 );
 
 export type ReviewRestaurantQueryVariables = Exact<{
@@ -754,6 +772,7 @@ export const UserProfileCardFragmentDoc = gql`
     `;
 export const ReviewCommentFragmentDoc = gql`
     fragment reviewComment on ReviewComment {
+  id
   comment
 }
     `;
@@ -831,6 +850,72 @@ export function useCreateReviewMutation(baseOptions?: Apollo.MutationHookOptions
 export type CreateReviewMutationHookResult = ReturnType<typeof useCreateReviewMutation>;
 export type CreateReviewMutationResult = Apollo.MutationResult<CreateReviewMutation>;
 export type CreateReviewMutationOptions = Apollo.BaseMutationOptions<CreateReviewMutation, CreateReviewMutationVariables>;
+export const DeleteReviewDocument = gql`
+    mutation deleteReview($id: Int!) {
+  deleteReview(id: $id) {
+    id
+  }
+}
+    `;
+export type DeleteReviewMutationFn = Apollo.MutationFunction<DeleteReviewMutation, DeleteReviewMutationVariables>;
+
+/**
+ * __useDeleteReviewMutation__
+ *
+ * To run a mutation, you first call `useDeleteReviewMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteReviewMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteReviewMutation, { data, loading, error }] = useDeleteReviewMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useDeleteReviewMutation(baseOptions?: Apollo.MutationHookOptions<DeleteReviewMutation, DeleteReviewMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteReviewMutation, DeleteReviewMutationVariables>(DeleteReviewDocument, options);
+      }
+export type DeleteReviewMutationHookResult = ReturnType<typeof useDeleteReviewMutation>;
+export type DeleteReviewMutationResult = Apollo.MutationResult<DeleteReviewMutation>;
+export type DeleteReviewMutationOptions = Apollo.BaseMutationOptions<DeleteReviewMutation, DeleteReviewMutationVariables>;
+export const DeleteReviewCommentDocument = gql`
+    mutation deleteReviewComment($id: Int!) {
+  deleteReviewComment(id: $id) {
+    id
+  }
+}
+    `;
+export type DeleteReviewCommentMutationFn = Apollo.MutationFunction<DeleteReviewCommentMutation, DeleteReviewCommentMutationVariables>;
+
+/**
+ * __useDeleteReviewCommentMutation__
+ *
+ * To run a mutation, you first call `useDeleteReviewCommentMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteReviewCommentMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteReviewCommentMutation, { data, loading, error }] = useDeleteReviewCommentMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useDeleteReviewCommentMutation(baseOptions?: Apollo.MutationHookOptions<DeleteReviewCommentMutation, DeleteReviewCommentMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteReviewCommentMutation, DeleteReviewCommentMutationVariables>(DeleteReviewCommentDocument, options);
+      }
+export type DeleteReviewCommentMutationHookResult = ReturnType<typeof useDeleteReviewCommentMutation>;
+export type DeleteReviewCommentMutationResult = Apollo.MutationResult<DeleteReviewCommentMutation>;
+export type DeleteReviewCommentMutationOptions = Apollo.BaseMutationOptions<DeleteReviewCommentMutation, DeleteReviewCommentMutationVariables>;
 export const EditReviewDocument = gql`
     mutation editReview($id: Int!, $content: String!, $rating: Int!) {
   editReview(input: {content: $content, rating: $rating, id: $id}) {
@@ -870,6 +955,9 @@ export const RestaurantDetailsDocument = gql`
     query restaurantDetails($id: Int!) {
   restaurant(id: $id) {
     ...restaurant
+  }
+  currentUser {
+    role
   }
 }
     ${RestaurantFragmentDoc}`;

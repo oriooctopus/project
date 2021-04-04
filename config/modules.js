@@ -61,15 +61,12 @@ function getWebpackAliases(options = {}) {
     return {};
   }
 
-  const baseUrlResolved = path.resolve(paths.appPath, baseUrl);
-  const test = path.relative(paths.appPath, baseUrlResolved);
-
-  // if (path.relative(paths.appPath, baseUrlResolved) === '') {
   return {
     src: paths.appSrc,
     gql: paths.appGraphql,
     styles: paths.appStyles,
     atoms: paths.appAtoms,
+    hooks: paths.appHooks,
     molecules: paths.appMolecules,
     organisms: paths.appOrganisms,
     legacyComponents: paths.appLegacyComponents,
@@ -79,7 +76,6 @@ function getWebpackAliases(options = {}) {
     pages: paths.appPages,
     containers: paths.appContainers,
   };
-  // }
 }
 
 /**

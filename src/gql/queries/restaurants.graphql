@@ -2,6 +2,9 @@ query restaurantDetails($id: Int!) {
   restaurant(id: $id) {
     ...restaurant
   }
+  currentUser {
+    role
+  }
 }
 
 query restaurants($after: Int, $limit: Int!, $ratingsMinimum: Int) {
@@ -66,6 +69,7 @@ fragment review on Review {
 }
 
 fragment reviewComment on ReviewComment {
+  id
   comment
 }
 

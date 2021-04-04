@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import SubmitButton from 'components/atoms/Buttons/Submit';
+import React from 'react';
+import Button from 'components/atoms/Button';
 import Rating from 'components/atoms/Rating';
 import styles from './index.module.scss';
 import clsx from 'clsx';
@@ -53,9 +53,9 @@ const SubmitReviewBox = ({
           value={reviewContent}
         />
         <div className={styles.submitContainer}></div>
-        <SubmitButton disabled={!canSubmit}>
+        <Button disabled={!canSubmit} theme="success" type="submit">
           Submit Review
-        </SubmitButton>
+        </Button>
         {errorMessage && (
           <span className={styles.error}>{errorMessage}</span>
         )}

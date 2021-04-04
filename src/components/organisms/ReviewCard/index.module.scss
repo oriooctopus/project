@@ -1,12 +1,20 @@
 @import 'styles/shared.scss';
 
 .reviewCard {
-  border-radius: px(3);
-  box-shadow: $card-box-shadow;
-  padding: px(10);
+  .review {
+    border-radius: px(3);
+    box-shadow: $card-box-shadow;
+    padding: px(10);
+
+    .buttonContainer {
+      margin-top: px(15);
+      button {
+        margin-right: px(15);
+      }
+    }
+  }
 
   .response {
-    display: block;
     margin-top: px(20);
   }
 }

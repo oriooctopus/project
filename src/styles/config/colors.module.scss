@@ -3,7 +3,7 @@ $white: #ffffff;
 $inherit: inherit;
 
 $brand-light-gray: #f4f6f5;
-$error: red;
+$danger: red;
 $dark-blue: #174062;
 $dark-gray: #3c4650;
 $gray: #f7f7f7;
@@ -17,6 +17,8 @@ $light-purple: #faf8fd;
 $light-turquoise: #e6f5f0;
 $purple: #5c1d62;
 $rich-gray: #465a69;
+
+$primary: $rich-gray;
 
 $color-map: (
   'black': $black,

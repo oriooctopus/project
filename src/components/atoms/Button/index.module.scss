@@ -1,9 +1,7 @@
 @import 'styles/shared.scss';
 
 .root {
-  background-color: $green;
   border-radius: px(4);
-  color: white;
   height: px(40);
   margin-top: px(15);
   width: px(200);
@@ -12,5 +10,20 @@
     background-color: $gray;
     color: $rich-gray;
     cursor: pointer;
+  }
+
+  &.danger {
+    background-color: $danger;
+    color: $white;
+  }
+
+  &.primary {
+    background-color: $primary;
+    color: $white;
+  }
+
+  &.success {
+    background-color: $green;
+    color: $white;
   }
 }

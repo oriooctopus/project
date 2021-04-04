@@ -14,6 +14,18 @@ mutation createReview(
   }
 }
 
+mutation deleteReview($id: Int!) {
+  deleteReview(id: $id) {
+    id
+  }
+}
+
+mutation deleteReviewComment($id: Int!) {
+  deleteReviewComment(id: $id) {
+    id
+  }
+}
+
 mutation editReview($id: Int!, $content: String!, $rating: Int!) {
   editReview(input: { content: $content, rating: $rating, id: $id }) {
     id

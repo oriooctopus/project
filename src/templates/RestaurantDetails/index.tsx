@@ -9,13 +9,24 @@ import RestaurantReviews from 'components/organisms/RestaurantReviews';
 
 // import styles from './styles';
 
-// image, title, location, ratings, average rating, number of reviews
+type RestaurantDetailsProps = RestaurantDetailsQuery & {
+  includeDelete: boolean;
+  includeEdit: boolean;
+};
+
 const RestaurantDetails = ({
+  includeDelete,
+  includeEdit,
   restaurant,
-}: RestaurantDetailsQuery) => {
+}: RestaurantDetailsProps) => {
   if (!restaurant) {
-    return <span />;
+    return <span>data not found</span>;
   }
+
+  const sharedButtonProps = {
+    includeDelete,
+    includeEdit,
+  };
 
   const {
     averageRating,
@@ -42,18 +53,22 @@ const RestaurantDetails = ({
           <div className="row">
             <div className="col-md-6">
               <h4>Highest Review</h4>
-              <ReviewCard {...highestReview} />
+              <ReviewCard {...sharedButtonProps} {...highestReview} />
             </div>
             <div className="col-md-6">
               <h4>Lowest Review</h4>
-              <ReviewCard {...lowestReview} />
+              <ReviewCard {...sharedButtonProps} {...lowestReview} />
             </div>
           </div>
         </Container>
       </section>
       {title && (
-        // @ts-ignore
-        <RestaurantReviews reviews={reviews} title="All Reviews" />
+        <RestaurantReviews
+          // @ts-ignore
+          reviews={reviews}
+          title="All Reviews"
+          {...sharedButtonProps}
+        />
       )}
     </Layout>
   );

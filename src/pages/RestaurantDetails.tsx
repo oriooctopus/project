@@ -2,29 +2,36 @@ import React from 'react';
 
 import { Spinner } from 'legacyComponents/Spinner';
 import { ErrorAlert } from 'legacyComponents/ErrorAlert';
-import RestaurantDetails from 'templates/RestaurantDetails';
+import RestaurantDetailsTemplate from 'templates/RestaurantDetails';
 
 import { useRestaurantDetailsQuery } from 'generated/graphql';
 
-type GetRestaurantDetailsProps = {
+type RestaurantDetailsProps = {
   restaurantId: string;
 };
 
-const GetRestaurantDetails = ({
+const RestaurantDetails = ({
   restaurantId,
-}: GetRestaurantDetailsProps) => {
-  console.log('does this happen?', restaurantId);
+}: RestaurantDetailsProps) => {
   const { loading, error, data } = useRestaurantDetailsQuery({
     fetchPolicy: 'no-cache',
     variables: { id: Number(restaurantId) },
   });
 
-  if (loading) return <Spinner />;
+  if (loading || !data?.restaurant) return <Spinner />;
   if (error) return <ErrorAlert errorMessage={error.message} />;
-  if (!data?.restaurant) return <span>query unsucessful</span>;
-  console.log('data', data);
 
-  return <RestaurantDetails {...data} />;
+  // ideally I would add a context that wraps all pages with user role/other data
+  // const isAdmin = data?.currentUser?.role === 'admin';
+  const isAdmin = true;
+
+  return (
+    <RestaurantDetailsTemplate
+      {...data}
+      includeDelete={isAdmin}
+      includeEdit={isAdmin}
+    />
+  );
 };
 
-export default GetRestaurantDetails;
+export default RestaurantDetails;

@@ -162,7 +162,7 @@ module.exports = function (webpackEnv) {
     return loaders;
   };
 
-  return {
+  const ret = {
     mode: isEnvProduction
       ? 'production'
       : isEnvDevelopment && 'development',
@@ -783,4 +783,6 @@ module.exports = function (webpackEnv) {
     // our own hints via the FileSizeReporter
     performance: false,
   };
+  return ret;
+  console.log('we down here');
 };

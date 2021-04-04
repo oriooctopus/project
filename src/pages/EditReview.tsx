@@ -52,9 +52,7 @@ const EditRestaurantReview = ({
   const onSubmit = () => {
     editReviewMutation()
       .then(() => {
-        setTimeout(() => {
-          window.location.href = `/restaurant/${restaurantId}`;
-        }, 2000);
+        window.location.href = `/restaurant/${restaurantId}`;
       })
       .catch((e) => setErrorMessage(JSON.stringify(e)));
   };
