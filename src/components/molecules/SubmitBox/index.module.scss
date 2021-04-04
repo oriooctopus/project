@@ -1,11 +1,7 @@
 @import 'styles/shared';
 
-.SubmitRestaurantBox {
+.root {
   padding: px(5) 0;
-
-  .rating {
-    margin: px(10) 0;
-  }
 
   .error {
     color: $danger;

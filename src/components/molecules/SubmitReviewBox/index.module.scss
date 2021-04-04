@@ -1,16 +1,7 @@
 @import 'styles/shared';
 
-.SubmitReviewBox {
-  padding: px(5) 0;
-
+.root {
   .rating {
     margin: px(10) 0;
-  }
-
-  .error {
-    color: $danger;
-    display: block;
-    // padding: 0 px(10);
-    margin-top: px(5);
   }
 }

@@ -14,6 +14,7 @@ import { Footer } from './legacyComponents/Footer';
 import { Spinner } from './legacyComponents/Spinner';
 
 import AddRestaurant from 'src/pages/AddRestaurant';
+import EditRestaurant from 'src/pages/EditRestaurant';
 import RestaurantDetails from 'src/pages/RestaurantDetails';
 import ReviewRestaurant from 'src/pages/ReviewRestaurant';
 import Restaurants from 'pages/Restaurants';
@@ -81,6 +82,7 @@ export const App = () => {
 
                 <ReviewRestaurant path="/review/add/:restaurantId" />
                 <AddRestaurant path="/restaurant/add" />
+                <EditRestaurant path="/restaurant/edit/:restaurantId" />
                 <Restaurants path="/restaurants" />
 
                 <RestaurantDetails path="/restaurant/:restaurantId" />

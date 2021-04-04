@@ -1,8 +1,7 @@
 import React from 'react';
-import Button from 'components/atoms/Button';
 import TextInput from 'components/atoms/Inputs/Text';
-import styles from './index.module.scss';
-import clsx from 'clsx';
+import Textarea from 'components/atoms/Inputs/Textarea';
+import SubmitBox from 'components/molecules/SubmitBox';
 
 type SubmitRestaurantBoxProps = {
   canSubmit: boolean;
@@ -18,7 +17,6 @@ type SubmitRestaurantBoxProps = {
   title: string;
 };
 
-// Ideally we could abstract this further by adding a submitContainer component
 const SubmitRestaurantBox = ({
   canSubmit,
   description,
@@ -32,58 +30,37 @@ const SubmitRestaurantBox = ({
   setTitle,
   title,
 }: SubmitRestaurantBoxProps) => {
-  const onChangeDescription = (
-    e: React.FormEvent<HTMLTextAreaElement>,
-  ) => {
-    const { value } = e.target as HTMLTextAreaElement;
-
-    setDescription(value);
-  };
-
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    onSubmit();
-  };
-
   return (
-    <form
-      className={clsx(styles.SubmitRestaurantBox, 'row')}
-      onSubmit={handleSubmit}
+    <SubmitBox
+      canSubmit={canSubmit}
+      errorMessage={errorMessage}
+      onSubmit={onSubmit}
     >
-      <div className="col-md-8">
-        <textarea
-          onChange={onChangeDescription}
-          placeholder="Description Here"
-          value={description}
-        />
-        <TextInput
-          name="title"
-          handleChange={setTitle}
-          placeholder="Title here"
-          value={title}
-        />
-        <TextInput
-          name="location"
-          handleChange={setLocation}
-          placeholder="Location Here"
-          value={location}
-        />
-        <TextInput
-          name="image_url"
-          handleChange={setImageUrl}
-          placeholder="Image Url Here"
-          value={imageUrl}
-        />
-        <div className={styles.submitContainer}>
-          <Button disabled={!canSubmit} theme="success" type="submit">
-            Submit Review
-          </Button>
-          {errorMessage && (
-            <span className={styles.error}>{errorMessage}</span>
-          )}
-        </div>
-      </div>
-    </form>
+      <Textarea
+        handleChange={setDescription}
+        name="description"
+        placeholder="Description Here"
+        value={description}
+      />
+      <TextInput
+        name="title"
+        handleChange={setTitle}
+        placeholder="Title here"
+        value={title}
+      />
+      <TextInput
+        name="location"
+        handleChange={setLocation}
+        placeholder="Location Here"
+        value={location}
+      />
+      <TextInput
+        name="image_url"
+        handleChange={setImageUrl}
+        placeholder="Image Url Here"
+        value={imageUrl}
+      />
+    </SubmitBox>
   );
 };
 

@@ -1,10 +1,20 @@
 import React, { useEffect, useState } from 'react';
 
-import AddRestaurantTemplate from 'templates/RestaurantData';
+import RestaurantDataTemplate from 'templates/RestaurantData';
+import { useRestaurantDetailsQuery } from 'generated/graphql';
 
 import { useCreateRestaurantMutation } from 'generated/graphql';
 
-const AddRestaurant = () => {
+type EditRestaurantProps = {
+  restaurantId: string;
+};
+
+const EditRestaurant = ({ restaurantId }: EditRestaurantProps) => {
+  const { data: restaurantDetailsQuery } = useRestaurantDetailsQuery({
+    fetchPolicy: 'no-cache',
+    variables: { id: Number(restaurantId) },
+  });
+
   const [description, setDescription] = useState('');
   const [location, setLocation] = useState('');
   const [imageUrl, setImageUrl] = useState('');
@@ -24,6 +34,7 @@ const AddRestaurant = () => {
       userId: 2,
     },
   });
+
   const onSubmit = () => {
     createRestaurantMutation()
       .then(
@@ -37,8 +48,17 @@ const AddRestaurant = () => {
     setCanSubmit(!submitCalled);
   }, [submitCalled]);
 
+  useEffect(() => {
+    setDescription(
+      restaurantDetailsQuery?.restaurant?.description || '',
+    );
+    setLocation(restaurantDetailsQuery?.restaurant?.location || '');
+    setImageUrl(restaurantDetailsQuery?.restaurant?.imageUrl || '');
+    setTitle(restaurantDetailsQuery?.restaurant?.title || '');
+  }, [restaurantDetailsQuery]);
+
   return (
-    <AddRestaurantTemplate
+    <RestaurantDataTemplate
       canSubmit={canSubmit}
       description={description}
       errorMessage={errorMessage}
@@ -54,4 +74,4 @@ const AddRestaurant = () => {
   );
 };
 
-export default AddRestaurant;
+export default EditRestaurant;

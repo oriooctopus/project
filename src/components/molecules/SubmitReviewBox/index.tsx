@@ -1,8 +1,8 @@
 import React from 'react';
-import Button from 'components/atoms/Button';
 import Rating from 'components/atoms/Rating';
 import styles from './index.module.scss';
-import clsx from 'clsx';
+import Textarea from 'components/atoms/Inputs/Textarea';
+import SubmitBox from 'components/molecules/SubmitBox';
 
 type SubmitReviewBoxProps = {
   canSubmit: boolean;
@@ -23,44 +23,26 @@ const SubmitReviewBox = ({
   rating,
   reviewContent,
 }: SubmitReviewBoxProps) => {
-  const onChangeReviewContent = (
-    e: React.FormEvent<HTMLTextAreaElement>,
-  ) => {
-    const { value } = e.target as HTMLTextAreaElement;
-
-    setReviewContent(value);
-  };
-
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    onSubmit();
-  };
-
   return (
-    <form
-      className={clsx(styles.SubmitReviewBox, 'row')}
-      onSubmit={handleSubmit}
+    <SubmitBox
+      canSubmit={canSubmit}
+      className={styles.root}
+      errorMessage={errorMessage}
+      onSubmit={onSubmit}
     >
-      <div className="col-md-8">
-        <Rating
-          className={styles.rating}
-          rating={rating}
-          name="create-review"
-          setRating={setRating}
-        />
-        <textarea
-          onChange={onChangeReviewContent}
-          value={reviewContent}
-        />
-        <div className={styles.submitContainer}></div>
-        <Button disabled={!canSubmit} theme="success" type="submit">
-          Submit Review
-        </Button>
-        {errorMessage && (
-          <span className={styles.error}>{errorMessage}</span>
-        )}
-      </div>
-    </form>
+      <Rating
+        className={styles.rating}
+        rating={rating}
+        name="create-review"
+        setRating={setRating}
+      />
+      <Textarea
+        handleChange={setReviewContent}
+        placeholder="Review Content"
+        name="review_content"
+        value={reviewContent}
+      />
+    </SubmitBox>
   );
 };
 
