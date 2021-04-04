@@ -128,7 +128,7 @@ export type EditReviewCommentInput = {
 export type EditReviewInput = {
   id: Scalars['Int'];
   content: Scalars['String'];
-  restaurantId: Scalars['Int'];
+  rating: Scalars['Int'];
 };
 
 export type EditUserInput = {
@@ -358,6 +358,7 @@ export type Query = {
   serverCounter?: Maybe<Counter>;
   restaurants?: Maybe<Restaurants>;
   restaurant?: Maybe<Restaurant>;
+  review?: Maybe<Review>;
   stripeSubscription?: Maybe<StripeSubscription>;
   stripeSubscriptionProtectedNumber?: Maybe<StripeSubscriberProtectedNumber>;
   stripeSubscriptionCard?: Maybe<StripeSubscriptionCard>;
@@ -379,6 +380,11 @@ export type QueryRestaurantsArgs = {
 
 
 export type QueryRestaurantArgs = {
+  id: Scalars['Int'];
+};
+
+
+export type QueryReviewArgs = {
   id: Scalars['Int'];
 };
 
@@ -454,6 +460,7 @@ export type Review = {
   content: Scalars['String'];
   date: Scalars['String'];
   rating: Scalars['Int'];
+  restaurant?: Maybe<Restaurant>;
   userId: Scalars['Int'];
   restaurantId: Scalars['Int'];
   reviewComment?: Maybe<ReviewComment>;
@@ -612,6 +619,21 @@ export type CreateReviewMutation = (
   )> }
 );
 
+export type EditReviewMutationVariables = Exact<{
+  id: Scalars['Int'];
+  content: Scalars['String'];
+  rating: Scalars['Int'];
+}>;
+
+
+export type EditReviewMutation = (
+  { __typename?: 'Mutation' }
+  & { editReview?: Maybe<(
+    { __typename?: 'Review' }
+    & Pick<Review, 'id'>
+  )> }
+);
+
 export type RestaurantDetailsQueryVariables = Exact<{
   id: Scalars['Int'];
 }>;
@@ -644,6 +666,23 @@ export type RestaurantsQuery = (
         & RestaurantFragment
       )> }
     )>>> }
+  )> }
+);
+
+export type EditReviewPageQueryVariables = Exact<{
+  id: Scalars['Int'];
+}>;
+
+
+export type EditReviewPageQuery = (
+  { __typename?: 'Query' }
+  & { review?: Maybe<(
+    { __typename?: 'Review' }
+    & Pick<Review, 'id' | 'content' | 'rating'>
+    & { restaurant?: Maybe<(
+      { __typename?: 'Restaurant' }
+      & Pick<Restaurant, 'id' | 'title'>
+    )> }
   )> }
 );
 
@@ -792,6 +831,41 @@ export function useCreateReviewMutation(baseOptions?: Apollo.MutationHookOptions
 export type CreateReviewMutationHookResult = ReturnType<typeof useCreateReviewMutation>;
 export type CreateReviewMutationResult = Apollo.MutationResult<CreateReviewMutation>;
 export type CreateReviewMutationOptions = Apollo.BaseMutationOptions<CreateReviewMutation, CreateReviewMutationVariables>;
+export const EditReviewDocument = gql`
+    mutation editReview($id: Int!, $content: String!, $rating: Int!) {
+  editReview(input: {content: $content, rating: $rating, id: $id}) {
+    id
+  }
+}
+    `;
+export type EditReviewMutationFn = Apollo.MutationFunction<EditReviewMutation, EditReviewMutationVariables>;
+
+/**
+ * __useEditReviewMutation__
+ *
+ * To run a mutation, you first call `useEditReviewMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useEditReviewMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [editReviewMutation, { data, loading, error }] = useEditReviewMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      content: // value for 'content'
+ *      rating: // value for 'rating'
+ *   },
+ * });
+ */
+export function useEditReviewMutation(baseOptions?: Apollo.MutationHookOptions<EditReviewMutation, EditReviewMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<EditReviewMutation, EditReviewMutationVariables>(EditReviewDocument, options);
+      }
+export type EditReviewMutationHookResult = ReturnType<typeof useEditReviewMutation>;
+export type EditReviewMutationResult = Apollo.MutationResult<EditReviewMutation>;
+export type EditReviewMutationOptions = Apollo.BaseMutationOptions<EditReviewMutation, EditReviewMutationVariables>;
 export const RestaurantDetailsDocument = gql`
     query restaurantDetails($id: Int!) {
   restaurant(id: $id) {
@@ -869,6 +943,47 @@ export function useRestaurantsLazyQuery(baseOptions?: Apollo.LazyQueryHookOption
 export type RestaurantsQueryHookResult = ReturnType<typeof useRestaurantsQuery>;
 export type RestaurantsLazyQueryHookResult = ReturnType<typeof useRestaurantsLazyQuery>;
 export type RestaurantsQueryResult = Apollo.QueryResult<RestaurantsQuery, RestaurantsQueryVariables>;
+export const EditReviewPageDocument = gql`
+    query editReviewPage($id: Int!) {
+  review(id: $id) {
+    id
+    content
+    rating
+    restaurant {
+      id
+      title
+    }
+  }
+}
+    `;
+
+/**
+ * __useEditReviewPageQuery__
+ *
+ * To run a query within a React component, call `useEditReviewPageQuery` and pass it any options that fit your needs.
+ * When your component renders, `useEditReviewPageQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useEditReviewPageQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useEditReviewPageQuery(baseOptions: Apollo.QueryHookOptions<EditReviewPageQuery, EditReviewPageQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<EditReviewPageQuery, EditReviewPageQueryVariables>(EditReviewPageDocument, options);
+      }
+export function useEditReviewPageLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<EditReviewPageQuery, EditReviewPageQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<EditReviewPageQuery, EditReviewPageQueryVariables>(EditReviewPageDocument, options);
+        }
+export type EditReviewPageQueryHookResult = ReturnType<typeof useEditReviewPageQuery>;
+export type EditReviewPageLazyQueryHookResult = ReturnType<typeof useEditReviewPageLazyQuery>;
+export type EditReviewPageQueryResult = Apollo.QueryResult<EditReviewPageQuery, EditReviewPageQueryVariables>;
 export const ReviewRestaurantDocument = gql`
     query reviewRestaurant($id: Int!) {
   restaurant(id: $id) {

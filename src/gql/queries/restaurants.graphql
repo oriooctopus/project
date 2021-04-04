@@ -19,6 +19,18 @@ query restaurants($after: Int, $limit: Int!, $ratingsMinimum: Int) {
   }
 }
 
+query editReviewPage($id: Int!) {
+  review(id: $id) {
+    id
+    content
+    rating
+    restaurant {
+      id
+      title
+    }
+  }
+}
+
 fragment restaurant on Restaurant {
   id
   averageRating

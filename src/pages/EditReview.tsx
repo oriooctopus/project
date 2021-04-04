@@ -2,40 +2,55 @@ import React, { useEffect, useState } from 'react';
 
 import { Spinner } from 'components/Spinner';
 import { ErrorAlert } from 'components/ErrorAlert';
-import ReviewRestaurantTemplate from 'templates/RestaurantReview';
-
-import { Redirect } from '@reach/router';
+import RestaurantReviewTemplate from 'templates/RestaurantReview';
 
 import {
-  useReviewRestaurantQuery,
-  useCreateReviewMutation,
+  useEditReviewPageQuery,
+  useEditReviewMutation,
 } from 'generated/graphql';
 
 const MINIMUM_REVIEW_CONTENT_LENGTH = 1;
 
-type ReviewRestaurantProps = {
-  restaurantId: string;
+type EditRestaurantReviewProps = {
+  reviewId: string;
 };
 
-const ReviewRestaurant = ({
-  restaurantId,
-}: ReviewRestaurantProps) => {
+const EditRestaurantReview = ({
+  reviewId: reviewIdString,
+}: EditRestaurantReviewProps) => {
+  const reviewId = Number(reviewIdString);
+  const {
+    loading: reviewQueryLoading,
+    error: reviewQueryError,
+    data: reviewQuery,
+  } = useEditReviewPageQuery({
+    fetchPolicy: 'no-cache',
+    variables: { id: Number(reviewId) },
+  });
+
+  const previousReviewContent = reviewQuery?.review?.content || '';
+  const previousRating = reviewQuery?.review?.rating || 3;
+  const restaurantId = reviewQuery?.review?.restaurant?.id || 0;
+  const title = reviewQuery?.review?.restaurant?.title || '';
+
   const [rating, setRating] = useState(3);
   const [reviewContent, setReviewContent] = useState('');
-  const [canSubmit, setCanSubmit] = useState(false);
+  const [canSubmit, setCanSubmit] = useState(true);
   const [errorMessage, setErrorMessage] = useState('');
+
   const [
-    createReviewMutation,
+    editReviewMutation,
     { called: submitCalled },
-  ] = useCreateReviewMutation({
+  ] = useEditReviewMutation({
     variables: {
       content: reviewContent,
       rating,
-      restaurantId: Number(restaurantId),
+      id: reviewId,
     },
   });
+
   const onSubmit = () => {
-    createReviewMutation()
+    editReviewMutation()
       .then(() => {
         setTimeout(() => {
           window.location.href = `/restaurant/${restaurantId}`;
@@ -43,21 +58,11 @@ const ReviewRestaurant = ({
       })
       .catch((e) => setErrorMessage(JSON.stringify(e)));
   };
-  const {
-    loading,
-    error,
-    data: reviewRestaurantQueryData,
-  } = useReviewRestaurantQuery({
-    fetchPolicy: 'no-cache',
-    variables: { id: Number(restaurantId) },
-  });
-  const { title } = reviewRestaurantQueryData?.restaurant || {
-    title: '',
-  };
 
   useEffect(() => {
     const reviewIsSufficientLength =
       reviewContent.length > MINIMUM_REVIEW_CONTENT_LENGTH;
+    const newCanSubmit = reviewIsSufficientLength && !submitCalled;
 
     if (!reviewIsSufficientLength) {
       setErrorMessage(
@@ -67,18 +72,21 @@ const ReviewRestaurant = ({
       setErrorMessage('');
     }
 
-    const newCanSubmit = reviewIsSufficientLength && !submitCalled;
-
     setCanSubmit(newCanSubmit);
   }, [reviewContent, submitCalled]);
 
-  if (loading) return <Spinner />;
-  if (error) return <ErrorAlert errorMessage={error.message} />;
-  if (!reviewRestaurantQueryData?.restaurant)
-    return <span>query unsucessful</span>;
+  useEffect(() => {
+    setReviewContent(previousReviewContent);
+    setRating(previousRating);
+  }, [reviewQuery]);
+
+  if (reviewQueryLoading) return <Spinner />;
+  if (reviewQueryError)
+    return <ErrorAlert errorMessage={reviewQueryError.message} />;
+  if (!reviewQuery?.review) return <span>query unsucessful</span>;
 
   return (
-    <ReviewRestaurantTemplate
+    <RestaurantReviewTemplate
       canSubmit={canSubmit}
       errorMessage={errorMessage}
       onSubmit={onSubmit}
@@ -91,4 +99,4 @@ const ReviewRestaurant = ({
   );
 };
 
-export default ReviewRestaurant;
+export default EditRestaurantReview;

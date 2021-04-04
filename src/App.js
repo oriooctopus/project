@@ -16,8 +16,11 @@ import { Spinner } from './components/Spinner';
 import RestaurantDetails from 'src/containers/GetRestaurantDetails';
 import ReviewRestaurant from 'src/pages/ReviewRestaurant';
 import Restaurants from 'pages/Restaurants';
+import EditReview from 'pages/EditReview';
 
 import 'styles/main.scss';
+
+const adminRoutes = [<EditReview path="/review/edit/:reviewId" />];
 
 const Home = React.lazy(() => import('./pages/Home'));
 
@@ -71,6 +74,9 @@ export const App = () => {
                     noThrow
                   />
                 )}
+
+                {/* {userData.isAdmin && adminRoutes} */}
+                {adminRoutes}
 
                 <ReviewRestaurant path="/review/add/:restaurantId" />
                 <Restaurants path="/restaurants" />

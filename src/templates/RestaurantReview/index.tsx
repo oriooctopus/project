@@ -1,18 +1,18 @@
 import React from 'react';
 import Layout from 'atoms/Layout';
-import { ReviewRestaurantQuery } from 'generated/graphql';
 import Container from 'atoms/Container';
-import CreateReviewBox from 'molecules/CreateReviewBox';
+import SubmitReviewBox from 'molecules/SubmitReviewBox';
 import styles from './index.module.scss';
 
-type ReviewRestaurantProps = ReviewRestaurantQuery & {
+type ReviewRestaurantProps = {
   canSubmit: boolean;
   errorMessage: string;
   onSubmit: () => void;
   setRating: (number: number) => void;
-  rating: number;
   setReviewContent: (string: string) => void;
+  rating: number;
   reviewContent: string;
+  title: string;
 };
 
 const ReviewRestaurant = ({
@@ -22,20 +22,14 @@ const ReviewRestaurant = ({
   setRating,
   setReviewContent,
   rating,
-  restaurant,
   reviewContent,
+  title,
 }: ReviewRestaurantProps) => {
-  if (!restaurant) {
-    return <span />;
-  }
-
-  const { title } = restaurant;
-
   return (
     <Layout>
       <Container className={styles.reviewRestaurant}>
         <h1>{title}</h1>
-        <CreateReviewBox
+        <SubmitReviewBox
           canSubmit={canSubmit}
           errorMessage={errorMessage}
           onSubmit={onSubmit}

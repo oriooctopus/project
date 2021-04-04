@@ -4,7 +4,7 @@ import Rating from 'atoms/Rating';
 import styles from './index.module.scss';
 import clsx from 'clsx';
 
-type CreateReviewBoxProps = {
+type SubmitReviewBoxProps = {
   canSubmit: boolean;
   errorMessage: string;
   onSubmit: () => void;
@@ -14,7 +14,7 @@ type CreateReviewBoxProps = {
   reviewContent: string;
 };
 
-const CreateReviewBox = ({
+const SubmitReviewBox = ({
   canSubmit,
   errorMessage,
   onSubmit,
@@ -22,7 +22,7 @@ const CreateReviewBox = ({
   setReviewContent,
   rating,
   reviewContent,
-}: CreateReviewBoxProps) => {
+}: SubmitReviewBoxProps) => {
   const onChangeReviewContent = (
     e: React.FormEvent<HTMLTextAreaElement>,
   ) => {
@@ -38,7 +38,7 @@ const CreateReviewBox = ({
 
   return (
     <form
-      className={clsx(styles.createReviewBox, 'row')}
+      className={clsx(styles.SubmitReviewBox, 'row')}
       onSubmit={handleSubmit}
     >
       <div className="col-md-8">
@@ -53,7 +53,9 @@ const CreateReviewBox = ({
           value={reviewContent}
         />
         <div className={styles.submitContainer}></div>
-        <SubmitButton disabled={!canSubmit}>Post Review</SubmitButton>
+        <SubmitButton disabled={!canSubmit}>
+          Submit Review
+        </SubmitButton>
         {errorMessage && (
           <span className={styles.error}>{errorMessage}</span>
         )}
@@ -62,4 +64,4 @@ const CreateReviewBox = ({
   );
 };
 
-export default CreateReviewBox;
+export default SubmitReviewBox;

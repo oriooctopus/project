@@ -13,3 +13,9 @@ mutation createReview(
     id
   }
 }
+
+mutation editReview($id: Int!, $content: String!, $rating: Int!) {
+  editReview(input: { content: $content, rating: $rating, id: $id }) {
+    id
+  }
+}
