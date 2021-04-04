@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { Spinner } from 'components/Spinner';
-import { ErrorAlert } from 'components/ErrorAlert';
+import { Spinner } from 'legacyComponents/Spinner';
+import { ErrorAlert } from 'legacyComponents/ErrorAlert';
 import RestaurantDetails from 'templates/RestaurantDetails';
 
 import { useRestaurantDetailsQuery } from 'generated/graphql';

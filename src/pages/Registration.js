@@ -2,18 +2,16 @@ import React, { Fragment, useContext } from 'react';
 
 import { AuthContext } from '../AuthContext';
 
-import { PageTitle } from '../components/PageTitle';
-import { RegisterForm } from '../components/RegisterForm';
-
+import { PageTitle } from '../legacyComponents/PageTitle';
+import { RegisterForm } from '../legacyComponents/RegisterForm';
 
 export const Registration = () => {
+  const { activateAuth } = useContext(AuthContext);
 
-	const { activateAuth } = useContext(AuthContext);
-
-	return (
-		<Fragment>
-			<PageTitle text='Create an account' />
-			<RegisterForm activateAuth={activateAuth} />
-		</Fragment>
-	);
+  return (
+    <Fragment>
+      <PageTitle text="Create an account" />
+      <RegisterForm activateAuth={activateAuth} />
+    </Fragment>
+  );
 };

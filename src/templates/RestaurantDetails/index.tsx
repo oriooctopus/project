@@ -1,11 +1,11 @@
 import React from 'react';
-import RestaurantHero from 'organisms/RestaurantHero';
-import Layout from 'atoms/Layout';
-import Container from 'atoms/Container';
-import ReviewCard from 'organisms/ReviewCard';
+import RestaurantHero from 'components/organisms/RestaurantHero';
+import Layout from 'components/atoms/Layout';
+import Container from 'components/atoms/Container';
+import ReviewCard from 'components/organisms/ReviewCard';
 
 import { RestaurantDetailsQuery } from 'generated/graphql';
-import RestaurantReviews from 'organisms/RestaurantReviews';
+import RestaurantReviews from 'components/organisms/RestaurantReviews';
 
 // import styles from './styles';
 

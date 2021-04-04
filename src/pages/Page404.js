@@ -1,11 +1,11 @@
 import React, { Fragment } from 'react';
 
-import { ErrorAlert } from '../components/ErrorAlert';
+import { ErrorAlert } from '../legacyComponents/ErrorAlert';
 
 export const Page404 = () => {
-	return (
-		<Fragment>
-			<ErrorAlert errorMessage='404' />
-		</Fragment>
-	);
+  return (
+    <Fragment>
+      <ErrorAlert errorMessage="404" />
+    </Fragment>
+  );
 };

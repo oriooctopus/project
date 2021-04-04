@@ -1,8 +1,8 @@
 import React, { useContext, Fragment } from 'react';
 import { AuthContext } from '../AuthContext';
 
-import { SubmitButton } from '../components/SubmitButton';
-import { PageTitle } from '../components/PageTitle';
+import { SubmitButton } from '../legacyComponents/SubmitButton';
+import { PageTitle } from '../legacyComponents/PageTitle';
 
 export const Logout = () => {
   const { removeAuth } = useContext(AuthContext);

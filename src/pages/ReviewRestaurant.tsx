@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
-import { Spinner } from 'components/Spinner';
-import { ErrorAlert } from 'components/ErrorAlert';
+import { Spinner } from 'legacyComponents/Spinner';
+import { ErrorAlert } from 'legacyComponents/ErrorAlert';
 import ReviewRestaurantTemplate from 'templates/RestaurantReview';
 
 import { Redirect } from '@reach/router';

@@ -2,7 +2,7 @@ import React from 'react';
 
 import styles from './index.module.scss';
 import { ReactComponent as ReviewStar } from 'src/img/icons/review-star.svg';
-import Container from 'atoms/Container';
+import Container from 'components/atoms/Container';
 
 type RestaurantHeroProps = {
   averageRating: number;

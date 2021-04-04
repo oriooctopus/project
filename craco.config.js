@@ -3,7 +3,10 @@ const path = require(`path`);
 module.exports = {
   webpack: {
     alias: {
-      components: path.resolve(__dirname, './src/components'),
+      legacyComponents: path.resolve(
+        __dirname,
+        './src/legacyComponents',
+      ),
       pages: path.resolve(__dirname, './src/pages'),
       src: path.resolve(__dirname, './src'),
     },

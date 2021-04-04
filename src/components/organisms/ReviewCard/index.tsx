@@ -1,5 +1,5 @@
 import React from 'react';
-import UserCard from 'molecules/UserCard';
+import UserCard from 'components/molecules/UserCard';
 import clsx from 'clsx';
 import styles from './index.module.scss';
 

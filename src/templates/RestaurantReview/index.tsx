@@ -1,7 +1,7 @@
 import React from 'react';
-import Layout from 'atoms/Layout';
-import Container from 'atoms/Container';
-import SubmitReviewBox from 'molecules/SubmitReviewBox';
+import Layout from 'components/atoms/Layout';
+import Container from 'components/atoms/Container';
+import SubmitReviewBox from 'components/molecules/SubmitReviewBox';
 import styles from './index.module.scss';
 
 type ReviewRestaurantProps = {

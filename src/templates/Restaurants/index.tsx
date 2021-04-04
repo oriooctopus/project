@@ -1,6 +1,6 @@
 import React from 'react';
 // import RestaurantHero from 'organisms/RestaurantHero';
-import Layout from 'atoms/Layout';
+import Layout from 'components/atoms/Layout';
 
 import {
   RestaurantsQuery,
@@ -8,7 +8,7 @@ import {
   RestaurantEdges,
   Restaurant,
 } from 'generated/graphql';
-import Paginator from 'molecules/Paginator';
+import Paginator from 'components/molecules/Paginator';
 
 type RestaurantsProps = RestaurantsQuery & {
   currentPageNumber: number;

@@ -9,9 +9,9 @@ import { Registration } from './pages/Registration';
 import { Logout } from './pages/Logout';
 import { Page404 } from './pages/Page404';
 
-import { NavBar } from './components/NavBar';
-import { Footer } from './components/Footer';
-import { Spinner } from './components/Spinner';
+import { NavBar } from './legacyComponents/NavBar';
+import { Footer } from './legacyComponents/Footer';
+import { Spinner } from './legacyComponents/Spinner';
 
 import RestaurantDetails from 'src/containers/GetRestaurantDetails';
 import ReviewRestaurant from 'src/pages/ReviewRestaurant';

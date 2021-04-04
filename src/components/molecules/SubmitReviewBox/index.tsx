@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import SubmitButton from 'atoms/Buttons/Submit';
-import Rating from 'atoms/Rating';
+import SubmitButton from 'components/atoms/Buttons/Submit';
+import Rating from 'components/atoms/Rating';
 import styles from './index.module.scss';
 import clsx from 'clsx';
 

@@ -1,10 +1,10 @@
 import React from 'react';
 
 import { ReviewFragment } from 'generated/graphql';
-import ReviewCard from 'organisms/ReviewCard';
-import Container from 'atoms/Container';
+import ReviewCard from 'components/organisms/ReviewCard';
+import Container from 'components/atoms/Container';
 import styles from './index.module.scss';
-import Masonry from 'atoms/Masonry';
+import Masonry from 'components/atoms/Masonry';
 
 type RestaurantReviewsProps = {
   reviews: ReviewFragment[];
