@@ -1,3 +1,51 @@
+mutation createRestaurant(
+  $description: String!
+  $imageUrl: String!
+  $location: String!
+  $title: String!
+  $userID: Int!
+) {
+  addRestaurant(
+    input: {
+      description: $description
+      imageUrl: $imageUrl
+      location: $location
+      title: $title
+      userId: $userId
+    }
+  ) {
+    id
+  }
+}
+
+mutation editRestaurant(
+  $description: String!
+  $id: Int!
+  $imageUrl: String!
+  $location: String!
+  $title: String!
+  $userID: Int!
+) {
+  addRestaurant(
+    input: {
+      description: $description
+      id: $id
+      imageUrl: $imageUrl
+      location: $location
+      title: $title
+      userId: $userId
+    }
+  ) {
+    id
+  }
+}
+
+mutation deleteRestaurant(id: $id) {
+  deleteRestaurant(id: $id) {
+    id
+  }
+}
+
 mutation createReview(
   $content: String!
   $rating: Int!
