@@ -3,7 +3,7 @@ mutation createRestaurant(
   $imageUrl: String!
   $location: String!
   $title: String!
-  $userID: Int!
+  $userId: Int!
 ) {
   addRestaurant(
     input: {
@@ -24,9 +24,9 @@ mutation editRestaurant(
   $imageUrl: String!
   $location: String!
   $title: String!
-  $userID: Int!
+  $userId: Int!
 ) {
-  addRestaurant(
+  editRestaurant(
     input: {
       description: $description
       id: $id
@@ -40,7 +40,7 @@ mutation editRestaurant(
   }
 }
 
-mutation deleteRestaurant(id: $id) {
+mutation deleteRestaurant($id: Int!) {
   deleteRestaurant(id: $id) {
     id
   }

@@ -38,11 +38,12 @@ const RestaurantDetails = ({
     totalReviews,
     title,
   } = restaurant;
+  const averageRatingParsed = Number(averageRating);
 
   return (
     <Layout>
       <RestaurantHero
-        averageRating={averageRating}
+        averageRating={averageRatingParsed}
         image={imageUrl}
         location={location}
         totalReviews={totalReviews}
@@ -50,25 +51,39 @@ const RestaurantDetails = ({
       />
       <section>
         <Container>
-          <div className="row">
-            <div className="col-md-6">
-              <h4>Highest Review</h4>
-              <ReviewCard {...sharedButtonProps} {...highestReview} />
-            </div>
-            <div className="col-md-6">
-              <h4>Lowest Review</h4>
-              <ReviewCard {...sharedButtonProps} {...lowestReview} />
-            </div>
-          </div>
+          {highestReview &&
+            lowestReview &&
+            highestReview?.id !== lowestReview?.id && (
+              <div className="row">
+                <div className="col-md-6">
+                  <h4>Highest Review</h4>
+                  <ReviewCard
+                    {...sharedButtonProps}
+                    {...highestReview}
+                  />
+                </div>
+                <div className="col-md-6">
+                  <h4>Lowest Review</h4>
+                  <ReviewCard
+                    {...sharedButtonProps}
+                    {...lowestReview}
+                  />
+                </div>
+              </div>
+            )}
         </Container>
       </section>
-      {title && (
+      {reviews?.length ? (
         <RestaurantReviews
           // @ts-ignore
           reviews={reviews}
           title="All Reviews"
           {...sharedButtonProps}
         />
+      ) : (
+        <Container>
+          <h4>No reviews yet</h4>
+        </Container>
       )}
     </Layout>
   );

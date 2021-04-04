@@ -22,19 +22,20 @@ const RestaurantHero = ({
   const style = {
     '--url': `url(${image})`,
   } as React.CSSProperties;
-  console.log('maybe', ReviewStar);
-  console.log('styles', styles);
-  // TODO: Move to graphql
-  const formattedAverageRating = averageRating.toFixed(2);
+
   return (
     <header className={styles.restaurantHero} style={style}>
       <Container>
         <h1>{title}</h1>
         <div className={styles.ratingsContainer}>
           <ReviewStar />
-          <span className={styles.ratingText}>
-            {formattedAverageRating} stars from {totalReviews} reviews
-          </span>
+          {averageRating && (
+            <span className={styles.ratingText}>
+              {/* TODO: Move to graphql */}
+              {averageRating.toFixed(2)} stars from {totalReviews}{' '}
+              reviews
+            </span>
+          )}
         </div>
         <div className={styles.location}>
           <span>

@@ -13,6 +13,7 @@ import { NavBar } from './legacyComponents/NavBar';
 import { Footer } from './legacyComponents/Footer';
 import { Spinner } from './legacyComponents/Spinner';
 
+import AddRestaurant from 'src/pages/AddRestaurant';
 import RestaurantDetails from 'src/pages/RestaurantDetails';
 import ReviewRestaurant from 'src/pages/ReviewRestaurant';
 import Restaurants from 'pages/Restaurants';
@@ -79,6 +80,7 @@ export const App = () => {
                 {adminRoutes}
 
                 <ReviewRestaurant path="/review/add/:restaurantId" />
+                <AddRestaurant path="/restaurant/add" />
                 <Restaurants path="/restaurants" />
 
                 <RestaurantDetails path="/restaurant/:restaurantId" />
