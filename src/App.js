@@ -11,15 +11,15 @@ import { Page404 } from './pages/Page404';
 import { NavBar } from './legacyComponents/NavBar';
 import { Spinner } from './legacyComponents/Spinner';
 
-import AddRestaurant from 'src/pages/AddRestaurant';
+import AddRestaurant from 'src/pages/AddRestaurant/index.tsx';
 import AddReviewComment from 'src/pages/AddReviewComment/index.tsx';
 import EditReviewComment from 'src/pages/EditReviewComment/index.tsx';
-import EditRestaurant from 'src/pages/EditRestaurant';
+import EditRestaurant from 'src/pages/EditRestaurant/index.tsx';
 import RestaurantDetails from 'src/pages/RestaurantDetails/index.tsx';
-import AddReview from 'src/pages/AddReview';
+import AddReview from 'src/pages/AddReview/index.tsx';
 import Restaurants from 'pages/Restaurants/index.tsx';
 import UnansweredReviews from 'pages/UnansweredReviews/index.tsx';
-import EditReview from 'pages/EditReview';
+import EditReview from 'pages/EditReview/index.tsx';
 import OwnerHome from 'pages/OwnerHome/index.tsx';
 import Home from 'pages/Home';
 

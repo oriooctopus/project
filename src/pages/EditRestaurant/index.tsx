@@ -1,18 +1,24 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 
 import RestaurantDataTemplate from 'templates/RestaurantData';
 import { useRestaurantDetailsQuery } from 'generated/graphql';
 
-import { useCreateRestaurantMutation } from 'generated/graphql';
+import { useEditRestaurantMutation } from 'generated/graphql';
+import { AuthContext } from 'AuthContext';
 
 type EditRestaurantProps = {
   restaurantId: string;
 };
 
 const EditRestaurant = ({ restaurantId }: EditRestaurantProps) => {
+  const formattedRestaurantId = Number(restaurantId);
+  const {
+    userData: { uuid },
+  } = useContext(AuthContext);
+
   const { data: restaurantDetailsQuery } = useRestaurantDetailsQuery({
     fetchPolicy: 'no-cache',
-    variables: { id: Number(restaurantId) },
+    variables: { id: formattedRestaurantId },
   });
 
   const [description, setDescription] = useState('');
@@ -23,22 +29,24 @@ const EditRestaurant = ({ restaurantId }: EditRestaurantProps) => {
   const [canSubmit, setCanSubmit] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [
-    createRestaurantMutation,
+    editRestaurantMutation,
     { called: submitCalled },
-  ] = useCreateRestaurantMutation({
+  ] = useEditRestaurantMutation({
     variables: {
       description,
+      id: formattedRestaurantId,
       location,
       imageUrl,
       title,
+      userId: Number(uuid),
     },
   });
 
   const onSubmit = () => {
-    createRestaurantMutation()
+    editRestaurantMutation()
       .then(
         (response) =>
-          (window.location.href = `/restaurant/${response?.data?.addRestaurant?.id}`),
+          (window.location.href = `/restaurant/${response?.data?.editRestaurant?.id}`),
       )
       .catch((e) => setErrorMessage(JSON.stringify(e)));
   };

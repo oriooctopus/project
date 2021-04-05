@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useContext } from 'react';
 
 import { Spinner } from 'legacyComponents/Spinner';
 import { ErrorAlert } from 'legacyComponents/ErrorAlert';
 import RestaurantDetailsTemplate from 'templates/RestaurantDetails';
-import AuthContext from 'AuthContext';
+import { AuthContext } from 'AuthContext';
 
 import { useRestaurantDetailsQuery } from 'generated/graphql';
 

@@ -1,15 +1,3 @@
-query editReviewPage($id: Int!) {
-  review(id: $id) {
-    id
-    content
-    rating
-    restaurant {
-      id
-      title
-    }
-  }
-}
-
 fragment restaurant on Restaurant {
   id
   averageRating
@@ -48,6 +36,7 @@ fragment review on Review {
 
 fragment reviewComment on ReviewComment {
   id
+  canModify
   comment
 }
 

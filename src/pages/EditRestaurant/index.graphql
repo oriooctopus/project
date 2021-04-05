@@ -1,0 +1,21 @@
+mutation editRestaurant(
+  $description: String!
+  $id: Int!
+  $imageUrl: String!
+  $location: String!
+  $title: String!
+  $userId: Int!
+) {
+  editRestaurant(
+    input: {
+      description: $description
+      id: $id
+      imageUrl: $imageUrl
+      location: $location
+      title: $title
+      userId: $userId
+    }
+  ) {
+    id
+  }
+}

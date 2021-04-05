@@ -481,6 +481,7 @@ export type Review = {
 export type ReviewComment = {
   __typename?: 'ReviewComment';
   id: Scalars['Int'];
+  canModify: Scalars['Boolean'];
   comment: Scalars['String'];
   review: Review;
   reviewId: Scalars['Int'];
@@ -631,40 +632,6 @@ export type UserProfile = {
   fullName?: Maybe<Scalars['String']>;
 };
 
-export type CreateRestaurantMutationVariables = Exact<{
-  description: Scalars['String'];
-  imageUrl: Scalars['String'];
-  location: Scalars['String'];
-  title: Scalars['String'];
-}>;
-
-
-export type CreateRestaurantMutation = (
-  { __typename?: 'Mutation' }
-  & { addRestaurant?: Maybe<(
-    { __typename?: 'Restaurant' }
-    & Pick<Restaurant, 'id'>
-  )> }
-);
-
-export type EditRestaurantMutationVariables = Exact<{
-  description: Scalars['String'];
-  id: Scalars['Int'];
-  imageUrl: Scalars['String'];
-  location: Scalars['String'];
-  title: Scalars['String'];
-  userId: Scalars['Int'];
-}>;
-
-
-export type EditRestaurantMutation = (
-  { __typename?: 'Mutation' }
-  & { editRestaurant?: Maybe<(
-    { __typename?: 'Restaurant' }
-    & Pick<Restaurant, 'id'>
-  )> }
-);
-
 export type DeleteReviewCommentMutationVariables = Exact<{
   id: Scalars['Int'];
 }>;
@@ -734,23 +701,6 @@ export type EditReviewMutation = (
   )> }
 );
 
-export type EditReviewPageQueryVariables = Exact<{
-  id: Scalars['Int'];
-}>;
-
-
-export type EditReviewPageQuery = (
-  { __typename?: 'Query' }
-  & { review?: Maybe<(
-    { __typename?: 'Review' }
-    & Pick<Review, 'id' | 'content' | 'rating'>
-    & { restaurant?: Maybe<(
-      { __typename?: 'Restaurant' }
-      & Pick<Restaurant, 'id' | 'title'>
-    )> }
-  )> }
-);
-
 export type RestaurantFragment = (
   { __typename?: 'Restaurant' }
   & Pick<Restaurant, 'id' | 'averageRating' | 'canAddReview' | 'description' | 'imageUrl' | 'location' | 'title' | 'totalReviews'>
@@ -780,7 +730,7 @@ export type ReviewFragment = (
 
 export type ReviewCommentFragment = (
   { __typename?: 'ReviewComment' }
-  & Pick<ReviewComment, 'id' | 'comment'>
+  & Pick<ReviewComment, 'id' | 'canModify' | 'comment'>
 );
 
 export type ReviewRestaurantQueryVariables = Exact<{
@@ -812,6 +762,22 @@ export type UserProfileCardFragment = (
   & Pick<UserProfile, 'fullName'>
 );
 
+export type CreateRestaurantMutationVariables = Exact<{
+  description: Scalars['String'];
+  imageUrl: Scalars['String'];
+  location: Scalars['String'];
+  title: Scalars['String'];
+}>;
+
+
+export type CreateRestaurantMutation = (
+  { __typename?: 'Mutation' }
+  & { addRestaurant?: Maybe<(
+    { __typename?: 'Restaurant' }
+    & Pick<Restaurant, 'id'>
+  )> }
+);
+
 export type AddReviewCommentMutationVariables = Exact<{
   reviewId: Scalars['Int'];
   comment: Scalars['String'];
@@ -832,6 +798,41 @@ export type AddReviewCommentDataQueryVariables = Exact<{
 
 
 export type AddReviewCommentDataQuery = (
+  { __typename?: 'Query' }
+  & { review?: Maybe<(
+    { __typename?: 'Review' }
+    & Pick<Review, 'id' | 'content' | 'rating'>
+    & { restaurant?: Maybe<(
+      { __typename?: 'Restaurant' }
+      & Pick<Restaurant, 'id' | 'title'>
+    )> }
+  )> }
+);
+
+export type EditRestaurantMutationVariables = Exact<{
+  description: Scalars['String'];
+  id: Scalars['Int'];
+  imageUrl: Scalars['String'];
+  location: Scalars['String'];
+  title: Scalars['String'];
+  userId: Scalars['Int'];
+}>;
+
+
+export type EditRestaurantMutation = (
+  { __typename?: 'Mutation' }
+  & { editRestaurant?: Maybe<(
+    { __typename?: 'Restaurant' }
+    & Pick<Restaurant, 'id'>
+  )> }
+);
+
+export type EditReviewPageQueryVariables = Exact<{
+  id: Scalars['Int'];
+}>;
+
+
+export type EditReviewPageQuery = (
   { __typename?: 'Query' }
   & { review?: Maybe<(
     { __typename?: 'Review' }
@@ -975,6 +976,7 @@ export const UserProfileCardFragmentDoc = gql`
 export const ReviewCommentFragmentDoc = gql`
     fragment reviewComment on ReviewComment {
   id
+  canModify
   comment
 }
     `;
@@ -1017,84 +1019,6 @@ export const RestaurantFragmentDoc = gql`
   totalReviews
 }
     ${ReviewFragmentDoc}`;
-export const CreateRestaurantDocument = gql`
-    mutation createRestaurant($description: String!, $imageUrl: String!, $location: String!, $title: String!) {
-  addRestaurant(
-    input: {description: $description, imageUrl: $imageUrl, location: $location, title: $title}
-  ) {
-    id
-  }
-}
-    `;
-export type CreateRestaurantMutationFn = Apollo.MutationFunction<CreateRestaurantMutation, CreateRestaurantMutationVariables>;
-
-/**
- * __useCreateRestaurantMutation__
- *
- * To run a mutation, you first call `useCreateRestaurantMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useCreateRestaurantMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [createRestaurantMutation, { data, loading, error }] = useCreateRestaurantMutation({
- *   variables: {
- *      description: // value for 'description'
- *      imageUrl: // value for 'imageUrl'
- *      location: // value for 'location'
- *      title: // value for 'title'
- *   },
- * });
- */
-export function useCreateRestaurantMutation(baseOptions?: Apollo.MutationHookOptions<CreateRestaurantMutation, CreateRestaurantMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<CreateRestaurantMutation, CreateRestaurantMutationVariables>(CreateRestaurantDocument, options);
-      }
-export type CreateRestaurantMutationHookResult = ReturnType<typeof useCreateRestaurantMutation>;
-export type CreateRestaurantMutationResult = Apollo.MutationResult<CreateRestaurantMutation>;
-export type CreateRestaurantMutationOptions = Apollo.BaseMutationOptions<CreateRestaurantMutation, CreateRestaurantMutationVariables>;
-export const EditRestaurantDocument = gql`
-    mutation editRestaurant($description: String!, $id: Int!, $imageUrl: String!, $location: String!, $title: String!, $userId: Int!) {
-  editRestaurant(
-    input: {description: $description, id: $id, imageUrl: $imageUrl, location: $location, title: $title, userId: $userId}
-  ) {
-    id
-  }
-}
-    `;
-export type EditRestaurantMutationFn = Apollo.MutationFunction<EditRestaurantMutation, EditRestaurantMutationVariables>;
-
-/**
- * __useEditRestaurantMutation__
- *
- * To run a mutation, you first call `useEditRestaurantMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useEditRestaurantMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [editRestaurantMutation, { data, loading, error }] = useEditRestaurantMutation({
- *   variables: {
- *      description: // value for 'description'
- *      id: // value for 'id'
- *      imageUrl: // value for 'imageUrl'
- *      location: // value for 'location'
- *      title: // value for 'title'
- *      userId: // value for 'userId'
- *   },
- * });
- */
-export function useEditRestaurantMutation(baseOptions?: Apollo.MutationHookOptions<EditRestaurantMutation, EditRestaurantMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<EditRestaurantMutation, EditRestaurantMutationVariables>(EditRestaurantDocument, options);
-      }
-export type EditRestaurantMutationHookResult = ReturnType<typeof useEditRestaurantMutation>;
-export type EditRestaurantMutationResult = Apollo.MutationResult<EditRestaurantMutation>;
-export type EditRestaurantMutationOptions = Apollo.BaseMutationOptions<EditRestaurantMutation, EditRestaurantMutationVariables>;
 export const DeleteReviewCommentDocument = gql`
     mutation deleteReviewComment($id: Int!) {
   deleteReviewComment(id: $id) {
@@ -1266,47 +1190,6 @@ export function useEditReviewMutation(baseOptions?: Apollo.MutationHookOptions<E
 export type EditReviewMutationHookResult = ReturnType<typeof useEditReviewMutation>;
 export type EditReviewMutationResult = Apollo.MutationResult<EditReviewMutation>;
 export type EditReviewMutationOptions = Apollo.BaseMutationOptions<EditReviewMutation, EditReviewMutationVariables>;
-export const EditReviewPageDocument = gql`
-    query editReviewPage($id: Int!) {
-  review(id: $id) {
-    id
-    content
-    rating
-    restaurant {
-      id
-      title
-    }
-  }
-}
-    `;
-
-/**
- * __useEditReviewPageQuery__
- *
- * To run a query within a React component, call `useEditReviewPageQuery` and pass it any options that fit your needs.
- * When your component renders, `useEditReviewPageQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useEditReviewPageQuery({
- *   variables: {
- *      id: // value for 'id'
- *   },
- * });
- */
-export function useEditReviewPageQuery(baseOptions: Apollo.QueryHookOptions<EditReviewPageQuery, EditReviewPageQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<EditReviewPageQuery, EditReviewPageQueryVariables>(EditReviewPageDocument, options);
-      }
-export function useEditReviewPageLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<EditReviewPageQuery, EditReviewPageQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<EditReviewPageQuery, EditReviewPageQueryVariables>(EditReviewPageDocument, options);
-        }
-export type EditReviewPageQueryHookResult = ReturnType<typeof useEditReviewPageQuery>;
-export type EditReviewPageLazyQueryHookResult = ReturnType<typeof useEditReviewPageLazyQuery>;
-export type EditReviewPageQueryResult = Apollo.QueryResult<EditReviewPageQuery, EditReviewPageQueryVariables>;
 export const ReviewRestaurantDocument = gql`
     query reviewRestaurant($id: Int!) {
   restaurant(id: $id) {
@@ -1378,6 +1261,44 @@ export function useCurrentUserLazyQuery(baseOptions?: Apollo.LazyQueryHookOption
 export type CurrentUserQueryHookResult = ReturnType<typeof useCurrentUserQuery>;
 export type CurrentUserLazyQueryHookResult = ReturnType<typeof useCurrentUserLazyQuery>;
 export type CurrentUserQueryResult = Apollo.QueryResult<CurrentUserQuery, CurrentUserQueryVariables>;
+export const CreateRestaurantDocument = gql`
+    mutation createRestaurant($description: String!, $imageUrl: String!, $location: String!, $title: String!) {
+  addRestaurant(
+    input: {description: $description, imageUrl: $imageUrl, location: $location, title: $title}
+  ) {
+    id
+  }
+}
+    `;
+export type CreateRestaurantMutationFn = Apollo.MutationFunction<CreateRestaurantMutation, CreateRestaurantMutationVariables>;
+
+/**
+ * __useCreateRestaurantMutation__
+ *
+ * To run a mutation, you first call `useCreateRestaurantMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateRestaurantMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createRestaurantMutation, { data, loading, error }] = useCreateRestaurantMutation({
+ *   variables: {
+ *      description: // value for 'description'
+ *      imageUrl: // value for 'imageUrl'
+ *      location: // value for 'location'
+ *      title: // value for 'title'
+ *   },
+ * });
+ */
+export function useCreateRestaurantMutation(baseOptions?: Apollo.MutationHookOptions<CreateRestaurantMutation, CreateRestaurantMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateRestaurantMutation, CreateRestaurantMutationVariables>(CreateRestaurantDocument, options);
+      }
+export type CreateRestaurantMutationHookResult = ReturnType<typeof useCreateRestaurantMutation>;
+export type CreateRestaurantMutationResult = Apollo.MutationResult<CreateRestaurantMutation>;
+export type CreateRestaurantMutationOptions = Apollo.BaseMutationOptions<CreateRestaurantMutation, CreateRestaurantMutationVariables>;
 export const AddReviewCommentDocument = gql`
     mutation addReviewComment($reviewId: Int!, $comment: String!) {
   addReviewComment(input: {reviewId: $reviewId, comment: $comment}) {
@@ -1453,6 +1374,87 @@ export function useAddReviewCommentDataLazyQuery(baseOptions?: Apollo.LazyQueryH
 export type AddReviewCommentDataQueryHookResult = ReturnType<typeof useAddReviewCommentDataQuery>;
 export type AddReviewCommentDataLazyQueryHookResult = ReturnType<typeof useAddReviewCommentDataLazyQuery>;
 export type AddReviewCommentDataQueryResult = Apollo.QueryResult<AddReviewCommentDataQuery, AddReviewCommentDataQueryVariables>;
+export const EditRestaurantDocument = gql`
+    mutation editRestaurant($description: String!, $id: Int!, $imageUrl: String!, $location: String!, $title: String!, $userId: Int!) {
+  editRestaurant(
+    input: {description: $description, id: $id, imageUrl: $imageUrl, location: $location, title: $title, userId: $userId}
+  ) {
+    id
+  }
+}
+    `;
+export type EditRestaurantMutationFn = Apollo.MutationFunction<EditRestaurantMutation, EditRestaurantMutationVariables>;
+
+/**
+ * __useEditRestaurantMutation__
+ *
+ * To run a mutation, you first call `useEditRestaurantMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useEditRestaurantMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [editRestaurantMutation, { data, loading, error }] = useEditRestaurantMutation({
+ *   variables: {
+ *      description: // value for 'description'
+ *      id: // value for 'id'
+ *      imageUrl: // value for 'imageUrl'
+ *      location: // value for 'location'
+ *      title: // value for 'title'
+ *      userId: // value for 'userId'
+ *   },
+ * });
+ */
+export function useEditRestaurantMutation(baseOptions?: Apollo.MutationHookOptions<EditRestaurantMutation, EditRestaurantMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<EditRestaurantMutation, EditRestaurantMutationVariables>(EditRestaurantDocument, options);
+      }
+export type EditRestaurantMutationHookResult = ReturnType<typeof useEditRestaurantMutation>;
+export type EditRestaurantMutationResult = Apollo.MutationResult<EditRestaurantMutation>;
+export type EditRestaurantMutationOptions = Apollo.BaseMutationOptions<EditRestaurantMutation, EditRestaurantMutationVariables>;
+export const EditReviewPageDocument = gql`
+    query editReviewPage($id: Int!) {
+  review(id: $id) {
+    id
+    content
+    rating
+    restaurant {
+      id
+      title
+    }
+  }
+}
+    `;
+
+/**
+ * __useEditReviewPageQuery__
+ *
+ * To run a query within a React component, call `useEditReviewPageQuery` and pass it any options that fit your needs.
+ * When your component renders, `useEditReviewPageQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useEditReviewPageQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useEditReviewPageQuery(baseOptions: Apollo.QueryHookOptions<EditReviewPageQuery, EditReviewPageQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<EditReviewPageQuery, EditReviewPageQueryVariables>(EditReviewPageDocument, options);
+      }
+export function useEditReviewPageLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<EditReviewPageQuery, EditReviewPageQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<EditReviewPageQuery, EditReviewPageQueryVariables>(EditReviewPageDocument, options);
+        }
+export type EditReviewPageQueryHookResult = ReturnType<typeof useEditReviewPageQuery>;
+export type EditReviewPageLazyQueryHookResult = ReturnType<typeof useEditReviewPageLazyQuery>;
+export type EditReviewPageQueryResult = Apollo.QueryResult<EditReviewPageQuery, EditReviewPageQueryVariables>;
 export const EditReviewCommentDocument = gql`
     mutation editReviewComment($id: Int!, $reviewId: Int!, $comment: String!) {
   editReviewComment(input: {id: $id, comment: $comment, reviewId: $reviewId}) {

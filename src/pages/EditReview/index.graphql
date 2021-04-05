@@ -1,0 +1,11 @@
+query editReviewPage($id: Int!) {
+  review(id: $id) {
+    id
+    content
+    rating
+    restaurant {
+      id
+      title
+    }
+  }
+}

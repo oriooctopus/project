@@ -1,0 +1,17 @@
+mutation createRestaurant(
+  $description: String!
+  $imageUrl: String!
+  $location: String!
+  $title: String!
+) {
+  addRestaurant(
+    input: {
+      description: $description
+      imageUrl: $imageUrl
+      location: $location
+      title: $title
+    }
+  ) {
+    id
+  }
+}
