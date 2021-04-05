@@ -1,6 +1,9 @@
 import React from 'react';
-// import RestaurantHero from 'organisms/RestaurantHero';
+import { Link } from '@reach/router';
+import Container from 'components/atoms/Container';
 import Layout from 'components/atoms/Layout';
+import { ReviewFragment } from 'generated/graphql';
+import ReviewCard from 'components/organisms/ReviewCard';
 
 import {
   OwnerHomeQuery,
@@ -30,36 +33,47 @@ const OwnerHome = ({
     (edge: UnansweredReviewEdges) => edge?.node,
   ) as Review[];
 
+  console.log('result', getUnansweredReviewsForOwner);
+
   return (
     <Layout>
-      {formattedRestaurants.map(
-        ({ id, averageRating, title, canAddReview }: Restaurant) => (
-          <span>{title}</span>
-        ),
-      )}
-      {formattedUnansweredReviews.map(
-        ({ reviewComment, content, id, rating }: Review) => (
-          <div style={{ marginBottom: '20px' }}>
-            <a href={`/review-comment/add/${id}`}>
-              <p>{content}</p>
-              <span>{rating}</span>
-            </a>
-          </div>
-        ),
-      )}
-      {/* {formattedOwnerHome.map(
-        ({ id, averageRating, title, canAddReview }: Restaurant) => (
-          <div style={{ marginBottom: '20px' }}>
-            <a href={`/restaurant/${id}`}>
-              <p>{title}</p>
-              <p>average rating: {averageRating}</p>
-              {canAddReview && (
-                <a href={`/review/add/${id}`}>Leave a Review</a>
+      <Container>
+        {formattedRestaurants.map(
+          ({
+            id,
+            averageRating,
+            title,
+            canAddReview,
+          }: Restaurant) => (
+            <span>{title}</span>
+          ),
+        )}
+        <section>
+          <div>
+            <h4>Unanswered Reviews</h4>
+            <div className="row">
+              {formattedUnansweredReviews.length ? (
+                formattedUnansweredReviews.map(
+                  (review: ReviewFragment) => (
+                    <div className="col-md-4 spacing-medium-bottom">
+                      <ReviewCard {...review} />
+                    </div>
+                  ),
+                )
+              ) : (
+                <span>No Unanswered Review</span>
               )}
-            </a>
+            </div>
+            {formattedUnansweredReviews.length && (
+              <Link to="/unanswered-comments">
+                <span className="button success">
+                  See All Unanswered Comments
+                </span>
+              </Link>
+            )}
           </div>
-        ),
-      )} */}
+        </section>
+      </Container>
     </Layout>
   );
 };

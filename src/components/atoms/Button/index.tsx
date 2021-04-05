@@ -1,6 +1,5 @@
 import React from 'react';
 import clsx from 'clsx';
-import styles from './index.module.scss';
 
 type ButtonProps = React.ComponentProps<'button'> & {
   children: string;
@@ -18,7 +17,7 @@ const Button = ({
 }: ButtonProps) => {
   return (
     <button
-      className={clsx(styles.root, styles[theme], className)}
+      className={clsx('button', theme, className)}
       disabled={disabled}
       {...props}
     >

@@ -2,8 +2,8 @@
 @import 'shared';
 @import 'localReset';
 @import 'config/bootstrap';
+@import 'theme/buttons';
 @import 'theme/typography';
-@import 'theme/docusaurus-overrides';
 
 body {
   font-family: $font-primary;
@@ -15,11 +15,11 @@ html {
 }
 
 section {
-  padding-top: px(50);
-  padding-bottom: px(50);
+  padding-top: px(40);
+  padding-bottom: px(40);
 
   > *:not(:last-child) {
-    padding-bottom: px(50);
+    padding-bottom: px(40);
   }
 }
 
@@ -37,6 +37,10 @@ textarea {
 
 .desktop-only {
   display: none;
+}
+
+.spacing-medium-bottom {
+  margin-bottom: px(20);
 }
 
 @include breakpoint(medium-tablet) {

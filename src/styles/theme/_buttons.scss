@@ -1,10 +1,12 @@
-@import 'styles/shared.scss';
+@import 'styles/shared';
 
-.root {
+.button {
   border-radius: px(4);
-  height: px(40);
+  display: inline-block;
+  line-height: px(40);
   margin-top: px(15);
-  width: px(200);
+  min-width: px(200);
+  padding: 0 px(15);
 
   &:disabled {
     background-color: $gray;
@@ -24,6 +26,11 @@
 
   &.success {
     background-color: $green;
+    color: $white;
+  }
+
+  &.info {
+    background-color: $info-blue;
     color: $white;
   }
 }
