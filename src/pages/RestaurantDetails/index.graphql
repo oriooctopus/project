@@ -1,0 +1,9 @@
+query restaurantDetails($id: Int!) {
+  restaurant(id: $id) {
+    ...restaurant
+    canAddReview
+  }
+  currentUser {
+    role
+  }
+}

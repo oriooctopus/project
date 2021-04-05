@@ -40,6 +40,12 @@ mutation editRestaurant(
   }
 }
 
+mutation deleteReviewComment($id: Int!) {
+  deleteReviewComment(id: $id) {
+    id
+  }
+}
+
 mutation deleteRestaurant($id: Int!) {
   deleteRestaurant(id: $id) {
     id
@@ -64,12 +70,6 @@ mutation createReview(
 
 mutation deleteReview($id: Int!) {
   deleteReview(id: $id) {
-    id
-  }
-}
-
-mutation deleteReviewComment($id: Int!) {
-  deleteReviewComment(id: $id) {
     id
   }
 }

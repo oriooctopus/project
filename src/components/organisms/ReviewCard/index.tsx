@@ -15,6 +15,7 @@ type ReviewCardProps = ReviewFragment & {
 };
 
 const ReviewCard = ({
+  canAddComment,
   className,
   content,
   date,
@@ -37,7 +38,7 @@ const ReviewCard = ({
     reviewComment?.id || 0,
   );
   const onClickReviewCommentEdit = () => {
-    window.location.href = `/reviewComment/edit/${reviewComment?.id}`;
+    window.location.href = `/review-comment/edit/${reviewComment?.id}`;
   };
 
   return (
@@ -45,8 +46,8 @@ const ReviewCard = ({
       <div className={clsx(styles.review, className)}>
         <UserCard {...userProfile} />
         <p>{content}</p>
-        rating: {rating}
-        date: {date}
+        <span>rating: {rating}</span>
+        <span>date: {date}</span>
         {(includeDelete || includeEdit) && (
           <div className={styles.buttonContainer}>
             {includeDelete && (
@@ -62,6 +63,16 @@ const ReviewCard = ({
           </div>
         )}
       </div>
+      {canAddComment && (
+        <Button
+          theme="primary"
+          onClick={() =>
+            (window.location.href = `/review-comment/add/${id}`)
+          }
+        >
+          Reply
+        </Button>
+      )}
       {reviewComment && (
         <div>
           <span className={styles.response}>

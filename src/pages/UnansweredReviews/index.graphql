@@ -1,0 +1,10 @@
+query unansweredReviews($after: Int, $limit: Int!) {
+  getUnansweredReviewsForOwner(after: $after, limit: $limit) {
+    totalCount
+    edges {
+      node {
+        ...review
+      }
+    }
+  }
+}

@@ -32,7 +32,7 @@ const SubmitBox = ({
         {children}
         <div className={styles.submitContainer}>
           <Button disabled={!canSubmit} theme="success" type="submit">
-            Submit Review
+            Submit
           </Button>
           {errorMessage && (
             <span className={styles.error}>{errorMessage}</span>

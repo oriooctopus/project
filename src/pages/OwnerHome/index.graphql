@@ -1,0 +1,18 @@
+query ownerHome {
+  getUnansweredReviewsForOwner(after: 0, limit: 5) {
+    totalCount
+    edges {
+      node {
+        ...review
+      }
+    }
+  }
+  restaurants(after: 0, limit: 5, ownedByUser: true) {
+    totalCount
+    edges {
+      node {
+        ...restaurant
+      }
+    }
+  }
+}

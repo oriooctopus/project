@@ -118,6 +118,7 @@ export type EditRestaurantInput = {
 export type EditReviewCommentInput = {
   id: Scalars['Int'];
   comment: Scalars['String'];
+  reviewId: Scalars['Int'];
 };
 
 export type EditReviewInput = {
@@ -342,6 +343,12 @@ export type OrderByUserInput = {
   order?: Maybe<Scalars['String']>;
 };
 
+export type PaginationQueryPageInfo = {
+  __typename?: 'PaginationQueryPageInfo';
+  endCursor?: Maybe<Scalars['Int']>;
+  hasNextPage?: Maybe<Scalars['Boolean']>;
+};
+
 export type ProfileInput = {
   firstName?: Maybe<Scalars['String']>;
   lastName?: Maybe<Scalars['String']>;
@@ -352,8 +359,10 @@ export type Query = {
   dummy?: Maybe<Scalars['Int']>;
   serverCounter?: Maybe<Counter>;
   restaurants?: Maybe<Restaurants>;
+  getUnansweredReviewsForOwner?: Maybe<UnansweredReviews>;
   restaurant?: Maybe<Restaurant>;
   review?: Maybe<Review>;
+  reviewComment?: Maybe<ReviewComment>;
   stripeSubscription?: Maybe<StripeSubscription>;
   stripeSubscriptionProtectedNumber?: Maybe<StripeSubscriberProtectedNumber>;
   stripeSubscriptionCard?: Maybe<StripeSubscriptionCard>;
@@ -370,7 +379,14 @@ export type Query = {
 export type QueryRestaurantsArgs = {
   after?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
+  ownedByUser?: Maybe<Scalars['Boolean']>;
   ratingsMinimum?: Maybe<Scalars['Int']>;
+};
+
+
+export type QueryGetUnansweredReviewsForOwnerArgs = {
+  after?: Maybe<Scalars['Int']>;
+  limit?: Maybe<Scalars['Int']>;
 };
 
 
@@ -380,6 +396,11 @@ export type QueryRestaurantArgs = {
 
 
 export type QueryReviewArgs = {
+  id: Scalars['Int'];
+};
+
+
+export type QueryReviewCommentArgs = {
   id: Scalars['Int'];
 };
 
@@ -417,6 +438,7 @@ export type ResetPasswordInput = {
 export type Restaurant = {
   __typename?: 'Restaurant';
   id: Scalars['Int'];
+  averageRating?: Maybe<Scalars['Float']>;
   canAddReview: Scalars['Boolean'];
   title: Scalars['String'];
   description: Scalars['String'];
@@ -425,8 +447,8 @@ export type Restaurant = {
   lowestReview?: Maybe<Review>;
   location: Scalars['String'];
   reviews?: Maybe<Array<Maybe<Review>>>;
-  averageRating?: Maybe<Scalars['Float']>;
   totalReviews: Scalars['Int'];
+  userId: Scalars['Int'];
 };
 
 export type RestaurantEdges = {
@@ -435,23 +457,18 @@ export type RestaurantEdges = {
   cursor?: Maybe<Scalars['Int']>;
 };
 
-export type RestaurantPageInfo = {
-  __typename?: 'RestaurantPageInfo';
-  endCursor?: Maybe<Scalars['Int']>;
-  hasNextPage?: Maybe<Scalars['Boolean']>;
-};
-
 export type Restaurants = {
   __typename?: 'Restaurants';
   totalCount?: Maybe<Scalars['Int']>;
   edges?: Maybe<Array<Maybe<RestaurantEdges>>>;
-  pageInfo?: Maybe<RestaurantPageInfo>;
+  pageInfo?: Maybe<PaginationQueryPageInfo>;
 };
 
 export type Review = {
   __typename?: 'Review';
-  createdAt: Scalars['String'];
   id: Scalars['Int'];
+  canAddComment: Scalars['Boolean'];
+  createdAt: Scalars['String'];
   content: Scalars['String'];
   date: Scalars['String'];
   rating: Scalars['Int'];
@@ -466,7 +483,9 @@ export type ReviewComment = {
   __typename?: 'ReviewComment';
   id: Scalars['Int'];
   comment: Scalars['String'];
+  review: Review;
   reviewId: Scalars['Int'];
+  restaurantId: Scalars['Int'];
 };
 
 export type StripeSubscriberProtectedNumber = {
@@ -538,6 +557,19 @@ export type Tokens = {
   refreshToken?: Maybe<Scalars['String']>;
 };
 
+export type UnansweredReviewEdges = {
+  __typename?: 'UnansweredReviewEdges';
+  node?: Maybe<Review>;
+  cursor?: Maybe<Scalars['Int']>;
+};
+
+export type UnansweredReviews = {
+  __typename?: 'UnansweredReviews';
+  totalCount?: Maybe<Scalars['Int']>;
+  edges?: Maybe<Array<Maybe<UnansweredReviewEdges>>>;
+  pageInfo?: Maybe<PaginationQueryPageInfo>;
+};
+
 export type UpdateRestaurantPayload = {
   __typename?: 'UpdateRestaurantPayload';
   mutation: Scalars['String'];
@@ -594,6 +626,7 @@ export type UserPayload = {
 
 export type UserProfile = {
   __typename?: 'UserProfile';
+  id: Scalars['Int'];
   firstName?: Maybe<Scalars['String']>;
   lastName?: Maybe<Scalars['String']>;
   fullName?: Maybe<Scalars['String']>;
@@ -631,6 +664,19 @@ export type EditRestaurantMutation = (
   & { editRestaurant?: Maybe<(
     { __typename?: 'Restaurant' }
     & Pick<Restaurant, 'id'>
+  )> }
+);
+
+export type DeleteReviewCommentMutationVariables = Exact<{
+  id: Scalars['Int'];
+}>;
+
+
+export type DeleteReviewCommentMutation = (
+  { __typename?: 'Mutation' }
+  & { deleteReviewComment?: Maybe<(
+    { __typename?: 'ReviewComment' }
+    & Pick<ReviewComment, 'id'>
   )> }
 );
 
@@ -675,19 +721,6 @@ export type DeleteReviewMutation = (
   )> }
 );
 
-export type DeleteReviewCommentMutationVariables = Exact<{
-  id: Scalars['Int'];
-}>;
-
-
-export type DeleteReviewCommentMutation = (
-  { __typename?: 'Mutation' }
-  & { deleteReviewComment?: Maybe<(
-    { __typename?: 'ReviewComment' }
-    & Pick<ReviewComment, 'id'>
-  )> }
-);
-
 export type EditReviewMutationVariables = Exact<{
   id: Scalars['Int'];
   content: Scalars['String'];
@@ -700,44 +733,6 @@ export type EditReviewMutation = (
   & { editReview?: Maybe<(
     { __typename?: 'Review' }
     & Pick<Review, 'id'>
-  )> }
-);
-
-export type RestaurantDetailsQueryVariables = Exact<{
-  id: Scalars['Int'];
-}>;
-
-
-export type RestaurantDetailsQuery = (
-  { __typename?: 'Query' }
-  & { restaurant?: Maybe<(
-    { __typename?: 'Restaurant' }
-    & RestaurantFragment
-  )>, currentUser?: Maybe<(
-    { __typename?: 'User' }
-    & Pick<User, 'role'>
-  )> }
-);
-
-export type RestaurantsQueryVariables = Exact<{
-  after?: Maybe<Scalars['Int']>;
-  limit: Scalars['Int'];
-  ratingsMinimum?: Maybe<Scalars['Int']>;
-}>;
-
-
-export type RestaurantsQuery = (
-  { __typename?: 'Query' }
-  & { restaurants?: Maybe<(
-    { __typename?: 'Restaurants' }
-    & Pick<Restaurants, 'totalCount'>
-    & { edges?: Maybe<Array<Maybe<(
-      { __typename?: 'RestaurantEdges' }
-      & { node?: Maybe<(
-        { __typename?: 'Restaurant' }
-        & RestaurantFragment
-      )> }
-    )>>> }
   )> }
 );
 
@@ -775,7 +770,7 @@ export type RestaurantFragment = (
 
 export type ReviewFragment = (
   { __typename?: 'Review' }
-  & Pick<Review, 'id' | 'content' | 'date' | 'rating' | 'restaurantId'>
+  & Pick<Review, 'id' | 'canAddComment' | 'content' | 'date' | 'rating' | 'restaurantId'>
   & { userProfile: (
     { __typename?: 'UserProfile' }
     & UserProfileCardFragment
@@ -819,6 +814,161 @@ export type UserProfileCardFragment = (
   & Pick<UserProfile, 'fullName'>
 );
 
+export type AddReviewCommentMutationVariables = Exact<{
+  reviewId: Scalars['Int'];
+  comment: Scalars['String'];
+}>;
+
+
+export type AddReviewCommentMutation = (
+  { __typename?: 'Mutation' }
+  & { addReviewComment?: Maybe<(
+    { __typename?: 'ReviewComment' }
+    & Pick<ReviewComment, 'restaurantId'>
+  )> }
+);
+
+export type AddReviewCommentDataQueryVariables = Exact<{
+  reviewId: Scalars['Int'];
+}>;
+
+
+export type AddReviewCommentDataQuery = (
+  { __typename?: 'Query' }
+  & { review?: Maybe<(
+    { __typename?: 'Review' }
+    & Pick<Review, 'id' | 'content' | 'rating'>
+    & { restaurant?: Maybe<(
+      { __typename?: 'Restaurant' }
+      & Pick<Restaurant, 'id' | 'title'>
+    )> }
+  )> }
+);
+
+export type EditReviewCommentMutationVariables = Exact<{
+  id: Scalars['Int'];
+  reviewId: Scalars['Int'];
+  comment: Scalars['String'];
+}>;
+
+
+export type EditReviewCommentMutation = (
+  { __typename?: 'Mutation' }
+  & { editReviewComment?: Maybe<(
+    { __typename?: 'ReviewComment' }
+    & Pick<ReviewComment, 'restaurantId'>
+  )> }
+);
+
+export type EditReviewCommentDataQueryVariables = Exact<{
+  reviewCommentId: Scalars['Int'];
+}>;
+
+
+export type EditReviewCommentDataQuery = (
+  { __typename?: 'Query' }
+  & { reviewComment?: Maybe<(
+    { __typename?: 'ReviewComment' }
+    & Pick<ReviewComment, 'comment' | 'restaurantId'>
+    & { review: (
+      { __typename?: 'Review' }
+      & Pick<Review, 'id' | 'content' | 'rating'>
+      & { restaurant?: Maybe<(
+        { __typename?: 'Restaurant' }
+        & Pick<Restaurant, 'id' | 'title'>
+      )> }
+    ) }
+  )> }
+);
+
+export type OwnerHomeQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type OwnerHomeQuery = (
+  { __typename?: 'Query' }
+  & { getUnansweredReviewsForOwner?: Maybe<(
+    { __typename?: 'UnansweredReviews' }
+    & Pick<UnansweredReviews, 'totalCount'>
+    & { edges?: Maybe<Array<Maybe<(
+      { __typename?: 'UnansweredReviewEdges' }
+      & { node?: Maybe<(
+        { __typename?: 'Review' }
+        & ReviewFragment
+      )> }
+    )>>> }
+  )>, restaurants?: Maybe<(
+    { __typename?: 'Restaurants' }
+    & Pick<Restaurants, 'totalCount'>
+    & { edges?: Maybe<Array<Maybe<(
+      { __typename?: 'RestaurantEdges' }
+      & { node?: Maybe<(
+        { __typename?: 'Restaurant' }
+        & RestaurantFragment
+      )> }
+    )>>> }
+  )> }
+);
+
+export type RestaurantDetailsQueryVariables = Exact<{
+  id: Scalars['Int'];
+}>;
+
+
+export type RestaurantDetailsQuery = (
+  { __typename?: 'Query' }
+  & { restaurant?: Maybe<(
+    { __typename?: 'Restaurant' }
+    & Pick<Restaurant, 'canAddReview'>
+    & RestaurantFragment
+  )>, currentUser?: Maybe<(
+    { __typename?: 'User' }
+    & Pick<User, 'role'>
+  )> }
+);
+
+export type RestaurantsQueryVariables = Exact<{
+  after?: Maybe<Scalars['Int']>;
+  limit: Scalars['Int'];
+  ratingsMinimum?: Maybe<Scalars['Int']>;
+}>;
+
+
+export type RestaurantsQuery = (
+  { __typename?: 'Query' }
+  & { restaurants?: Maybe<(
+    { __typename?: 'Restaurants' }
+    & Pick<Restaurants, 'totalCount'>
+    & { edges?: Maybe<Array<Maybe<(
+      { __typename?: 'RestaurantEdges' }
+      & { node?: Maybe<(
+        { __typename?: 'Restaurant' }
+        & RestaurantFragment
+      )> }
+    )>>> }
+  )> }
+);
+
+export type UnansweredReviewsQueryVariables = Exact<{
+  after?: Maybe<Scalars['Int']>;
+  limit: Scalars['Int'];
+}>;
+
+
+export type UnansweredReviewsQuery = (
+  { __typename?: 'Query' }
+  & { getUnansweredReviewsForOwner?: Maybe<(
+    { __typename?: 'UnansweredReviews' }
+    & Pick<UnansweredReviews, 'totalCount'>
+    & { edges?: Maybe<Array<Maybe<(
+      { __typename?: 'UnansweredReviewEdges' }
+      & { node?: Maybe<(
+        { __typename?: 'Review' }
+        & ReviewFragment
+      )> }
+    )>>> }
+  )> }
+);
+
 export const UserProfileCardFragmentDoc = gql`
     fragment userProfileCard on UserProfile {
   fullName
@@ -833,6 +983,7 @@ export const ReviewCommentFragmentDoc = gql`
 export const ReviewFragmentDoc = gql`
     fragment review on Review {
   id
+  canAddComment
   content
   date
   rating
@@ -946,6 +1097,39 @@ export function useEditRestaurantMutation(baseOptions?: Apollo.MutationHookOptio
 export type EditRestaurantMutationHookResult = ReturnType<typeof useEditRestaurantMutation>;
 export type EditRestaurantMutationResult = Apollo.MutationResult<EditRestaurantMutation>;
 export type EditRestaurantMutationOptions = Apollo.BaseMutationOptions<EditRestaurantMutation, EditRestaurantMutationVariables>;
+export const DeleteReviewCommentDocument = gql`
+    mutation deleteReviewComment($id: Int!) {
+  deleteReviewComment(id: $id) {
+    id
+  }
+}
+    `;
+export type DeleteReviewCommentMutationFn = Apollo.MutationFunction<DeleteReviewCommentMutation, DeleteReviewCommentMutationVariables>;
+
+/**
+ * __useDeleteReviewCommentMutation__
+ *
+ * To run a mutation, you first call `useDeleteReviewCommentMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteReviewCommentMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteReviewCommentMutation, { data, loading, error }] = useDeleteReviewCommentMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useDeleteReviewCommentMutation(baseOptions?: Apollo.MutationHookOptions<DeleteReviewCommentMutation, DeleteReviewCommentMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteReviewCommentMutation, DeleteReviewCommentMutationVariables>(DeleteReviewCommentDocument, options);
+      }
+export type DeleteReviewCommentMutationHookResult = ReturnType<typeof useDeleteReviewCommentMutation>;
+export type DeleteReviewCommentMutationResult = Apollo.MutationResult<DeleteReviewCommentMutation>;
+export type DeleteReviewCommentMutationOptions = Apollo.BaseMutationOptions<DeleteReviewCommentMutation, DeleteReviewCommentMutationVariables>;
 export const DeleteRestaurantDocument = gql`
     mutation deleteRestaurant($id: Int!) {
   deleteRestaurant(id: $id) {
@@ -1049,39 +1233,6 @@ export function useDeleteReviewMutation(baseOptions?: Apollo.MutationHookOptions
 export type DeleteReviewMutationHookResult = ReturnType<typeof useDeleteReviewMutation>;
 export type DeleteReviewMutationResult = Apollo.MutationResult<DeleteReviewMutation>;
 export type DeleteReviewMutationOptions = Apollo.BaseMutationOptions<DeleteReviewMutation, DeleteReviewMutationVariables>;
-export const DeleteReviewCommentDocument = gql`
-    mutation deleteReviewComment($id: Int!) {
-  deleteReviewComment(id: $id) {
-    id
-  }
-}
-    `;
-export type DeleteReviewCommentMutationFn = Apollo.MutationFunction<DeleteReviewCommentMutation, DeleteReviewCommentMutationVariables>;
-
-/**
- * __useDeleteReviewCommentMutation__
- *
- * To run a mutation, you first call `useDeleteReviewCommentMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useDeleteReviewCommentMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [deleteReviewCommentMutation, { data, loading, error }] = useDeleteReviewCommentMutation({
- *   variables: {
- *      id: // value for 'id'
- *   },
- * });
- */
-export function useDeleteReviewCommentMutation(baseOptions?: Apollo.MutationHookOptions<DeleteReviewCommentMutation, DeleteReviewCommentMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<DeleteReviewCommentMutation, DeleteReviewCommentMutationVariables>(DeleteReviewCommentDocument, options);
-      }
-export type DeleteReviewCommentMutationHookResult = ReturnType<typeof useDeleteReviewCommentMutation>;
-export type DeleteReviewCommentMutationResult = Apollo.MutationResult<DeleteReviewCommentMutation>;
-export type DeleteReviewCommentMutationOptions = Apollo.BaseMutationOptions<DeleteReviewCommentMutation, DeleteReviewCommentMutationVariables>;
 export const EditReviewDocument = gql`
     mutation editReview($id: Int!, $content: String!, $rating: Int!) {
   editReview(input: {content: $content, rating: $rating, id: $id}) {
@@ -1117,86 +1268,6 @@ export function useEditReviewMutation(baseOptions?: Apollo.MutationHookOptions<E
 export type EditReviewMutationHookResult = ReturnType<typeof useEditReviewMutation>;
 export type EditReviewMutationResult = Apollo.MutationResult<EditReviewMutation>;
 export type EditReviewMutationOptions = Apollo.BaseMutationOptions<EditReviewMutation, EditReviewMutationVariables>;
-export const RestaurantDetailsDocument = gql`
-    query restaurantDetails($id: Int!) {
-  restaurant(id: $id) {
-    ...restaurant
-  }
-  currentUser {
-    role
-  }
-}
-    ${RestaurantFragmentDoc}`;
-
-/**
- * __useRestaurantDetailsQuery__
- *
- * To run a query within a React component, call `useRestaurantDetailsQuery` and pass it any options that fit your needs.
- * When your component renders, `useRestaurantDetailsQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useRestaurantDetailsQuery({
- *   variables: {
- *      id: // value for 'id'
- *   },
- * });
- */
-export function useRestaurantDetailsQuery(baseOptions: Apollo.QueryHookOptions<RestaurantDetailsQuery, RestaurantDetailsQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<RestaurantDetailsQuery, RestaurantDetailsQueryVariables>(RestaurantDetailsDocument, options);
-      }
-export function useRestaurantDetailsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<RestaurantDetailsQuery, RestaurantDetailsQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<RestaurantDetailsQuery, RestaurantDetailsQueryVariables>(RestaurantDetailsDocument, options);
-        }
-export type RestaurantDetailsQueryHookResult = ReturnType<typeof useRestaurantDetailsQuery>;
-export type RestaurantDetailsLazyQueryHookResult = ReturnType<typeof useRestaurantDetailsLazyQuery>;
-export type RestaurantDetailsQueryResult = Apollo.QueryResult<RestaurantDetailsQuery, RestaurantDetailsQueryVariables>;
-export const RestaurantsDocument = gql`
-    query restaurants($after: Int, $limit: Int!, $ratingsMinimum: Int) {
-  restaurants(after: $after, limit: $limit, ratingsMinimum: $ratingsMinimum) {
-    totalCount
-    edges {
-      node {
-        ...restaurant
-      }
-    }
-  }
-}
-    ${RestaurantFragmentDoc}`;
-
-/**
- * __useRestaurantsQuery__
- *
- * To run a query within a React component, call `useRestaurantsQuery` and pass it any options that fit your needs.
- * When your component renders, `useRestaurantsQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useRestaurantsQuery({
- *   variables: {
- *      after: // value for 'after'
- *      limit: // value for 'limit'
- *      ratingsMinimum: // value for 'ratingsMinimum'
- *   },
- * });
- */
-export function useRestaurantsQuery(baseOptions: Apollo.QueryHookOptions<RestaurantsQuery, RestaurantsQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<RestaurantsQuery, RestaurantsQueryVariables>(RestaurantsDocument, options);
-      }
-export function useRestaurantsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<RestaurantsQuery, RestaurantsQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<RestaurantsQuery, RestaurantsQueryVariables>(RestaurantsDocument, options);
-        }
-export type RestaurantsQueryHookResult = ReturnType<typeof useRestaurantsQuery>;
-export type RestaurantsLazyQueryHookResult = ReturnType<typeof useRestaurantsLazyQuery>;
-export type RestaurantsQueryResult = Apollo.QueryResult<RestaurantsQuery, RestaurantsQueryVariables>;
 export const EditReviewPageDocument = gql`
     query editReviewPage($id: Int!) {
   review(id: $id) {
@@ -1309,3 +1380,333 @@ export function useCurrentUserLazyQuery(baseOptions?: Apollo.LazyQueryHookOption
 export type CurrentUserQueryHookResult = ReturnType<typeof useCurrentUserQuery>;
 export type CurrentUserLazyQueryHookResult = ReturnType<typeof useCurrentUserLazyQuery>;
 export type CurrentUserQueryResult = Apollo.QueryResult<CurrentUserQuery, CurrentUserQueryVariables>;
+export const AddReviewCommentDocument = gql`
+    mutation addReviewComment($reviewId: Int!, $comment: String!) {
+  addReviewComment(input: {reviewId: $reviewId, comment: $comment}) {
+    restaurantId
+  }
+}
+    `;
+export type AddReviewCommentMutationFn = Apollo.MutationFunction<AddReviewCommentMutation, AddReviewCommentMutationVariables>;
+
+/**
+ * __useAddReviewCommentMutation__
+ *
+ * To run a mutation, you first call `useAddReviewCommentMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddReviewCommentMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addReviewCommentMutation, { data, loading, error }] = useAddReviewCommentMutation({
+ *   variables: {
+ *      reviewId: // value for 'reviewId'
+ *      comment: // value for 'comment'
+ *   },
+ * });
+ */
+export function useAddReviewCommentMutation(baseOptions?: Apollo.MutationHookOptions<AddReviewCommentMutation, AddReviewCommentMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<AddReviewCommentMutation, AddReviewCommentMutationVariables>(AddReviewCommentDocument, options);
+      }
+export type AddReviewCommentMutationHookResult = ReturnType<typeof useAddReviewCommentMutation>;
+export type AddReviewCommentMutationResult = Apollo.MutationResult<AddReviewCommentMutation>;
+export type AddReviewCommentMutationOptions = Apollo.BaseMutationOptions<AddReviewCommentMutation, AddReviewCommentMutationVariables>;
+export const AddReviewCommentDataDocument = gql`
+    query addReviewCommentData($reviewId: Int!) {
+  review(id: $reviewId) {
+    id
+    content
+    rating
+    restaurant {
+      id
+      title
+    }
+  }
+}
+    `;
+
+/**
+ * __useAddReviewCommentDataQuery__
+ *
+ * To run a query within a React component, call `useAddReviewCommentDataQuery` and pass it any options that fit your needs.
+ * When your component renders, `useAddReviewCommentDataQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useAddReviewCommentDataQuery({
+ *   variables: {
+ *      reviewId: // value for 'reviewId'
+ *   },
+ * });
+ */
+export function useAddReviewCommentDataQuery(baseOptions: Apollo.QueryHookOptions<AddReviewCommentDataQuery, AddReviewCommentDataQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<AddReviewCommentDataQuery, AddReviewCommentDataQueryVariables>(AddReviewCommentDataDocument, options);
+      }
+export function useAddReviewCommentDataLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<AddReviewCommentDataQuery, AddReviewCommentDataQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<AddReviewCommentDataQuery, AddReviewCommentDataQueryVariables>(AddReviewCommentDataDocument, options);
+        }
+export type AddReviewCommentDataQueryHookResult = ReturnType<typeof useAddReviewCommentDataQuery>;
+export type AddReviewCommentDataLazyQueryHookResult = ReturnType<typeof useAddReviewCommentDataLazyQuery>;
+export type AddReviewCommentDataQueryResult = Apollo.QueryResult<AddReviewCommentDataQuery, AddReviewCommentDataQueryVariables>;
+export const EditReviewCommentDocument = gql`
+    mutation editReviewComment($id: Int!, $reviewId: Int!, $comment: String!) {
+  editReviewComment(input: {id: $id, comment: $comment, reviewId: $reviewId}) {
+    restaurantId
+  }
+}
+    `;
+export type EditReviewCommentMutationFn = Apollo.MutationFunction<EditReviewCommentMutation, EditReviewCommentMutationVariables>;
+
+/**
+ * __useEditReviewCommentMutation__
+ *
+ * To run a mutation, you first call `useEditReviewCommentMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useEditReviewCommentMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [editReviewCommentMutation, { data, loading, error }] = useEditReviewCommentMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      reviewId: // value for 'reviewId'
+ *      comment: // value for 'comment'
+ *   },
+ * });
+ */
+export function useEditReviewCommentMutation(baseOptions?: Apollo.MutationHookOptions<EditReviewCommentMutation, EditReviewCommentMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<EditReviewCommentMutation, EditReviewCommentMutationVariables>(EditReviewCommentDocument, options);
+      }
+export type EditReviewCommentMutationHookResult = ReturnType<typeof useEditReviewCommentMutation>;
+export type EditReviewCommentMutationResult = Apollo.MutationResult<EditReviewCommentMutation>;
+export type EditReviewCommentMutationOptions = Apollo.BaseMutationOptions<EditReviewCommentMutation, EditReviewCommentMutationVariables>;
+export const EditReviewCommentDataDocument = gql`
+    query editReviewCommentData($reviewCommentId: Int!) {
+  reviewComment(id: $reviewCommentId) {
+    comment
+    restaurantId
+    review {
+      id
+      content
+      rating
+      restaurant {
+        id
+        title
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useEditReviewCommentDataQuery__
+ *
+ * To run a query within a React component, call `useEditReviewCommentDataQuery` and pass it any options that fit your needs.
+ * When your component renders, `useEditReviewCommentDataQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useEditReviewCommentDataQuery({
+ *   variables: {
+ *      reviewCommentId: // value for 'reviewCommentId'
+ *   },
+ * });
+ */
+export function useEditReviewCommentDataQuery(baseOptions: Apollo.QueryHookOptions<EditReviewCommentDataQuery, EditReviewCommentDataQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<EditReviewCommentDataQuery, EditReviewCommentDataQueryVariables>(EditReviewCommentDataDocument, options);
+      }
+export function useEditReviewCommentDataLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<EditReviewCommentDataQuery, EditReviewCommentDataQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<EditReviewCommentDataQuery, EditReviewCommentDataQueryVariables>(EditReviewCommentDataDocument, options);
+        }
+export type EditReviewCommentDataQueryHookResult = ReturnType<typeof useEditReviewCommentDataQuery>;
+export type EditReviewCommentDataLazyQueryHookResult = ReturnType<typeof useEditReviewCommentDataLazyQuery>;
+export type EditReviewCommentDataQueryResult = Apollo.QueryResult<EditReviewCommentDataQuery, EditReviewCommentDataQueryVariables>;
+export const OwnerHomeDocument = gql`
+    query ownerHome {
+  getUnansweredReviewsForOwner(after: 0, limit: 5) {
+    totalCount
+    edges {
+      node {
+        ...review
+      }
+    }
+  }
+  restaurants(after: 0, limit: 5, ownedByUser: true) {
+    totalCount
+    edges {
+      node {
+        ...restaurant
+      }
+    }
+  }
+}
+    ${ReviewFragmentDoc}
+${RestaurantFragmentDoc}`;
+
+/**
+ * __useOwnerHomeQuery__
+ *
+ * To run a query within a React component, call `useOwnerHomeQuery` and pass it any options that fit your needs.
+ * When your component renders, `useOwnerHomeQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useOwnerHomeQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useOwnerHomeQuery(baseOptions?: Apollo.QueryHookOptions<OwnerHomeQuery, OwnerHomeQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<OwnerHomeQuery, OwnerHomeQueryVariables>(OwnerHomeDocument, options);
+      }
+export function useOwnerHomeLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<OwnerHomeQuery, OwnerHomeQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<OwnerHomeQuery, OwnerHomeQueryVariables>(OwnerHomeDocument, options);
+        }
+export type OwnerHomeQueryHookResult = ReturnType<typeof useOwnerHomeQuery>;
+export type OwnerHomeLazyQueryHookResult = ReturnType<typeof useOwnerHomeLazyQuery>;
+export type OwnerHomeQueryResult = Apollo.QueryResult<OwnerHomeQuery, OwnerHomeQueryVariables>;
+export const RestaurantDetailsDocument = gql`
+    query restaurantDetails($id: Int!) {
+  restaurant(id: $id) {
+    ...restaurant
+    canAddReview
+  }
+  currentUser {
+    role
+  }
+}
+    ${RestaurantFragmentDoc}`;
+
+/**
+ * __useRestaurantDetailsQuery__
+ *
+ * To run a query within a React component, call `useRestaurantDetailsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useRestaurantDetailsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useRestaurantDetailsQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useRestaurantDetailsQuery(baseOptions: Apollo.QueryHookOptions<RestaurantDetailsQuery, RestaurantDetailsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<RestaurantDetailsQuery, RestaurantDetailsQueryVariables>(RestaurantDetailsDocument, options);
+      }
+export function useRestaurantDetailsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<RestaurantDetailsQuery, RestaurantDetailsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<RestaurantDetailsQuery, RestaurantDetailsQueryVariables>(RestaurantDetailsDocument, options);
+        }
+export type RestaurantDetailsQueryHookResult = ReturnType<typeof useRestaurantDetailsQuery>;
+export type RestaurantDetailsLazyQueryHookResult = ReturnType<typeof useRestaurantDetailsLazyQuery>;
+export type RestaurantDetailsQueryResult = Apollo.QueryResult<RestaurantDetailsQuery, RestaurantDetailsQueryVariables>;
+export const RestaurantsDocument = gql`
+    query restaurants($after: Int, $limit: Int!, $ratingsMinimum: Int) {
+  restaurants(
+    after: $after
+    limit: $limit
+    ownedByUser: true
+    ratingsMinimum: $ratingsMinimum
+  ) {
+    totalCount
+    edges {
+      node {
+        ...restaurant
+      }
+    }
+  }
+}
+    ${RestaurantFragmentDoc}`;
+
+/**
+ * __useRestaurantsQuery__
+ *
+ * To run a query within a React component, call `useRestaurantsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useRestaurantsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useRestaurantsQuery({
+ *   variables: {
+ *      after: // value for 'after'
+ *      limit: // value for 'limit'
+ *      ratingsMinimum: // value for 'ratingsMinimum'
+ *   },
+ * });
+ */
+export function useRestaurantsQuery(baseOptions: Apollo.QueryHookOptions<RestaurantsQuery, RestaurantsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<RestaurantsQuery, RestaurantsQueryVariables>(RestaurantsDocument, options);
+      }
+export function useRestaurantsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<RestaurantsQuery, RestaurantsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<RestaurantsQuery, RestaurantsQueryVariables>(RestaurantsDocument, options);
+        }
+export type RestaurantsQueryHookResult = ReturnType<typeof useRestaurantsQuery>;
+export type RestaurantsLazyQueryHookResult = ReturnType<typeof useRestaurantsLazyQuery>;
+export type RestaurantsQueryResult = Apollo.QueryResult<RestaurantsQuery, RestaurantsQueryVariables>;
+export const UnansweredReviewsDocument = gql`
+    query unansweredReviews($after: Int, $limit: Int!) {
+  getUnansweredReviewsForOwner(after: $after, limit: $limit) {
+    totalCount
+    edges {
+      node {
+        ...review
+      }
+    }
+  }
+}
+    ${ReviewFragmentDoc}`;
+
+/**
+ * __useUnansweredReviewsQuery__
+ *
+ * To run a query within a React component, call `useUnansweredReviewsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useUnansweredReviewsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useUnansweredReviewsQuery({
+ *   variables: {
+ *      after: // value for 'after'
+ *      limit: // value for 'limit'
+ *   },
+ * });
+ */
+export function useUnansweredReviewsQuery(baseOptions: Apollo.QueryHookOptions<UnansweredReviewsQuery, UnansweredReviewsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<UnansweredReviewsQuery, UnansweredReviewsQueryVariables>(UnansweredReviewsDocument, options);
+      }
+export function useUnansweredReviewsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<UnansweredReviewsQuery, UnansweredReviewsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<UnansweredReviewsQuery, UnansweredReviewsQueryVariables>(UnansweredReviewsDocument, options);
+        }
+export type UnansweredReviewsQueryHookResult = ReturnType<typeof useUnansweredReviewsQuery>;
+export type UnansweredReviewsLazyQueryHookResult = ReturnType<typeof useUnansweredReviewsLazyQuery>;
+export type UnansweredReviewsQueryResult = Apollo.QueryResult<UnansweredReviewsQuery, UnansweredReviewsQueryVariables>;

@@ -1,27 +1,3 @@
-query restaurantDetails($id: Int!) {
-  restaurant(id: $id) {
-    ...restaurant
-  }
-  currentUser {
-    role
-  }
-}
-
-query restaurants($after: Int, $limit: Int!, $ratingsMinimum: Int) {
-  restaurants(
-    after: $after
-    limit: $limit
-    ratingsMinimum: $ratingsMinimum
-  ) {
-    totalCount
-    edges {
-      node {
-        ...restaurant
-      }
-    }
-  }
-}
-
 query editReviewPage($id: Int!) {
   review(id: $id) {
     id
@@ -56,6 +32,7 @@ fragment restaurant on Restaurant {
 
 fragment review on Review {
   id
+  canAddComment
   content
   date
   rating

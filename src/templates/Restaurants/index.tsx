@@ -4,7 +4,6 @@ import Layout from 'components/atoms/Layout';
 
 import {
   RestaurantsQuery,
-  RestaurantFragment,
   RestaurantEdges,
   Restaurant,
 } from 'generated/graphql';

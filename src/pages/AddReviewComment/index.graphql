@@ -1,0 +1,19 @@
+mutation addReviewComment($reviewId: Int!, $comment: String!) {
+  addReviewComment(
+    input: { reviewId: $reviewId, comment: $comment }
+  ) {
+    restaurantId
+  }
+}
+
+query addReviewCommentData($reviewId: Int!) {
+  review(id: $reviewId) {
+    id
+    content
+    rating
+    restaurant {
+      id
+      title
+    }
+  }
+}

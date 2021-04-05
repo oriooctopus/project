@@ -4,8 +4,6 @@ import { Spinner } from 'legacyComponents/Spinner';
 import { ErrorAlert } from 'legacyComponents/ErrorAlert';
 import ReviewRestaurantTemplate from 'templates/RestaurantReview';
 
-import { Redirect } from '@reach/router';
-
 import {
   useReviewRestaurantQuery,
   useCreateReviewMutation,

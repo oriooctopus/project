@@ -14,11 +14,15 @@ import { Footer } from './legacyComponents/Footer';
 import { Spinner } from './legacyComponents/Spinner';
 
 import AddRestaurant from 'src/pages/AddRestaurant';
+import AddReviewComment from 'src/pages/AddReviewComment/index.tsx';
+import EditReviewComment from 'src/pages/EditReviewComment/index.tsx';
 import EditRestaurant from 'src/pages/EditRestaurant';
-import RestaurantDetails from 'src/pages/RestaurantDetails';
+import RestaurantDetails from 'src/pages/RestaurantDetails/index.tsx';
 import ReviewRestaurant from 'src/pages/ReviewRestaurant';
-import Restaurants from 'pages/Restaurants';
+import Restaurants from 'pages/Restaurants/index.tsx';
+import UnansweredReviews from 'pages/UnansweredReviews/index.tsx';
 import EditReview from 'pages/EditReview';
+import OwnerHome from 'pages/OwnerHome/index.tsx';
 
 import 'styles/main.scss';
 
@@ -40,7 +44,6 @@ export const App = () => {
             <main className="pb-4">
               <Router>
                 <Page404 default />
-                <Home path="/" />
 
                 {
                   // If is not authenticated...
@@ -81,12 +84,17 @@ export const App = () => {
                 {adminRoutes}
 
                 <ReviewRestaurant path="/review/add/:restaurantId" />
+                <AddReviewComment path="/review-comment/add/:reviewId" />
+                <EditReviewComment path="/review-comment/edit/:reviewCommentId" />
                 <AddRestaurant path="/restaurant/add" />
                 <EditRestaurant path="/restaurant/edit/:restaurantId" />
                 <Restaurants path="/restaurants" />
-
                 <RestaurantDetails path="/restaurant/:restaurantId" />
+                <UnansweredReviews path="/unanswered-reviews" />
+                <UnansweredReviews path="/unanswered-reviews/:pageNumber" />
+                <OwnerHome path="/" />
                 <Logout path="/logout" />
+                <Home path="/" />
               </Router>
             </main>
             <div className="row pb-5"></div>

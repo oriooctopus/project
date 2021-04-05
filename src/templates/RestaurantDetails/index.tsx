@@ -3,6 +3,7 @@ import RestaurantHero from 'components/organisms/RestaurantHero';
 import Layout from 'components/atoms/Layout';
 import Container from 'components/atoms/Container';
 import ReviewCard from 'components/organisms/ReviewCard';
+import Button from 'components/atoms/Button';
 
 import { RestaurantDetailsQuery } from 'generated/graphql';
 import RestaurantReviews from 'components/organisms/RestaurantReviews';
@@ -20,7 +21,7 @@ const RestaurantDetails = ({
   restaurant,
 }: RestaurantDetailsProps) => {
   if (!restaurant) {
-    return <span>data not found</span>;
+    return <span>Restaurant not found</span>;
   }
 
   const sharedButtonProps = {
@@ -30,8 +31,10 @@ const RestaurantDetails = ({
 
   const {
     averageRating,
+    canAddReview,
     imageUrl,
     highestReview,
+    id: restaurantId,
     location,
     lowestReview,
     reviews,
@@ -49,11 +52,23 @@ const RestaurantDetails = ({
         totalReviews={totalReviews}
         title={title}
       />
-      <section>
+      {canAddReview && (
         <Container>
-          {highestReview &&
-            lowestReview &&
-            highestReview?.id !== lowestReview?.id && (
+          <Button
+            theme="success"
+            onClick={() =>
+              (window.location.href = `/review/add/${restaurantId}`)
+            }
+          >
+            Add a review
+          </Button>
+        </Container>
+      )}
+      {highestReview &&
+        lowestReview &&
+        highestReview?.id !== lowestReview?.id && (
+          <section>
+            <Container>
               <div className="row">
                 <div className="col-md-6">
                   <h4>Highest Review</h4>
@@ -70,9 +85,9 @@ const RestaurantDetails = ({
                   />
                 </div>
               </div>
-            )}
-        </Container>
-      </section>
+            </Container>
+          </section>
+        )}
       {reviews?.length ? (
         <RestaurantReviews
           // @ts-ignore

@@ -1,0 +1,27 @@
+mutation editReviewComment(
+  $id: Int!
+  $reviewId: Int!
+  $comment: String!
+) {
+  editReviewComment(
+    input: { id: $id, comment: $comment, reviewId: $reviewId }
+  ) {
+    restaurantId
+  }
+}
+
+query editReviewCommentData($reviewCommentId: Int!) {
+  reviewComment(id: $reviewCommentId) {
+    comment
+    restaurantId
+    review {
+      id
+      content
+      rating
+      restaurant {
+        id
+        title
+      }
+    }
+  }
+}

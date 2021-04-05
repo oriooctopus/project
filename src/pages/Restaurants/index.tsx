@@ -6,7 +6,7 @@ import RestaurantsTemplate from 'templates/Restaurants';
 
 import { useRestaurantsQuery } from 'generated/graphql';
 
-const RESTAURANTS_PER_PAGE = 2;
+const RESTAURANTS_PER_PAGE = 10;
 
 type RestaurantsProps = {
   pageParameters?: string;
