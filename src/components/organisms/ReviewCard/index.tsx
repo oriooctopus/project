@@ -10,18 +10,15 @@ import { ReviewFragment } from 'generated/graphql';
 
 type ReviewCardProps = ReviewFragment & {
   className?: string;
-  includeDelete: boolean;
-  includeEdit: boolean;
 };
 
 const ReviewCard = ({
   canAddComment,
+  canModify: canModifyReview,
   className,
   content,
   date,
   id,
-  includeDelete,
-  includeEdit,
   rating,
   userProfile,
   reviewComment,
@@ -48,18 +45,14 @@ const ReviewCard = ({
         <p>{content}</p>
         <span>rating: {rating}</span>
         <span>date: {date}</span>
-        {(includeDelete || includeEdit) && (
+        {canModifyReview && (
           <div className={styles.buttonContainer}>
-            {includeDelete && (
-              <Button theme="danger" onClick={onClickReviewDelete}>
-                Delete
-              </Button>
-            )}
-            {includeEdit && (
-              <Button theme="primary" onClick={onClickReviewEdit}>
-                Edit
-              </Button>
-            )}
+            <Button theme="danger" onClick={onClickReviewDelete}>
+              Delete
+            </Button>
+            <Button theme="primary" onClick={onClickReviewEdit}>
+              Edit
+            </Button>
           </div>
         )}
       </div>
@@ -78,24 +71,20 @@ const ReviewCard = ({
           <span className={styles.response}>
             <i>The owner responded:</i> <br /> {reviewComment.comment}
           </span>
-          {(includeDelete || includeEdit) && (
+          {reviewComment?.canModify && (
             <div className={styles.buttonContainer}>
-              {includeDelete && (
-                <Button
-                  theme="danger"
-                  onClick={onClickReviewCommentDelete}
-                >
-                  Delete
-                </Button>
-              )}
-              {includeEdit && (
-                <Button
-                  theme="primary"
-                  onClick={onClickReviewCommentEdit}
-                >
-                  Edit
-                </Button>
-              )}
+              <Button
+                theme="danger"
+                onClick={onClickReviewCommentDelete}
+              >
+                Delete
+              </Button>
+              <Button
+                theme="primary"
+                onClick={onClickReviewCommentEdit}
+              >
+                Edit
+              </Button>
             </div>
           )}
         </div>

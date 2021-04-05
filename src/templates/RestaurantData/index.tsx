@@ -30,27 +30,25 @@ const RestaurantData = ({
   setLocation,
   setTitle,
   title,
-}: RestaurantDataProps) => {
-  return (
-    <Layout>
-      <Container className={styles.RestaurantData}>
-        <h1>{title}</h1>
-        <SubmitRestaurantBox
-          canSubmit={canSubmit}
-          description={description}
-          errorMessage={errorMessage}
-          imageUrl={imageUrl}
-          location={location}
-          onSubmit={onSubmit}
-          setDescription={setDescription}
-          setImageUrl={setImageUrl}
-          setLocation={setLocation}
-          setTitle={setTitle}
-          title={title}
-        />
-      </Container>
-    </Layout>
-  );
-};
+}: RestaurantDataProps) => (
+  <Layout>
+    <Container className={styles.RestaurantData}>
+      <h1>{title}</h1>
+      <SubmitRestaurantBox
+        canSubmit={canSubmit}
+        description={description}
+        errorMessage={errorMessage}
+        imageUrl={imageUrl}
+        location={location}
+        onSubmit={onSubmit}
+        setDescription={setDescription}
+        setImageUrl={setImageUrl}
+        setLocation={setLocation}
+        setTitle={setTitle}
+        title={title}
+      />
+    </Container>
+  </Layout>
+);
 
 export default RestaurantData;

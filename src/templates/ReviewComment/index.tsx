@@ -25,36 +25,34 @@ const ReviewComment = ({
   rating,
   reviewContent,
   setComment,
-}: ReviewCommentProps) => {
-  return (
-    <Layout>
-      <Container className={styles.root}>
-        <div className={styles.previousReview}>
-          <h4>Previous Review</h4>
-          <Rating
-            className={styles.rating}
-            rating={rating}
-            name="review"
-          />
-          <p>{reviewContent}</p>
-        </div>
+}: ReviewCommentProps) => (
+  <Layout>
+    <Container className={styles.root}>
+      <div className={styles.previousReview}>
+        <h4>Previous Review</h4>
+        <Rating
+          className={styles.rating}
+          rating={rating}
+          name="review"
+        />
+        <p>{reviewContent}</p>
+      </div>
 
-        <h4>Review Comment</h4>
-        <SubmitBox
-          canSubmit={canSubmit}
-          errorMessage={errorMessage}
-          onSubmit={onSubmit}
-        >
-          <Textarea
-            handleChange={setComment}
-            name="comment"
-            placeholder="Comment Here"
-            value={comment}
-          />
-        </SubmitBox>
-      </Container>
-    </Layout>
-  );
-};
+      <h4>Review Comment</h4>
+      <SubmitBox
+        canSubmit={canSubmit}
+        errorMessage={errorMessage}
+        onSubmit={onSubmit}
+      >
+        <Textarea
+          handleChange={setComment}
+          name="comment"
+          placeholder="Comment Here"
+          value={comment}
+        />
+      </SubmitBox>
+    </Container>
+  </Layout>
+);
 
 export default ReviewComment;

@@ -7,15 +7,11 @@ import styles from './index.module.scss';
 import Masonry from 'components/atoms/Masonry';
 
 type RestaurantReviewsProps = {
-  includeDelete: boolean;
-  includeEdit: boolean;
   reviews: ReviewFragment[];
   title?: string;
 };
 
 const RestaurantReviews = ({
-  includeDelete,
-  includeEdit,
   reviews,
   title,
 }: RestaurantReviewsProps) => {
@@ -25,12 +21,7 @@ const RestaurantReviews = ({
         {title && <h4>{title}</h4>}
         <Masonry>
           {reviews?.map((review: ReviewFragment) => (
-            <ReviewCard
-              className={styles.review}
-              includeDelete={includeDelete}
-              includeEdit={includeEdit}
-              {...review}
-            />
+            <ReviewCard className={styles.review} {...review} />
           ))}
         </Masonry>
       </Container>

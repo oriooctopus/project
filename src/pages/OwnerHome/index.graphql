@@ -7,7 +7,7 @@ query ownerHome {
       }
     }
   }
-  restaurants(after: 0, limit: 5, ownedByUser: true) {
+  restaurants(after: 0, limit: 5) {
     totalCount
     edges {
       node {

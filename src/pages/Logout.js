@@ -10,8 +10,7 @@ export const Logout = () => {
     <Fragment>
       <PageTitle text="Log out" />
       <div className="mt-5">
-        <SubmitButton onClick={() => {}}>
-          {/* <SubmitButton onClick={thremoveAu}> */}
+        <SubmitButton onClick={removeAuth}>
           Close session
         </SubmitButton>
       </div>

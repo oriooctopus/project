@@ -21,7 +21,6 @@ const AddRestaurant = () => {
       location,
       imageUrl,
       title,
-      userId: 2,
     },
   });
   const onSubmit = () => {

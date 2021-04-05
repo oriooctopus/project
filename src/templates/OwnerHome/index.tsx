@@ -32,7 +32,6 @@ const OwnerHome = ({
 
   return (
     <Layout>
-      <span>ewfewe </span>
       {formattedRestaurants.map(
         ({ id, averageRating, title, canAddReview }: Restaurant) => (
           <span>{title}</span>

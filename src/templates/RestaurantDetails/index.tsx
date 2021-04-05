@@ -16,18 +16,11 @@ type RestaurantDetailsProps = RestaurantDetailsQuery & {
 };
 
 const RestaurantDetails = ({
-  includeDelete,
-  includeEdit,
   restaurant,
 }: RestaurantDetailsProps) => {
   if (!restaurant) {
     return <span>Restaurant not found</span>;
   }
-
-  const sharedButtonProps = {
-    includeDelete,
-    includeEdit,
-  };
 
   const {
     averageRating,
@@ -72,17 +65,11 @@ const RestaurantDetails = ({
               <div className="row">
                 <div className="col-md-6">
                   <h4>Highest Review</h4>
-                  <ReviewCard
-                    {...sharedButtonProps}
-                    {...highestReview}
-                  />
+                  <ReviewCard {...highestReview} />
                 </div>
                 <div className="col-md-6">
                   <h4>Lowest Review</h4>
-                  <ReviewCard
-                    {...sharedButtonProps}
-                    {...lowestReview}
-                  />
+                  <ReviewCard {...lowestReview} />
                 </div>
               </div>
             </Container>
@@ -93,7 +80,6 @@ const RestaurantDetails = ({
           // @ts-ignore
           reviews={reviews}
           title="All Reviews"
-          {...sharedButtonProps}
         />
       ) : (
         <Container>

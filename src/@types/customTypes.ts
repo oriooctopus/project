@@ -1,8 +1,7 @@
-// export type UserProfile =
+export enum roles {
+  'admin',
+  'owner',
+  'customer',
+}
 
-export type Review = {
-  rating: number;
-  // userProfile: UserProfile;
-};
-
-export {};
+export { };

@@ -25,7 +25,6 @@ export type AddRestaurantInput = {
   description: Scalars['String'];
   title: Scalars['String'];
   imageUrl: Scalars['String'];
-  userId: Scalars['Int'];
   location: Scalars['String'];
 };
 
@@ -379,7 +378,6 @@ export type Query = {
 export type QueryRestaurantsArgs = {
   after?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
-  ownedByUser?: Maybe<Scalars['Boolean']>;
   ratingsMinimum?: Maybe<Scalars['Int']>;
 };
 
@@ -468,6 +466,7 @@ export type Review = {
   __typename?: 'Review';
   id: Scalars['Int'];
   canAddComment: Scalars['Boolean'];
+  canModify: Scalars['Boolean'];
   createdAt: Scalars['String'];
   content: Scalars['String'];
   date: Scalars['String'];
@@ -637,7 +636,6 @@ export type CreateRestaurantMutationVariables = Exact<{
   imageUrl: Scalars['String'];
   location: Scalars['String'];
   title: Scalars['String'];
-  userId: Scalars['Int'];
 }>;
 
 
@@ -770,7 +768,7 @@ export type RestaurantFragment = (
 
 export type ReviewFragment = (
   { __typename?: 'Review' }
-  & Pick<Review, 'id' | 'canAddComment' | 'content' | 'date' | 'rating' | 'restaurantId'>
+  & Pick<Review, 'id' | 'canAddComment' | 'canModify' | 'content' | 'date' | 'rating' | 'restaurantId'>
   & { userProfile: (
     { __typename?: 'UserProfile' }
     & UserProfileCardFragment
@@ -984,6 +982,7 @@ export const ReviewFragmentDoc = gql`
     fragment review on Review {
   id
   canAddComment
+  canModify
   content
   date
   rating
@@ -1019,9 +1018,9 @@ export const RestaurantFragmentDoc = gql`
 }
     ${ReviewFragmentDoc}`;
 export const CreateRestaurantDocument = gql`
-    mutation createRestaurant($description: String!, $imageUrl: String!, $location: String!, $title: String!, $userId: Int!) {
+    mutation createRestaurant($description: String!, $imageUrl: String!, $location: String!, $title: String!) {
   addRestaurant(
-    input: {description: $description, imageUrl: $imageUrl, location: $location, title: $title, userId: $userId}
+    input: {description: $description, imageUrl: $imageUrl, location: $location, title: $title}
   ) {
     id
   }
@@ -1046,7 +1045,6 @@ export type CreateRestaurantMutationFn = Apollo.MutationFunction<CreateRestauran
  *      imageUrl: // value for 'imageUrl'
  *      location: // value for 'location'
  *      title: // value for 'title'
- *      userId: // value for 'userId'
  *   },
  * });
  */
@@ -1545,7 +1543,7 @@ export const OwnerHomeDocument = gql`
       }
     }
   }
-  restaurants(after: 0, limit: 5, ownedByUser: true) {
+  restaurants(after: 0, limit: 5) {
     totalCount
     edges {
       node {
@@ -1624,12 +1622,7 @@ export type RestaurantDetailsLazyQueryHookResult = ReturnType<typeof useRestaura
 export type RestaurantDetailsQueryResult = Apollo.QueryResult<RestaurantDetailsQuery, RestaurantDetailsQueryVariables>;
 export const RestaurantsDocument = gql`
     query restaurants($after: Int, $limit: Int!, $ratingsMinimum: Int) {
-  restaurants(
-    after: $after
-    limit: $limit
-    ownedByUser: true
-    ratingsMinimum: $ratingsMinimum
-  ) {
+  restaurants(after: $after, limit: $limit, ratingsMinimum: $ratingsMinimum) {
     totalCount
     edges {
       node {

@@ -33,6 +33,7 @@ fragment restaurant on Restaurant {
 fragment review on Review {
   id
   canAddComment
+  canModify
   content
   date
   rating

@@ -2,7 +2,6 @@ query restaurants($after: Int, $limit: Int!, $ratingsMinimum: Int) {
   restaurants(
     after: $after
     limit: $limit
-    ownedByUser: true
     ratingsMinimum: $ratingsMinimum
   ) {
     totalCount

@@ -24,23 +24,21 @@ const ReviewRestaurant = ({
   rating,
   reviewContent,
   title,
-}: ReviewRestaurantProps) => {
-  return (
-    <Layout>
-      <Container className={styles.reviewRestaurant}>
-        <h1>{title}</h1>
-        <SubmitReviewBox
-          canSubmit={canSubmit}
-          errorMessage={errorMessage}
-          onSubmit={onSubmit}
-          rating={rating}
-          reviewContent={reviewContent}
-          setRating={setRating}
-          setReviewContent={setReviewContent}
-        />
-      </Container>
-    </Layout>
-  );
-};
+}: ReviewRestaurantProps) => (
+  <Layout>
+    <Container className={styles.reviewRestaurant}>
+      <h1>{title}</h1>
+      <SubmitReviewBox
+        canSubmit={canSubmit}
+        errorMessage={errorMessage}
+        onSubmit={onSubmit}
+        rating={rating}
+        reviewContent={reviewContent}
+        setRating={setRating}
+        setReviewContent={setReviewContent}
+      />
+    </Container>
+  </Layout>
+);
 
 export default ReviewRestaurant;

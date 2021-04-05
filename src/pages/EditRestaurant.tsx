@@ -31,7 +31,6 @@ const EditRestaurant = ({ restaurantId }: EditRestaurantProps) => {
       location,
       imageUrl,
       title,
-      userId: 2,
     },
   });
 

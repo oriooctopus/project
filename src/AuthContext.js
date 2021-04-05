@@ -30,6 +30,7 @@ const Provider = ({ children }) => {
       const userData = {
         email: decodedToken.identity.email,
         isAdmin: decodedToken.identity.role === 'admin',
+        role: decodedToken.identity.role,
         isActive: decodedToken.identity.isActive,
         uuid: decodedToken.identity.id,
       };

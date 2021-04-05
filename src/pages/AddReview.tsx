@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 import { Spinner } from 'legacyComponents/Spinner';
 import { ErrorAlert } from 'legacyComponents/ErrorAlert';
-import ReviewRestaurantTemplate from 'templates/RestaurantReview';
+import AddReviewTemplate from 'templates/RestaurantReview';
 
 import {
   useReviewRestaurantQuery,
@@ -11,13 +11,11 @@ import {
 
 const MINIMUM_REVIEW_CONTENT_LENGTH = 1;
 
-type ReviewRestaurantProps = {
+type AddReviewProps = {
   restaurantId: string;
 };
 
-const ReviewRestaurant = ({
-  restaurantId,
-}: ReviewRestaurantProps) => {
+const AddReview = ({ restaurantId }: AddReviewProps) => {
   const [rating, setRating] = useState(3);
   const [reviewContent, setReviewContent] = useState('');
   const [canSubmit, setCanSubmit] = useState(false);
@@ -44,12 +42,12 @@ const ReviewRestaurant = ({
   const {
     loading,
     error,
-    data: reviewRestaurantQueryData,
+    data: addReviewQueryData,
   } = useReviewRestaurantQuery({
     fetchPolicy: 'no-cache',
     variables: { id: Number(restaurantId) },
   });
-  const { title } = reviewRestaurantQueryData?.restaurant || {
+  const { title } = addReviewQueryData?.restaurant || {
     title: '',
   };
 
@@ -72,11 +70,11 @@ const ReviewRestaurant = ({
 
   if (loading) return <Spinner />;
   if (error) return <ErrorAlert errorMessage={error.message} />;
-  if (!reviewRestaurantQueryData?.restaurant)
+  if (!addReviewQueryData?.restaurant)
     return <span>query unsucessful</span>;
 
   return (
-    <ReviewRestaurantTemplate
+    <AddReviewTemplate
       canSubmit={canSubmit}
       errorMessage={errorMessage}
       onSubmit={onSubmit}
@@ -89,4 +87,4 @@ const ReviewRestaurant = ({
   );
 };
 
-export default ReviewRestaurant;
+export default AddReview;
