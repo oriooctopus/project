@@ -1,5 +1,6 @@
 import React from 'react';
-// import UnansweredReviewHero from 'organisms/UnansweredReviewHero';
+import Container from 'components/atoms/Container';
+import ReviewCard from 'components/organisms/ReviewCard';
 import Layout from 'components/atoms/Layout';
 
 import {
@@ -40,21 +41,26 @@ const UnansweredReviews = ({
 
   return (
     <Layout>
-      {formattedUnansweredReviews.map(
-        ({ reviewComment, content, id, rating }: Review) => (
-          <div style={{ marginBottom: '20px' }}>
-            <a href={`/review-comment/add/${id}`}>
-              <p>{content}</p>
-              <span>{rating}</span>
-            </a>
+      <Container>
+        <section>
+          <div className="row">
+            {formattedUnansweredReviews.length ? (
+              formattedUnansweredReviews.map((review: Review) => (
+                <div className="col-md-6 spacing-medium-bottom">
+                  <ReviewCard {...review} />
+                </div>
+              ))
+            ) : (
+              <span>No Unanswered Review</span>
+            )}
           </div>
-        ),
-      )}
-      <Paginator
-        currentPage={currentPageNumber}
-        paginationUrlBuilder={paginationUrlBuilder}
-        totalPages={totalPages}
-      />
+          <Paginator
+            currentPage={currentPageNumber}
+            paginationUrlBuilder={paginationUrlBuilder}
+            totalPages={totalPages}
+          />
+        </section>
+      </Container>
     </Layout>
   );
 };

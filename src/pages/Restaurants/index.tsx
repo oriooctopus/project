@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 
 import { Spinner } from 'legacyComponents/Spinner';
 import { ErrorAlert } from 'legacyComponents/ErrorAlert';
 import RestaurantsTemplate from 'templates/Restaurants';
+
+import { AuthContext } from 'AuthContext';
 
 import { useRestaurantsQuery } from 'generated/graphql';
 
@@ -13,6 +15,12 @@ type RestaurantsProps = {
 };
 
 const Restaurants = ({ pageParameters }: RestaurantsProps) => {
+  const {
+    userData: { role },
+  } = useContext(AuthContext);
+  debugger;
+  const includeRatingsFilter = role === 'user';
+
   const searchParameters = new URLSearchParams(
     window?.location.search,
   );
@@ -43,6 +51,7 @@ const Restaurants = ({ pageParameters }: RestaurantsProps) => {
     <RestaurantsTemplate
       {...data}
       currentPageNumber={currentPageNumber}
+      includeRatingsFilter={includeRatingsFilter}
       restaurantsPerPage={RESTAURANTS_PER_PAGE}
       paginationUrlBuilder={paginationUrlBuilder}
     />

@@ -8,7 +8,7 @@ import { Registration } from './pages/Registration';
 import { Logout } from './pages/Logout';
 import { Page404 } from './pages/Page404';
 
-import { NavBar } from './legacyComponents/NavBar';
+import { NavBar } from './components/organisms/NavBar/index.tsx';
 import { Spinner } from './legacyComponents/Spinner';
 
 import AddRestaurant from 'src/pages/AddRestaurant/index.tsx';
@@ -30,7 +30,6 @@ const adminRoutes = [
   <AddReview path="/review/add/:restaurantId" />,
   <EditReviewComment path="/review-comment/edit/:reviewCommentId" />,
   <EditRestaurant path="/restaurant/edit/:restaurantId" />,
-  <Restaurants path="/restaurants" />,
   <RestaurantDetails path="/restaurant/:restaurantId" />,
   <Home path="/" />,
 ];
@@ -48,14 +47,15 @@ const ownerRoutes = [
 
 const customerRoutes = [
   <AddReview path="/review/add/:restaurantId" />,
-  <Restaurants path="/restaurants" />,
   <RestaurantDetails path="/restaurant/:restaurantId" />,
   <Home path="/" />,
 ];
 
 export const App = () => {
-  const { isAuth, userData } = useContext(AuthContext);
-  console.log('user data', userData);
+  const {
+    isAuth,
+    userData: { role },
+  } = useContext(AuthContext);
 
   return (
     <StrictMode>
@@ -66,10 +66,8 @@ export const App = () => {
             <main className="pb-4">
               <Router>
                 <Page404 default />
-
                 {!isAuth && <Login path="/login" />}
                 {!isAuth && <Registration path="/register" />}
-
                 {!isAuth && (
                   <Redirect from="/logout" to="/login" noThrow />
                 )}
@@ -77,11 +75,10 @@ export const App = () => {
                 {isAuth && (
                   <Redirect from="/register" to="/" noThrow />
                 )}
-
-                {userData.role === 'admin' && adminRoutes}
-                {userData.role === 'owner' && ownerRoutes}
-                {userData.role === 'user' && customerRoutes}
-
+                <Restaurants path="/restaurants" />
+                {role === 'admin' && adminRoutes}
+                {role === 'owner' && ownerRoutes}
+                {role === 'user' && customerRoutes}
                 <Logout path="/logout" />
               </Router>
             </main>

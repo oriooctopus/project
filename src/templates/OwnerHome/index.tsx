@@ -2,8 +2,12 @@ import React from 'react';
 import { Link } from '@reach/router';
 import Container from 'components/atoms/Container';
 import Layout from 'components/atoms/Layout';
-import { ReviewFragment } from 'generated/graphql';
+import {
+  RestaurantFragment,
+  ReviewFragment,
+} from 'generated/graphql';
 import ReviewCard from 'components/organisms/ReviewCard';
+import RestaurantCard from 'components/organisms/RestaurantCard';
 
 import {
   OwnerHomeQuery,
@@ -38,16 +42,23 @@ const OwnerHome = ({
   return (
     <Layout>
       <Container>
-        {formattedRestaurants.map(
-          ({
-            id,
-            averageRating,
-            title,
-            canAddReview,
-          }: Restaurant) => (
-            <span>{title}</span>
-          ),
-        )}
+        <section>
+          <h4>Your restaurants</h4>
+          <div className="row">
+            {formattedRestaurants.map(
+              (restaurant: RestaurantFragment) => (
+                <div className="col-md-6 spacing-medium-bottom">
+                  <RestaurantCard {...restaurant} />
+                </div>
+              ),
+            )}
+          </div>
+          <Link to="/restaurants">
+            <span className="button success">
+              See All Restaurants
+            </span>
+          </Link>
+        </section>
         <section>
           <div>
             <h4>Unanswered Reviews</h4>
@@ -55,7 +66,7 @@ const OwnerHome = ({
               {formattedUnansweredReviews.length ? (
                 formattedUnansweredReviews.map(
                   (review: ReviewFragment) => (
-                    <div className="col-md-4 spacing-medium-bottom">
+                    <div className="col-md-6 spacing-medium-bottom">
                       <ReviewCard {...review} />
                     </div>
                   ),

@@ -2,6 +2,7 @@ fragment restaurant on Restaurant {
   id
   averageRating
   canAddReview
+  canModify
   description
   highestReview {
     ...review

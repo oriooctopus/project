@@ -6,7 +6,7 @@ import UnansweredReviewsTemplate from 'templates/UnansweredReviews';
 
 import { useUnansweredReviewsQuery } from 'generated/graphql';
 
-const UNANSWERED_REVIEWS_PER_PAGE = 2;
+const UNANSWERED_REVIEWS_PER_PAGE = 10;
 
 type UnansweredReviewsProps = {
   pageNumber?: string;

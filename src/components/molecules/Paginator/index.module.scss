@@ -2,4 +2,15 @@
 
 .paginator {
   display: flex;
+
+  a {
+    color: $primary;
+    padding: px(15);
+
+    @include breakpoint(medium-tablet) {
+      &:first-child {
+        padding-left: px(5);
+      }
+    }
+  }
 }

@@ -1,0 +1,20 @@
+@import 'styles/shared';
+
+.navbar {
+  background-color: $black;
+  justify-content: flex-start;
+
+  .navbarItem {
+    &:not(:last-child) {
+      margin-right: px(15);
+    }
+
+    &:first-child {
+      margin-right: px(22);
+    }
+
+    &:last-child {
+      margin-left: auto;
+    }
+  }
+}

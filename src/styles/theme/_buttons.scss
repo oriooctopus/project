@@ -1,12 +1,22 @@
 @import 'styles/shared';
 
+button {
+  cursor: pointer;
+  border: none;
+  background: inherit;
+}
+
 .button {
   border-radius: px(4);
   display: inline-block;
   line-height: px(40);
   margin-top: px(15);
-  min-width: px(200);
-  padding: 0 px(15);
+  min-width: px(90);
+  padding: px(2) px(20);
+
+  &.large {
+    min-width: px(200);
+  }
 
   &:disabled {
     background-color: $gray;

@@ -1,0 +1,15 @@
+@import 'styles/shared.scss';
+
+.root {
+  border-radius: px(3);
+  box-shadow: $card-box-shadow;
+  padding: px(10);
+
+  .buttonContainer {
+    display: flex;
+
+    button {
+      margin-right: px(15);
+    }
+  }
+}

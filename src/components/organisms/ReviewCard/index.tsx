@@ -1,10 +1,13 @@
 import React from 'react';
 import UserCard from 'components/molecules/UserCard';
 import Button from 'components/atoms/Button';
-import clsx from 'clsx';
-import styles from './index.module.scss';
+import Rating from 'components/atoms/Rating';
+
 import useDeleteReview from 'hooks/useDeleteReview';
 import useDeleteReviewComment from 'hooks/useDeleteReviewComment';
+
+import clsx from 'clsx';
+import styles from './index.module.scss';
 
 import { ReviewFragment } from 'generated/graphql';
 
@@ -43,7 +46,11 @@ const ReviewCard = ({
       <div className={clsx(styles.review, className)}>
         <UserCard {...userProfile} />
         <p>{content}</p>
-        <span>rating: {rating}</span>
+        <Rating
+          canEdit={false}
+          name={`review of ${id} rating`}
+          rating={rating}
+        />
         <span>date: {date}</span>
         {canModifyReview && (
           <div className={styles.buttonContainer}>

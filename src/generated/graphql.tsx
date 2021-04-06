@@ -438,6 +438,7 @@ export type Restaurant = {
   id: Scalars['Int'];
   averageRating?: Maybe<Scalars['Float']>;
   canAddReview: Scalars['Boolean'];
+  canModify: Scalars['Boolean'];
   title: Scalars['String'];
   description: Scalars['String'];
   highestReview?: Maybe<Review>;
@@ -703,7 +704,7 @@ export type EditReviewMutation = (
 
 export type RestaurantFragment = (
   { __typename?: 'Restaurant' }
-  & Pick<Restaurant, 'id' | 'averageRating' | 'canAddReview' | 'description' | 'imageUrl' | 'location' | 'title' | 'totalReviews'>
+  & Pick<Restaurant, 'id' | 'averageRating' | 'canAddReview' | 'canModify' | 'description' | 'imageUrl' | 'location' | 'title' | 'totalReviews'>
   & { highestReview?: Maybe<(
     { __typename?: 'Review' }
     & ReviewFragment
@@ -1003,6 +1004,7 @@ export const RestaurantFragmentDoc = gql`
   id
   averageRating
   canAddReview
+  canModify
   description
   highestReview {
     ...review

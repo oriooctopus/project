@@ -10,10 +10,7 @@ import RestaurantReviews from 'components/organisms/RestaurantReviews';
 
 // import styles from './styles';
 
-type RestaurantDetailsProps = RestaurantDetailsQuery & {
-  includeDelete: boolean;
-  includeEdit: boolean;
-};
+type RestaurantDetailsProps = RestaurantDetailsQuery & {};
 
 const RestaurantDetails = ({
   restaurant,
