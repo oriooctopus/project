@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from '@reach/router';
 import RestaurantHero from 'components/organisms/RestaurantHero';
 import Layout from 'components/atoms/Layout';
 import Container from 'components/atoms/Container';
@@ -8,13 +9,13 @@ import Button from 'components/atoms/Button';
 import { RestaurantDetailsQuery } from 'generated/graphql';
 import RestaurantReviews from 'components/organisms/RestaurantReviews';
 
-// import styles from './styles';
-
 type RestaurantDetailsProps = RestaurantDetailsQuery & {};
 
 const RestaurantDetails = ({
   restaurant,
 }: RestaurantDetailsProps) => {
+  const navigate = useNavigate();
+
   if (!restaurant) {
     return <span>Restaurant not found</span>;
   }
@@ -46,9 +47,7 @@ const RestaurantDetails = ({
         <Container>
           <Button
             theme="success"
-            onClick={() =>
-              (window.location.href = `/review/add/${restaurantId}`)
-            }
+            onClick={() => navigate(`/review/add/${restaurantId}`)}
           >
             Add a review
           </Button>
@@ -80,7 +79,7 @@ const RestaurantDetails = ({
         />
       ) : (
         <Container>
-          <h4>No reviews yet</h4>
+          <h4 className="mt-5">No reviews yet</h4>
         </Container>
       )}
     </Layout>

@@ -774,6 +774,7 @@ export type EditUserMutationVariables = Exact<{
   id: Scalars['Int'];
   username: Scalars['String'];
   email: Scalars['String'];
+  password?: Maybe<Scalars['String']>;
 }>;
 
 
@@ -1549,8 +1550,10 @@ export type EditUserPageQueryHookResult = ReturnType<typeof useEditUserPageQuery
 export type EditUserPageLazyQueryHookResult = ReturnType<typeof useEditUserPageLazyQuery>;
 export type EditUserPageQueryResult = Apollo.QueryResult<EditUserPageQuery, EditUserPageQueryVariables>;
 export const EditUserDocument = gql`
-    mutation editUser($id: Int!, $username: String!, $email: String!) {
-  editUser(input: {id: $id, username: $username, email: $email}) {
+    mutation editUser($id: Int!, $username: String!, $email: String!, $password: String) {
+  editUser(
+    input: {id: $id, username: $username, email: $email, password: $password}
+  ) {
     user {
       id
       role
@@ -1576,6 +1579,7 @@ export type EditUserMutationFn = Apollo.MutationFunction<EditUserMutation, EditU
  *      id: // value for 'id'
  *      username: // value for 'username'
  *      email: // value for 'email'
+ *      password: // value for 'password'
  *   },
  * });
  */

@@ -2,7 +2,6 @@ import React, { Fragment, useContext } from 'react';
 
 import { AuthContext } from '../AuthContext';
 
-import { PageTitle } from '../legacyComponents/PageTitle';
 import { RegisterForm } from '../legacyComponents/RegisterForm';
 
 export const Registration = () => {
@@ -10,7 +9,7 @@ export const Registration = () => {
 
   return (
     <Fragment>
-      <PageTitle text="Create an account" />
+      <h1>Create an account</h1>
       <RegisterForm activateAuth={activateAuth} />
     </Fragment>
   );

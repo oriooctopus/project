@@ -26,9 +26,7 @@ const RatingsFilterLinks = () => (
     {Array(5)
       .fill('')
       .map((_, i) => (
-        <Link to={`/restaurants?ratingsMinimum=${i + 1}`}>
-          {i + 1}
-        </Link>
+        <Link to={`/?ratingsMinimum=${i + 1}`}>{i + 1}</Link>
       ))}
   </div>
 );

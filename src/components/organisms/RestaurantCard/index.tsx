@@ -26,16 +26,21 @@ const RestaurantCard = ({
       )}
       <span className="large-body">{title}</span>
       <p>{description}</p>
-      {canModify && (
-        <div className={styles.buttonContainer}>
-          <Button theme="danger" onClick={onClickRestaurantDelete}>
-            Delete
-          </Button>
-          <Link to={`/restaurant/edit/${id}`}>
-            <span className="button primary">Edit</span>
-          </Link>
-        </div>
-      )}
+      <div className={styles.buttonContainer}>
+        <Link to={`/restaurant/${id}`}>
+          <span className="button success">View</span>
+        </Link>
+        {canModify && (
+          <>
+            <Button theme="danger" onClick={onClickRestaurantDelete}>
+              Delete
+            </Button>
+            <Link to={`/restaurant/edit/${id}`}>
+              <span className="button primary">Edit</span>
+            </Link>
+          </>
+        )}
+      </div>
     </div>
   );
 };

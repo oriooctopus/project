@@ -1,11 +1,11 @@
 import { useDeleteReviewMutation } from 'generated/graphql';
 
-const useDeleteReview = (id: number) => {
+const useDeleteReview = (id: number, restaurantId: number) => {
   const [deleteReviewMutation] = useDeleteReviewMutation({
     variables: {
       id,
     },
-    refetchQueries: ['restaurant']
+    refetchQueries: ['restaurantDetails']
   });
 
   const onDeleteReview = () => {

@@ -9,8 +9,20 @@ query editUserPage($id: Int!) {
   }
 }
 
-mutation editUser($id: Int!, $username: String!, $email: String!) {
-  editUser(input: { id: $id, username: $username, email: $email }) {
+mutation editUser(
+  $id: Int!
+  $username: String!
+  $email: String!
+  $password: String
+) {
+  editUser(
+    input: {
+      id: $id
+      username: $username
+      email: $email
+      password: $password
+    }
+  ) {
     user {
       id
       role

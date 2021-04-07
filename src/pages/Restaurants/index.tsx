@@ -27,7 +27,7 @@ const Restaurants = ({ pageParameters }: RestaurantsProps) => {
   const ratingsMinimum = searchParameters.get('ratingsMinimum');
 
   const paginationUrlBuilder = (page: number) =>
-    `/restaurants?pageNumber=${page}&ratingsMinimum=${ratingsMinimum}`;
+    `/?pageNumber=${page}&ratingsMinimum=${ratingsMinimum}`;
 
   const currentPageNumber =
     Number(pageNumber) > 0 ? Number(pageNumber) : 1;

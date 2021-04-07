@@ -53,7 +53,7 @@ const OwnerHome = ({
               ),
             )}
           </div>
-          <Link to="/restaurants">
+          <Link to="/">
             <span className="button success">
               See All Restaurants
             </span>

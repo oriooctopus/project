@@ -1,0 +1,28 @@
+fragment review on Review {
+  id
+  canAddComment
+  canModify
+  content
+  date
+  rating
+  restaurantId
+  userProfile {
+    ...userProfileCard
+  }
+  reviewComment {
+    ...reviewComment
+  }
+}
+
+fragment reviewComment on ReviewComment {
+  id
+  canModify
+  comment
+}
+
+query reviewRestaurant($id: Int!) {
+  restaurant(id: $id) {
+    id
+    title
+  }
+}

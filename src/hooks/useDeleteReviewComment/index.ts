@@ -5,7 +5,7 @@ const useDeleteReviewComment = (id: number) => {
     variables: {
       id,
     },
-    refetchQueries: ['restaurant']
+    refetchQueries: ['restaurantDetails']
   });
 
   const onDeleteReviewComment = () => {

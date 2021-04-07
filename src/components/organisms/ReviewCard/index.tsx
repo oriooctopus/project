@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from '@reach/router';
+import { Link, useNavigate } from '@reach/router';
 import UserProfileCard from 'components/molecules/UserProfileCard';
 import Button from 'components/atoms/Button';
 import Rating from 'components/atoms/Rating';
@@ -10,7 +10,9 @@ import useDeleteReviewComment from 'hooks/useDeleteReviewComment';
 import clsx from 'clsx';
 import styles from './index.module.scss';
 
-import { ReviewFragment } from 'generated/graphql';
+import {
+  ReviewFragment,
+} from 'generated/graphql';
 
 type ReviewCardProps = ReviewFragment & {
   className?: string;
@@ -24,10 +26,12 @@ const ReviewCard = ({
   date,
   id,
   rating,
+  restaurantId,
   userProfile,
   reviewComment,
 }: ReviewCardProps) => {
-  const onClickReviewDelete = useDeleteReview(id);
+  const navigate = useNavigate();
+  const onClickReviewDelete = useDeleteReview(id, restaurantId);
   const onClickReviewCommentDelete = useDeleteReviewComment(
     reviewComment?.id || 0,
   );
@@ -57,9 +61,7 @@ const ReviewCard = ({
       {canAddComment && (
         <Button
           theme="primary"
-          onClick={() =>
-            (window.location.href = `/review-comment/add/${id}`)
-          }
+          onClick={() => navigate(`/review-comment/add/${id}`)}
         >
           Reply
         </Button>

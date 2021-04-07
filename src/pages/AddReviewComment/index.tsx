@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
-
+import { useNavigate } from '@reach/router';
 import AddReviewCommentTemplate from 'templates/ReviewComment';
-
 import {
   useAddReviewCommentDataQuery,
   useAddReviewCommentMutation,
@@ -14,6 +13,7 @@ type AddReviewCommentProps = {
 };
 
 const AddReviewComment = ({ reviewId }: AddReviewCommentProps) => {
+  const navigate = useNavigate();
   const [reviewContent, setReviewContent] = useState('');
   const [rating, setRating] = useState(3);
   const [comment, setComment] = useState('');
@@ -36,9 +36,11 @@ const AddReviewComment = ({ reviewId }: AddReviewCommentProps) => {
   });
   const onSubmit = () => {
     addReviewCommentMutation()
-      .then(() => {
-        window.location.href = `/restaurant/${addReviewCommentDataQuery?.review?.restaurant?.id}`;
-      })
+      .then(() =>
+        navigate(
+          `/restaurant/${addReviewCommentDataQuery?.review?.restaurant?.id}`,
+        ),
+      )
       .catch((e) => setErrorMessage(JSON.stringify(e)));
   };
 

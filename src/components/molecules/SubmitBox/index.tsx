@@ -7,7 +7,7 @@ type SubmitBoxProps = {
   canSubmit: boolean;
   children: React.ReactNode;
   className?: string;
-  errorMessage: string;
+  errorMessage?: string;
   onSubmit: () => void;
 };
 

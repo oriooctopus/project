@@ -3,16 +3,16 @@ import styles from './index.module.scss';
 
 type TextInputProps = React.ComponentProps<'input'> & {
   handleChange: (value: string) => void;
-  isEmail?: boolean;
   name: string;
+  type?: string;
   withLabel?: boolean;
   value: string;
 };
 
 const TextInput = ({
   handleChange,
+  type = 'text',
   name,
-  isEmail,
   withLabel,
   value,
   ...props
@@ -26,7 +26,7 @@ const TextInput = ({
       className={styles.input}
       name={name}
       onChange={onChange}
-      type={isEmail ? 'email' : 'text'}
+      type={type}
       value={value}
       {...props}
     />

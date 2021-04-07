@@ -9,11 +9,13 @@ type UserProps = {
   canSubmit: boolean;
   errorMessage: string;
   onSubmit: () => void;
-  setEmail: (string: string) => void;
-  setUsername: (string: string) => void;
+  setEmail: (email: string) => void;
+  setUsername: (username: string) => void;
+  setPassword: (password: string) => void;
   email: string;
   id: number;
   username: string;
+  password?: string;
 };
 
 const User = ({
@@ -22,8 +24,10 @@ const User = ({
   onSubmit,
   setEmail,
   setUsername,
+  setPassword,
   email,
   username,
+  password,
   id,
 }: UserProps) => (
   <Layout>
@@ -39,7 +43,7 @@ const User = ({
             <TextInput
               name="Email"
               handleChange={setEmail}
-              isEmail
+              type="email"
               required
               placeholder="Email Here"
               value={email}
@@ -53,6 +57,16 @@ const User = ({
               required
               placeholder="Username Here"
               value={username}
+              withLabel
+            />
+          </div>
+          <div className="col-md-3">
+            <TextInput
+              name="Password"
+              handleChange={setPassword}
+              placeholder="Password Here"
+              value={password || ''}
+              type="password"
               withLabel
             />
           </div>

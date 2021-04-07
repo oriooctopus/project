@@ -6,15 +6,13 @@ type PaginatorProps = {
   currentPage: number;
   paginationUrlBuilder: (page: number) => string;
   totalPages: number;
-  // truncateAfter?: number;
 };
 
 const Paginator = ({
   currentPage,
   paginationUrlBuilder,
   totalPages,
-}: // truncateAfter,
-PaginatorProps) => {
+}: PaginatorProps) => {
   return (
     <div className={styles.paginator}>
       {currentPage !== 1 && (

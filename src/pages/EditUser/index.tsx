@@ -17,6 +17,11 @@ type EditUserProps = {
 const EditUser = ({ userId: userIdString }: EditUserProps) => {
   const userId = Number(userIdString);
   const navigate = useNavigate();
+  const [canSubmit, setCanSubmit] = useState(true);
+  const [errorMessage, setErrorMessage] = useState('');
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState<string | null>(null);
   const {
     loading: userQueryLoading,
     error: userQueryError,
@@ -25,26 +30,22 @@ const EditUser = ({ userId: userIdString }: EditUserProps) => {
     fetchPolicy: 'no-cache',
     variables: { id: Number(userId) },
   });
-
-  const previousUsername = userQuery?.user?.user?.username || '';
-  const previousEmail = userQuery?.user?.user?.email || '';
-
-  const [username, setUsername] = useState('');
-  const [canSubmit, setCanSubmit] = useState(true);
-  const [errorMessage, setErrorMessage] = useState('');
-  const [email, setEmail] = useState('');
-
+  const handlePasswordChange = (password: string) => {
+    if (!!password) {
+      setPassword(password);
+    }
+  };
   const [
     editUserMutation,
     { called: submitCalled },
   ] = useEditUserMutation({
     variables: {
       email,
+      password,
       username,
       id: userId,
     },
   });
-
   const onSubmit = () => {
     editUserMutation()
       .then(() => {
@@ -52,14 +53,12 @@ const EditUser = ({ userId: userIdString }: EditUserProps) => {
       })
       .catch((e) => setErrorMessage(JSON.stringify(e)));
   };
-
   useEffect(() => {
     setCanSubmit(!submitCalled);
   }, [submitCalled]);
-
   useEffect(() => {
-    setEmail(previousEmail);
-    setUsername(previousUsername);
+    setEmail(userQuery?.user?.user?.email || '');
+    setUsername(userQuery?.user?.user?.username || '');
   }, [userQuery]);
 
   if (userQueryLoading) return <Spinner />;
@@ -75,8 +74,10 @@ const EditUser = ({ userId: userIdString }: EditUserProps) => {
       email={email}
       id={userId}
       username={username}
+      password={password || undefined}
       setEmail={setEmail}
       setUsername={setUsername}
+      setPassword={handlePasswordChange}
     />
   );
 };

@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from 'react';
-
+import { useNavigate } from '@reach/router';
 import AddRestaurantTemplate from 'templates/RestaurantData';
-
 import { useCreateRestaurantMutation } from 'generated/graphql';
 
 const AddRestaurant = () => {
+  const navigate = useNavigate();
   const [description, setDescription] = useState('');
   const [location, setLocation] = useState('');
   const [imageUrl, setImageUrl] = useState('');
   const [title, setTitle] = useState('');
-
   const [canSubmit, setCanSubmit] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [
@@ -25,13 +24,11 @@ const AddRestaurant = () => {
   });
   const onSubmit = () => {
     createRestaurantMutation()
-      .then(
-        (response) =>
-          (window.location.href = `/restaurant/${response?.data?.addRestaurant?.id}`),
+      .then((response) =>
+        navigate(`/restaurant/${response?.data?.addRestaurant?.id}`),
       )
       .catch((e) => setErrorMessage(JSON.stringify(e)));
   };
-
   useEffect(() => {
     setCanSubmit(!submitCalled);
   }, [submitCalled]);

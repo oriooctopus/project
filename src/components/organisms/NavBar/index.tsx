@@ -25,17 +25,11 @@ const NavLink = ({ children, to }: NavLinkProps) => (
   </Link>
 );
 
-const OwnerRoutes = () => (
-  <>
-    <NavLink to="/unanswered-reviews">Unanswered Reviews</NavLink>
-  </>
-);
+const ownerRoutes = [
+  <NavLink to="/unanswered-reviews">Unanswered Reviews</NavLink>,
+];
 
-const AdminRoutes = () => (
-  <>
-    <NavLink to="/users">Users</NavLink>
-  </>
-);
+const adminRoutes = [<NavLink to="/users">Users</NavLink>];
 
 export const NavBar = () => {
   const { isAuth } = useContext(AuthContext);
@@ -52,13 +46,10 @@ export const NavBar = () => {
         'navbar navbar-expand-lg navbar-dark d-flex',
       )}
     >
-      <NavLink to="/">
-        <MdHome size={SIZE} title="Home" />
-      </NavLink>
-      <NavLink to="/restaurants">Restaurants</NavLink>
+      {isAuth && <NavLink to="/">Restaurants</NavLink>}
 
-      {role === 'owner' && <OwnerRoutes />}
-      {role === 'admin' && <AdminRoutes />}
+      {role === 'owner' && ownerRoutes}
+      {role === 'admin' && adminRoutes}
 
       {isAuth && (
         <NavLink to="/logout">

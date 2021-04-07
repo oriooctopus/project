@@ -1,21 +1,21 @@
 import React, { useEffect, useState } from 'react';
-
+import { useNavigate } from '@reach/router';
 import { Spinner } from 'legacyComponents/Spinner';
 import { ErrorAlert } from 'legacyComponents/ErrorAlert';
 import AddReviewTemplate from 'templates/RestaurantReview';
-
 import {
   useReviewRestaurantQuery,
   useCreateReviewMutation,
 } from 'generated/graphql';
 
-const MINIMUM_REVIEW_CONTENT_LENGTH = 1;
+const MINIMUM_REVIEW_CONTENT_LENGTH = 5;
 
 type AddReviewProps = {
   restaurantId: string;
 };
 
 const AddReview = ({ restaurantId }: AddReviewProps) => {
+  const navigate = useNavigate();
   const [rating, setRating] = useState(3);
   const [reviewContent, setReviewContent] = useState('');
   const [canSubmit, setCanSubmit] = useState(false);
@@ -32,11 +32,7 @@ const AddReview = ({ restaurantId }: AddReviewProps) => {
   });
   const onSubmit = () => {
     createReviewMutation()
-      .then(() => {
-        setTimeout(() => {
-          window.location.href = `/restaurant/${restaurantId}`;
-        }, 2000);
-      })
+      .then(() => navigate(`/restaurant/${restaurantId}`))
       .catch((e) => setErrorMessage(JSON.stringify(e)));
   };
   const {

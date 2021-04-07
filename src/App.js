@@ -21,7 +21,6 @@ import Restaurants from 'pages/Restaurants/index.tsx';
 import UnansweredReviews from 'pages/UnansweredReviews/index.tsx';
 import EditReview from 'pages/EditReview/index.tsx';
 import OwnerHome from 'pages/OwnerHome/index.tsx';
-import Home from 'pages/Home';
 import EditUser from 'pages/EditUser/index.tsx';
 import Users from 'pages/Users/index.tsx';
 
@@ -35,7 +34,7 @@ const adminRoutes = [
   <RestaurantDetails path="/restaurant/:restaurantId" />,
   <Users path="/users" />,
   <EditUser path="/user/edit/:userId" />,
-  <Home path="/" />,
+  <Restaurants path="/" />,
 ];
 
 const ownerRoutes = [
@@ -53,7 +52,18 @@ const customerRoutes = [
   <AddReview path="/review/add/:restaurantId" />,
   <EditReview path="/review/edit/:reviewId" />,
   <RestaurantDetails path="/restaurant/:restaurantId" />,
-  <Home path="/" />,
+  <Restaurants path="/" />,
+];
+
+const authenticatedRoutes = [
+  <Redirect from="/login" to="/" noThrow />,
+  <Redirect from="/register" to="/" noThrow />,
+];
+
+const unauthenticatedRoutes = [
+  <Login path="/login" />,
+  <Registration path="/register" />,
+  <Redirect from="/logout" to="/login" noThrow />,
 ];
 
 export const App = () => {
@@ -65,30 +75,20 @@ export const App = () => {
   return (
     <StrictMode>
       <div>
-        <div className="">
-          <Suspense fallback={<Spinner />}>
-            <NavBar />
-            <main className="pb-4">
-              <Router>
-                <Page404 default />
-                {!isAuth && <Login path="/login" />}
-                {!isAuth && <Registration path="/register" />}
-                {!isAuth && (
-                  <Redirect from="/logout" to="/login" noThrow />
-                )}
-                {isAuth && <Redirect from="/login" to="/" noThrow />}
-                {isAuth && (
-                  <Redirect from="/register" to="/" noThrow />
-                )}
-                <Restaurants path="/restaurants" />
-                {role === 'admin' && adminRoutes}
-                {role === 'owner' && ownerRoutes}
-                {role === 'user' && customerRoutes}
-                <Logout path="/logout" />
-              </Router>
-            </main>
-          </Suspense>
-        </div>
+        <Suspense fallback={<Spinner />}>
+          <NavBar />
+          <main className="pb-4">
+            <Router>
+              <Page404 default />
+              {!isAuth && unauthenticatedRoutes}
+              {isAuth && authenticatedRoutes}
+              {role === 'admin' && adminRoutes}
+              {role === 'owner' && ownerRoutes}
+              {role === 'user' && customerRoutes}
+              <Logout path="/logout" />
+            </Router>
+          </main>
+        </Suspense>
       </div>
     </StrictMode>
   );
