@@ -5,13 +5,11 @@ const useDeleteReviewComment = (id: number) => {
     variables: {
       id,
     },
+    refetchQueries: ['restaurant']
   });
 
   const onDeleteReviewComment = () => {
     deleteReviewCommentMutation()
-      .then((response) => {
-        window.location.reload();
-      })
       .catch((e) => {
         console.log('there was an error with deleting!', e);
       });

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from '@reach/router';
 
 import EditReviewCommentTemplate from 'templates/ReviewComment';
 
@@ -22,6 +23,7 @@ const EditReviewComment = ({
   const [comment, setComment] = useState('');
   const [canSubmit, setCanSubmit] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+  const navigate = useNavigate();
   const {
     data: editReviewCommentDataQuery,
   } = useEditReviewCommentDataQuery({
@@ -41,7 +43,9 @@ const EditReviewComment = ({
   const onSubmit = () => {
     editReviewCommentMutation()
       .then(() => {
-        window.location.href = `/restaurant/${editReviewCommentDataQuery?.reviewComment?.restaurantId}`;
+        navigate(
+          `/restaurant/${editReviewCommentDataQuery?.reviewComment?.restaurantId}`,
+        );
       })
       .catch((e) => setErrorMessage(JSON.stringify(e)));
   };
@@ -64,7 +68,6 @@ const EditReviewComment = ({
   }, [comment, submitCalled]);
 
   useEffect(() => {
-    console.log('result', editReviewCommentDataQuery);
     setRating(
       editReviewCommentDataQuery?.reviewComment?.review?.rating || 3,
     );

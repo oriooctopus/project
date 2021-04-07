@@ -38,27 +38,30 @@ const SubmitRestaurantBox = ({
     >
       <Textarea
         handleChange={setDescription}
-        name="description"
+        name="Description"
         placeholder="Description Here"
         value={description}
       />
       <TextInput
-        name="title"
+        name="Title"
         handleChange={setTitle}
         placeholder="Title here"
         value={title}
+        withLabel
       />
       <TextInput
-        name="location"
+        name="Location"
         handleChange={setLocation}
         placeholder="Location Here"
         value={location}
+        withLabel
       />
       <TextInput
-        name="image_url"
+        name="Image"
         handleChange={setImageUrl}
         placeholder="Image Url Here"
         value={imageUrl}
+        withLabel
       />
     </SubmitBox>
   );

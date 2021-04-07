@@ -10,11 +10,9 @@ type UserProps = {
   errorMessage: string;
   onSubmit: () => void;
   setEmail: (string: string) => void;
-  setRole: (string: string) => void;
   setUsername: (string: string) => void;
   email: string;
   id: number;
-  role: string;
   username: string;
 };
 
@@ -23,10 +21,8 @@ const User = ({
   errorMessage,
   onSubmit,
   setEmail,
-  setRole,
   setUsername,
   email,
-  role,
   username,
   id,
 }: UserProps) => (
@@ -39,17 +35,7 @@ const User = ({
         onSubmit={onSubmit}
       >
         <div className="row">
-          <div className="col-md-4">
-            <TextInput
-              name="Role"
-              handleChange={setRole}
-              placeholder="Role here"
-              required
-              value={role}
-              withLabel
-            />
-          </div>
-          <div className="col-md-4">
+          <div className="col-md-3">
             <TextInput
               name="Email"
               handleChange={setEmail}
@@ -60,7 +46,7 @@ const User = ({
               withLabel
             />
           </div>
-          <div className="col-md-4">
+          <div className="col-md-3">
             <TextInput
               name="Username"
               handleChange={setUsername}

@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
+import { useNavigate } from '@reach/router';
 
 import RestaurantDataTemplate from 'templates/RestaurantData';
 import { useRestaurantDetailsQuery } from 'generated/graphql';
@@ -15,6 +16,7 @@ const EditRestaurant = ({ restaurantId }: EditRestaurantProps) => {
   const {
     userData: { uuid },
   } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const { data: restaurantDetailsQuery } = useRestaurantDetailsQuery({
     fetchPolicy: 'no-cache',
@@ -44,9 +46,8 @@ const EditRestaurant = ({ restaurantId }: EditRestaurantProps) => {
 
   const onSubmit = () => {
     editRestaurantMutation()
-      .then(
-        (response) =>
-          (window.location.href = `/restaurant/${response?.data?.editRestaurant?.id}`),
+      .then((response) =>
+        navigate(`/restaurant/${response?.data?.editRestaurant?.id}`),
       )
       .catch((e) => setErrorMessage(JSON.stringify(e)));
   };

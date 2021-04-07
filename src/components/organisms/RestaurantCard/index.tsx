@@ -14,34 +14,29 @@ const RestaurantCard = ({
   title,
 }: RestaurantFragment) => {
   const onClickRestaurantDelete = useDeleteRestaurant(id);
-  const onClickRestaurantEdit = () => {
-    window.location.href = `/restaurant/edit/${id}`;
-  };
 
   return (
-    <Link to={`/restaurant/${id}`}>
-      <div className={styles.root}>
-        {averageRating && (
-          <Rating
-            canEdit={false}
-            name={`${title} rating`}
-            rating={averageRating}
-          />
-        )}
-        <span className="large-body">{title}</span>
-        <p>{description}</p>
-        {canModify && (
-          <div className={styles.buttonContainer}>
-            <Button theme="danger" onClick={onClickRestaurantDelete}>
-              Delete
-            </Button>
-            <Button theme="primary" onClick={onClickRestaurantEdit}>
-              Edit
-            </Button>
-          </div>
-        )}
-      </div>
-    </Link>
+    <div className={styles.root}>
+      {averageRating && (
+        <Rating
+          canEdit={false}
+          name={`${title} rating`}
+          rating={averageRating}
+        />
+      )}
+      <span className="large-body">{title}</span>
+      <p>{description}</p>
+      {canModify && (
+        <div className={styles.buttonContainer}>
+          <Button theme="danger" onClick={onClickRestaurantDelete}>
+            Delete
+          </Button>
+          <Link to={`/restaurant/edit/${id}`}>
+            <span className="button primary">Edit</span>
+          </Link>
+        </div>
+      )}
+    </div>
   );
 };
 

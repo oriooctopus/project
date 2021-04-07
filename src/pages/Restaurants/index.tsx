@@ -33,7 +33,7 @@ const Restaurants = ({ pageParameters }: RestaurantsProps) => {
     Number(pageNumber) > 0 ? Number(pageNumber) : 1;
   const after = (currentPageNumber - 1) * RESTAURANTS_PER_PAGE;
 
-  const { loading, error, data } = useRestaurantsQuery({
+  const { loading, error, data, refetch } = useRestaurantsQuery({
     fetchPolicy: 'no-cache',
     variables: {
       after,
@@ -45,6 +45,11 @@ const Restaurants = ({ pageParameters }: RestaurantsProps) => {
   if (loading) return <Spinner />;
   if (error) return <ErrorAlert errorMessage={error.message} />;
   if (!data?.restaurants) return <span>query unsucessful</span>;
+
+  setInterval(() => {
+    console.log('refetching!!!');
+    // refetch();
+  }, 5000);
 
   return (
     <RestaurantsTemplate

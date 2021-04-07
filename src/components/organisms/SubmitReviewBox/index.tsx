@@ -39,6 +39,7 @@ const SubmitReviewBox = ({
       <Textarea
         handleChange={setReviewContent}
         placeholder="Review Content"
+        required
         name="review_content"
         value={reviewContent}
       />

@@ -37,6 +37,10 @@ textarea {
   margin-bottom: px(20);
 }
 
+.simple-page {
+  padding: px(40);
+}
+
 @include breakpoint(medium-tablet) {
   .main-wrapper section {
     padding-top: px(100);

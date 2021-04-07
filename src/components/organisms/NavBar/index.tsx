@@ -31,6 +31,12 @@ const OwnerRoutes = () => (
   </>
 );
 
+const AdminRoutes = () => (
+  <>
+    <NavLink to="/users">Users</NavLink>
+  </>
+);
+
 export const NavBar = () => {
   const { isAuth } = useContext(AuthContext);
   const {
@@ -52,6 +58,7 @@ export const NavBar = () => {
       <NavLink to="/restaurants">Restaurants</NavLink>
 
       {role === 'owner' && <OwnerRoutes />}
+      {role === 'admin' && <AdminRoutes />}
 
       {isAuth && (
         <NavLink to="/logout">

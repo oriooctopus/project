@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from '@reach/router';
 
 import { Spinner } from 'legacyComponents/Spinner';
 import { ErrorAlert } from 'legacyComponents/ErrorAlert';
@@ -15,6 +16,7 @@ type EditUserProps = {
 
 const EditUser = ({ userId: userIdString }: EditUserProps) => {
   const userId = Number(userIdString);
+  const navigate = useNavigate();
   const {
     loading: userQueryLoading,
     error: userQueryError,
@@ -24,11 +26,9 @@ const EditUser = ({ userId: userIdString }: EditUserProps) => {
     variables: { id: Number(userId) },
   });
 
-  const previousRole = userQuery?.user?.user?.role || '';
   const previousUsername = userQuery?.user?.user?.username || '';
   const previousEmail = userQuery?.user?.user?.email || '';
 
-  const [role, setRole] = useState('');
   const [username, setUsername] = useState('');
   const [canSubmit, setCanSubmit] = useState(true);
   const [errorMessage, setErrorMessage] = useState('');
@@ -41,7 +41,6 @@ const EditUser = ({ userId: userIdString }: EditUserProps) => {
     variables: {
       email,
       username,
-      role,
       id: userId,
     },
   });
@@ -49,7 +48,7 @@ const EditUser = ({ userId: userIdString }: EditUserProps) => {
   const onSubmit = () => {
     editUserMutation()
       .then(() => {
-        window.location.href = `/users`;
+        navigate('/users');
       })
       .catch((e) => setErrorMessage(JSON.stringify(e)));
   };
@@ -60,7 +59,6 @@ const EditUser = ({ userId: userIdString }: EditUserProps) => {
 
   useEffect(() => {
     setEmail(previousEmail);
-    setRole(previousRole);
     setUsername(previousUsername);
   }, [userQuery]);
 
@@ -76,10 +74,8 @@ const EditUser = ({ userId: userIdString }: EditUserProps) => {
       onSubmit={onSubmit}
       email={email}
       id={userId}
-      role={role}
       username={username}
       setEmail={setEmail}
-      setRole={setRole}
       setUsername={setUsername}
     />
   );

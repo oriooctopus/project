@@ -5,13 +5,11 @@ const useDeleteRestaurant = (id: number) => {
     variables: {
       id,
     },
+    refetchQueries: ['restaurants'],
   });
 
   const onDeleteRestaurant = () => {
     deleteRestaurantMutation()
-      .then((response) => {
-        window.location.reload();
-      })
       .catch((e) => {
         console.log('there was an error with deleting!', e);
       });

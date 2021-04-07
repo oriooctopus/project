@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from '@reach/router';
 import UserProfileCard from 'components/molecules/UserProfileCard';
 import Button from 'components/atoms/Button';
 import Rating from 'components/atoms/Rating';
@@ -26,20 +27,10 @@ const ReviewCard = ({
   userProfile,
   reviewComment,
 }: ReviewCardProps) => {
-  /*
-   * I'm not happy that these are in a view component. Ideally I can
-   * put this in a container component. Will refactor if I have time
-   */
   const onClickReviewDelete = useDeleteReview(id);
-  const onClickReviewEdit = () => {
-    window.location.href = `/review/edit/${id}`;
-  };
   const onClickReviewCommentDelete = useDeleteReviewComment(
     reviewComment?.id || 0,
   );
-  const onClickReviewCommentEdit = () => {
-    window.location.href = `/review-comment/edit/${reviewComment?.id}`;
-  };
 
   return (
     <div className={styles.reviewCard}>
@@ -57,9 +48,9 @@ const ReviewCard = ({
             <Button theme="danger" onClick={onClickReviewDelete}>
               Delete
             </Button>
-            <Button theme="primary" onClick={onClickReviewEdit}>
-              Edit
-            </Button>
+            <Link to={`/review/edit/${id}`}>
+              <span className="button primary">Edit</span>
+            </Link>
           </div>
         )}
       </div>
@@ -86,12 +77,9 @@ const ReviewCard = ({
               >
                 Delete
               </Button>
-              <Button
-                theme="primary"
-                onClick={onClickReviewCommentEdit}
-              >
-                Edit
-              </Button>
+              <Link to={`/review-comment/edit/${reviewComment?.id}`}>
+                <span className="button primary">Edit</span>
+              </Link>
             </div>
           )}
         </div>

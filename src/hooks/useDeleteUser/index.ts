@@ -5,13 +5,11 @@ const useDeleteUser = (id: number) => {
     variables: {
       id,
     },
+    refetchQueries: ['users']
   });
 
   const onDeleteUser = () => {
     deleteUserMutation()
-      .then((response: any) => {
-        window.location.reload();
-      })
       .catch((e) => {
         console.log('there was an error with deleting!', e);
       });

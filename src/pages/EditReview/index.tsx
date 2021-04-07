@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from '@reach/router';
 
 import { Spinner } from 'legacyComponents/Spinner';
 import { ErrorAlert } from 'legacyComponents/ErrorAlert';
@@ -27,6 +28,7 @@ const EditRestaurantReview = ({
     fetchPolicy: 'no-cache',
     variables: { id: Number(reviewId) },
   });
+  const navigate = useNavigate();
 
   const previousReviewContent = reviewQuery?.review?.content || '';
   const previousRating = reviewQuery?.review?.rating || 3;
@@ -52,7 +54,7 @@ const EditRestaurantReview = ({
   const onSubmit = () => {
     editReviewMutation()
       .then(() => {
-        window.location.href = `/restaurant/${restaurantId}`;
+        navigate(`/restaurant/${restaurantId}`);
       })
       .catch((e) => setErrorMessage(JSON.stringify(e)));
   };
