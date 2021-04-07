@@ -1,7 +1,5 @@
-@import 'styles/shared';
-
 .label,
-.input {
+.textarea {
   display: block;
 }
 
@@ -9,7 +7,6 @@
   font-weight: bold;
 }
 
-.input {
+.textarea {
   margin-bottom: px(5);
-  min-width: px(250);
 }

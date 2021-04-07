@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from '@reach/router';
 import { RestaurantFragment } from 'generated/graphql';
 import Rating from 'components/atoms/Rating';
+import CardContainer from 'components/atoms/CardContainer';
 import Button from 'components/atoms/Button';
 import useDeleteRestaurant from 'hooks/useDeleteRestaurant';
 import styles from './index.module.scss';
@@ -16,7 +17,7 @@ const RestaurantCard = ({
   const onClickRestaurantDelete = useDeleteRestaurant(id);
 
   return (
-    <div className={styles.root}>
+    <CardContainer className={styles.root}>
       {averageRating && (
         <Rating
           canEdit={false}
@@ -41,7 +42,7 @@ const RestaurantCard = ({
           </>
         )}
       </div>
-    </div>
+    </CardContainer>
   );
 };
 

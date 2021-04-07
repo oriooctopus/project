@@ -55,7 +55,10 @@ const Restaurants = ({
   return (
     <Layout>
       <Container>
-        {includeRatingsFilter && <RatingsFilterLinks />}
+        <section>
+          <h1>Restaurants</h1>
+          {includeRatingsFilter && <RatingsFilterLinks />}
+        </section>
         <section>
           {formattedRestaurants.length ? (
             <div className="row">

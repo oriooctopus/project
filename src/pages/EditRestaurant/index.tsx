@@ -77,7 +77,7 @@ const EditRestaurant = ({ restaurantId }: EditRestaurantProps) => {
       setImageUrl={setImageUrl}
       setLocation={setLocation}
       setTitle={setTitle}
-      title={title}
+      restaurantTitle={title}
     />
   );
 };

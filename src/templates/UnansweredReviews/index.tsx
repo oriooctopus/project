@@ -28,9 +28,10 @@ const UnansweredReviews = ({
 
   const totalUnansweredReviews =
     getUnansweredReviewsForOwner.totalCount || 0;
-  const totalPages = totalUnansweredReviews
-    ? 1
-    : Math.ceil(totalUnansweredReviews / unansweredReviewsPerPage);
+  const totalPages =
+    totalUnansweredReviews === 0
+      ? 1
+      : Math.ceil(totalUnansweredReviews / unansweredReviewsPerPage);
 
   const formattedUnansweredReviews = (
     getUnansweredReviewsForOwner?.edges || []
@@ -43,6 +44,7 @@ const UnansweredReviews = ({
     <Layout>
       <Container>
         <section>
+          <h1>Unanswered Reviews</h1>
           <div className="row">
             {formattedUnansweredReviews.length ? (
               formattedUnansweredReviews.map((review: Review) => (

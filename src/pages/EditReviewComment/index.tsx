@@ -8,7 +8,7 @@ import {
   useEditReviewCommentMutation,
 } from 'generated/graphql';
 
-const MINIMUM_REVIEW_COMMENT_LENGTH = 1;
+const MINIMUM_REVIEW_COMMENT_LENGTH = 5;
 
 type EditReviewCommentProps = {
   reviewCommentId: string;

@@ -63,6 +63,7 @@ const authenticatedRoutes = [
 const unauthenticatedRoutes = [
   <Login path="/login" />,
   <Registration path="/register" />,
+  <Redirect from="/" to="/login" noThrow />,
   <Redirect from="/logout" to="/login" noThrow />,
 ];
 

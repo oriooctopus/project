@@ -41,11 +41,12 @@ const AddRestaurant = () => {
       imageUrl={imageUrl}
       location={location}
       onSubmit={onSubmit}
+      restaurantTitle={title}
       setDescription={setDescription}
       setImageUrl={setImageUrl}
       setLocation={setLocation}
       setTitle={setTitle}
-      title={title}
+      title="Add a restaurant"
     />
   );
 };

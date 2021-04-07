@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from '@reach/router';
-import AddReviewCommentTemplate from 'templates/ReviewComment';
+import CommentTemplate from 'templates/ReviewComment';
 import {
   useAddReviewCommentDataQuery,
   useAddReviewCommentMutation,
 } from 'generated/graphql';
 
-const MINIMUM_REVIEW_COMMENT_LENGTH = 1;
+const MINIMUM_REVIEW_COMMENT_LENGTH = 5;
 
 type AddReviewCommentProps = {
   reviewId: string;
@@ -69,7 +69,7 @@ const AddReviewComment = ({ reviewId }: AddReviewCommentProps) => {
   }, [addReviewCommentDataQuery]);
 
   return (
-    <AddReviewCommentTemplate
+    <CommentTemplate
       comment={comment}
       canSubmit={canSubmit}
       errorMessage={errorMessage}

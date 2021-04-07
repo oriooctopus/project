@@ -1,15 +1,12 @@
 import React, { useContext } from 'react';
 import { Link } from '@reach/router';
-
-import { MdHome, MdPeopleOutline } from 'react-icons/md';
 import { IoMdLogIn, IoMdLogOut } from 'react-icons/io';
-
 import { AuthContext } from '../../../AuthContext';
 
 import clsx from 'clsx';
 import styles from './index.module.scss';
 
-const SIZE = '36px';
+const ICON_SIZE = '36px';
 
 type NavLinkProps = {
   children: React.ReactNode;
@@ -25,19 +22,24 @@ const NavLink = ({ children, to }: NavLinkProps) => (
   </Link>
 );
 
+const customerRoutes = [<NavLink to="/">Restaurants</NavLink>];
+
 const ownerRoutes = [
+  <NavLink to="/">Home</NavLink>,
   <NavLink to="/unanswered-reviews">Unanswered Reviews</NavLink>,
+  <NavLink to="/restaurant/add">Add a restaurant</NavLink>,
 ];
 
-const adminRoutes = [<NavLink to="/users">Users</NavLink>];
+const adminRoutes = [
+  <NavLink to="/">Restaurants</NavLink>,
+  <NavLink to="/users">Users</NavLink>,
+];
 
 export const NavBar = () => {
   const { isAuth } = useContext(AuthContext);
   const {
     userData: { role },
   } = useContext(AuthContext);
-
-  console.log('styles', styles);
 
   return (
     <nav
@@ -46,19 +48,17 @@ export const NavBar = () => {
         'navbar navbar-expand-lg navbar-dark d-flex',
       )}
     >
-      {isAuth && <NavLink to="/">Restaurants</NavLink>}
-
       {role === 'owner' && ownerRoutes}
       {role === 'admin' && adminRoutes}
 
       {isAuth && (
         <NavLink to="/logout">
-          <IoMdLogOut size={SIZE} title="Logout" />
+          <IoMdLogOut size={ICON_SIZE} title="Logout" />
         </NavLink>
       )}
       {!isAuth && (
         <NavLink to="/login">
-          <IoMdLogIn size={SIZE} title="Login" />
+          <IoMdLogIn size={ICON_SIZE} title="Login" />
         </NavLink>
       )}
     </nav>

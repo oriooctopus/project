@@ -1,7 +1,9 @@
 import React from 'react';
 import Layout from 'components/atoms/Layout';
 import Container from 'components/atoms/Container';
-import SubmitRestaurantBox from 'components/organisms/SubmitRestaurantBox';
+import TextInput from 'components/atoms/Inputs/Text';
+import Textarea from 'components/atoms/Inputs/Textarea';
+import SubmitBox from 'components/molecules/SubmitBox';
 import styles from './index.module.scss';
 
 type RestaurantDataProps = {
@@ -11,11 +13,12 @@ type RestaurantDataProps = {
   imageUrl: string;
   location: string;
   onSubmit: () => void;
+  restaurantTitle: string;
   setDescription: (description: string) => void;
   setImageUrl: (imageUrl: string) => void;
   setLocation: (location: string) => void;
   setTitle: (title: string) => void;
-  title: string;
+  title?: string;
 };
 
 const RestaurantData = ({
@@ -25,6 +28,7 @@ const RestaurantData = ({
   imageUrl,
   location,
   onSubmit,
+  restaurantTitle,
   setDescription,
   setImageUrl,
   setLocation,
@@ -32,21 +36,42 @@ const RestaurantData = ({
   title,
 }: RestaurantDataProps) => (
   <Layout>
-    <Container className={styles.RestaurantData}>
-      <h1>{title}</h1>
-      <SubmitRestaurantBox
+    <Container className={styles.root}>
+      <h1>{title ? title : restaurantTitle}</h1>
+      <SubmitBox
         canSubmit={canSubmit}
-        description={description}
         errorMessage={errorMessage}
-        imageUrl={imageUrl}
-        location={location}
         onSubmit={onSubmit}
-        setDescription={setDescription}
-        setImageUrl={setImageUrl}
-        setLocation={setLocation}
-        setTitle={setTitle}
-        title={title}
-      />
+      >
+        <TextInput
+          name="Title"
+          handleChange={setTitle}
+          placeholder="Title here"
+          value={restaurantTitle}
+          withLabel
+        />
+        <TextInput
+          name="Location"
+          handleChange={setLocation}
+          placeholder="Location Here"
+          value={location}
+          withLabel
+        />
+        <TextInput
+          name="Image"
+          handleChange={setImageUrl}
+          placeholder="Image Url Here"
+          value={imageUrl}
+          withLabel
+        />
+        <Textarea
+          handleChange={setDescription}
+          name="Description"
+          placeholder="Description Here"
+          value={description}
+          withLabel
+        />
+      </SubmitBox>
     </Container>
   </Layout>
 );

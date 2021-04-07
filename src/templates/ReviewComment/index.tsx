@@ -28,29 +28,35 @@ const ReviewComment = ({
 }: ReviewCommentProps) => (
   <Layout>
     <Container className={styles.root}>
-      <div className={styles.previousReview}>
-        <h4>Previous Review</h4>
-        <Rating
-          className={styles.rating}
-          rating={rating}
-          name="review"
-        />
-        <p>{reviewContent}</p>
+      <h1 className="h4">Leave a response here</h1>
+      <div className="row">
+        <div className="col-md-8">
+          <SubmitBox
+            canSubmit={canSubmit}
+            errorMessage={errorMessage}
+            onSubmit={onSubmit}
+          >
+            <Textarea
+              handleChange={setComment}
+              name="comment"
+              placeholder="Comment Here"
+              value={comment}
+            />
+          </SubmitBox>
+        </div>
+        <div className="col-md-4">
+          <span className="large-body d-block">
+            You are responding to:
+          </span>
+          <Rating
+            canEdit={false}
+            className={styles.rating}
+            rating={rating}
+            name="review"
+          />
+          <p>{reviewContent}</p>
+        </div>
       </div>
-
-      <h4>Review Comment</h4>
-      <SubmitBox
-        canSubmit={canSubmit}
-        errorMessage={errorMessage}
-        onSubmit={onSubmit}
-      >
-        <Textarea
-          handleChange={setComment}
-          name="comment"
-          placeholder="Comment Here"
-          value={comment}
-        />
-      </SubmitBox>
     </Container>
   </Layout>
 );

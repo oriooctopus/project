@@ -37,6 +37,7 @@ const Users = ({
     <Layout>
       <Container>
         <section>
+          <h1>Users</h1>
           <div className="row">
             {formattedUsers.map((user: User) => (
               <div className="col-md-6 spacing-medium-bottom">

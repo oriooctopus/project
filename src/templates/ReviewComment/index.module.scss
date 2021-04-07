@@ -1,11 +1,13 @@
 @import 'styles/shared';
 
 .root {
+  margin-top: px(20);
+
   .rating {
     margin: px(10) 0;
   }
 
   .previousReview {
-    margin: px(15) 0;
+    max-width: px(400);
   }
 }

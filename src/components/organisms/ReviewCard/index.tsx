@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, useNavigate } from '@reach/router';
-import UserProfileCard from 'components/molecules/UserProfileCard';
+import UserProfileCard from 'components/molecules/UserProfile';
+import CardContainer from 'components/atoms/CardContainer';
 import Button from 'components/atoms/Button';
 import Rating from 'components/atoms/Rating';
 
@@ -10,9 +11,7 @@ import useDeleteReviewComment from 'hooks/useDeleteReviewComment';
 import clsx from 'clsx';
 import styles from './index.module.scss';
 
-import {
-  ReviewFragment,
-} from 'generated/graphql';
+import { ReviewFragment } from 'generated/graphql';
 
 type ReviewCardProps = ReviewFragment & {
   className?: string;
@@ -38,7 +37,7 @@ const ReviewCard = ({
 
   return (
     <div className={styles.reviewCard}>
-      <div className={clsx(styles.review, className)}>
+      <CardContainer className={clsx(styles.review, className)}>
         <UserProfileCard {...userProfile} />
         <p>{content}</p>
         <Rating
@@ -49,15 +48,15 @@ const ReviewCard = ({
         <span>date: {date}</span>
         {canModifyReview && (
           <div className={styles.buttonContainer}>
-            <Button theme="danger" onClick={onClickReviewDelete}>
-              Delete
-            </Button>
             <Link to={`/review/edit/${id}`}>
               <span className="button primary">Edit</span>
             </Link>
+            <Button theme="danger" onClick={onClickReviewDelete}>
+              Delete
+            </Button>
           </div>
         )}
-      </div>
+      </CardContainer>
       {canAddComment && (
         <Button
           theme="primary"
@@ -67,24 +66,24 @@ const ReviewCard = ({
         </Button>
       )}
       {reviewComment && (
-        <div>
+        <CardContainer className={styles.reviewComment}>
           <span className={styles.response}>
             <i>The owner responded:</i> <br /> {reviewComment.comment}
           </span>
           {reviewComment?.canModify && (
             <div className={styles.buttonContainer}>
+              <Link to={`/review-comment/edit/${reviewComment?.id}`}>
+                <span className="button primary">Edit</span>
+              </Link>
               <Button
                 theme="danger"
                 onClick={onClickReviewCommentDelete}
               >
                 Delete
               </Button>
-              <Link to={`/review-comment/edit/${reviewComment?.id}`}>
-                <span className="button primary">Edit</span>
-              </Link>
             </div>
           )}
-        </div>
+        </CardContainer>
       )}
     </div>
   );

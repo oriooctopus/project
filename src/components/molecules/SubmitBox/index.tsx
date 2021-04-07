@@ -25,10 +25,10 @@ const SubmitBox = ({
 
   return (
     <form
-      className={clsx(styles.root, className, 'row')}
+      className={clsx(styles.root, className)}
       onSubmit={handleSubmit}
     >
-      <div className="col-md-8">
+      <div>
         {children}
         <div className={styles.submitContainer}>
           <Button disabled={!canSubmit} theme="success" type="submit">

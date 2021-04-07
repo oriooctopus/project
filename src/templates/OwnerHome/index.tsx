@@ -42,16 +42,19 @@ const OwnerHome = ({
   return (
     <Layout>
       <Container>
+        <h1>Home</h1>
         <section>
-          <h4>Your restaurants</h4>
-          <div className="row">
-            {formattedRestaurants.map(
-              (restaurant: RestaurantFragment) => (
-                <div className="col-md-6 spacing-medium-bottom">
-                  <RestaurantCard {...restaurant} />
-                </div>
-              ),
-            )}
+          <div>
+            <h4>Your restaurants</h4>
+            <div className="row">
+              {formattedRestaurants.map(
+                (restaurant: RestaurantFragment) => (
+                  <div className="col-md-6 spacing-medium-bottom">
+                    <RestaurantCard {...restaurant} />
+                  </div>
+                ),
+              )}
+            </div>
           </div>
           <Link to="/">
             <span className="button success">
@@ -76,9 +79,9 @@ const OwnerHome = ({
               )}
             </div>
             {formattedUnansweredReviews.length && (
-              <Link to="/unanswered-comments">
+              <Link to="/unanswered-reviews">
                 <span className="button success">
-                  See All Unanswered Comments
+                  See All Unanswered Reviews
                 </span>
               </Link>
             )}

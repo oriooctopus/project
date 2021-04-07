@@ -1,12 +1,11 @@
 @import 'styles/shared';
 
 .root {
-  padding: px(5) 0;
+  padding: px(7) 0;
 
   .error {
     color: $danger;
     display: block;
-    // padding: 0 px(10);
-    margin-top: px(5);
+    margin-top: px(15);
   }
 }

@@ -1,10 +1,13 @@
 import React from 'react';
+import styles from './index.module.scss';
+import clsx from 'clsx';
 
 type TextareaProps = React.ComponentProps<'textarea'> & {
   className?: string;
   handleChange: (value: string) => void;
   name: string;
   value: string;
+  withLabel?: boolean;
 };
 
 const Textarea = ({
@@ -12,6 +15,7 @@ const Textarea = ({
   handleChange,
   name,
   value,
+  withLabel,
   ...props
 }: TextareaProps) => {
   const onChange = (e: React.FormEvent<HTMLTextAreaElement>) => {
@@ -19,13 +23,24 @@ const Textarea = ({
     handleChange(value);
   };
 
-  return (
+  const textarea = (
     <textarea
-      className={className}
+      className={clsx(styles.textarea, className)}
       name={name}
       onChange={onChange}
       value={value}
     />
+  );
+
+  return withLabel ? (
+    <div>
+      <label className={styles.label} htmlFor={name}>
+        {name}
+      </label>
+      {textarea}
+    </div>
+  ) : (
+    textarea
   );
 };
 
