@@ -57,7 +57,6 @@ function recoverUserDataFromSessionStorage() {
  * Delete user data in Session Storage
  */
 function deleteUserDataFromSessionStorage() {
-  debugger;
   localStorage.removeItem('userData');
 }
 

@@ -1,15 +1,3 @@
-mutation deleteReviewComment($id: Int!) {
-  deleteReviewComment(id: $id) {
-    id
-  }
-}
-
-mutation deleteRestaurant($id: Int!) {
-  deleteRestaurant(id: $id) {
-    id
-  }
-}
-
 mutation createReview(
   $content: String!
   $rating: Int!
@@ -22,12 +10,6 @@ mutation createReview(
       restaurantId: $restaurantId
     }
   ) {
-    id
-  }
-}
-
-mutation deleteReview($id: Int!) {
-  deleteReview(id: $id) {
     id
   }
 }

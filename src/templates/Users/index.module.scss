@@ -1,0 +1,19 @@
+@import 'styles/shared';
+
+.userCard {
+  border-radius: px(3);
+  box-shadow: $card-box-shadow;
+  padding: px(10);
+
+  span {
+    display: block;
+  }
+
+  .buttonContainer {
+    display: flex;
+
+    button {
+      margin-right: px(15);
+    }
+  }
+}

@@ -18,7 +18,6 @@ const Restaurants = ({ pageParameters }: RestaurantsProps) => {
   const {
     userData: { role },
   } = useContext(AuthContext);
-  debugger;
   const includeRatingsFilter = role === 'user';
 
   const searchParameters = new URLSearchParams(

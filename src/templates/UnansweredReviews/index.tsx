@@ -28,9 +28,9 @@ const UnansweredReviews = ({
 
   const totalUnansweredReviews =
     getUnansweredReviewsForOwner.totalCount || 0;
-  const totalPages = Math.ceil(
-    totalUnansweredReviews / unansweredReviewsPerPage,
-  );
+  const totalPages = totalUnansweredReviews
+    ? 1
+    : Math.ceil(totalUnansweredReviews / unansweredReviewsPerPage);
 
   const formattedUnansweredReviews = (
     getUnansweredReviewsForOwner?.edges || []

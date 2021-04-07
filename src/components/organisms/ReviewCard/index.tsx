@@ -1,5 +1,5 @@
 import React from 'react';
-import UserCard from 'components/molecules/UserCard';
+import UserProfileCard from 'components/molecules/UserProfileCard';
 import Button from 'components/atoms/Button';
 import Rating from 'components/atoms/Rating';
 
@@ -44,7 +44,7 @@ const ReviewCard = ({
   return (
     <div className={styles.reviewCard}>
       <div className={clsx(styles.review, className)}>
-        <UserCard {...userProfile} />
+        <UserProfileCard {...userProfile} />
         <p>{content}</p>
         <Rating
           canEdit={false}

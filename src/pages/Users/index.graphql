@@ -1,0 +1,10 @@
+query users($after: Int, $limit: Int!) {
+  users(after: $after, limit: $limit) {
+    totalCount
+    edges {
+      node {
+        ...user
+      }
+    }
+  }
+}

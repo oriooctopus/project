@@ -38,7 +38,6 @@ const errorLink = onError(
       graphQLErrors.forEach((err) => {
         // err.message, err.locations, err.path, err.extensions
         if (err.extensions.code === 'UNAUTHENTICATED') {
-					debugger;
           deleteSession();
           window.location.href = '/';
         }
@@ -46,7 +45,6 @@ const errorLink = onError(
     }
 
     if (networkError && networkError.response === 'invalid_token') {
-			debugger;
       deleteSession();
       window.location.href = '/';
     }

@@ -1,3 +1,10 @@
+fragment user on User {
+  id
+  role
+  username
+  email
+}
+
 query currentUser {
   currentUser {
     id

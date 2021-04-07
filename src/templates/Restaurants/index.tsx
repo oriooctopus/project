@@ -45,7 +45,10 @@ const Restaurants = ({
   }
 
   const totalRestaurants = restaurants.totalCount || 0;
-  const totalPages = Math.ceil(totalRestaurants / restaurantsPerPage);
+  const totalPages =
+    totalRestaurants === 0
+      ? 1
+      : Math.ceil(totalRestaurants / restaurantsPerPage);
 
   const formattedRestaurants = (restaurants?.edges || [])
     // @ts-ignore

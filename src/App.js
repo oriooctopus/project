@@ -22,6 +22,7 @@ import UnansweredReviews from 'pages/UnansweredReviews/index.tsx';
 import EditReview from 'pages/EditReview/index.tsx';
 import OwnerHome from 'pages/OwnerHome/index.tsx';
 import Home from 'pages/Home';
+import Users from 'pages/Users/index.tsx';
 
 import 'styles/main.scss';
 
@@ -31,6 +32,7 @@ const adminRoutes = [
   <EditReviewComment path="/review-comment/edit/:reviewCommentId" />,
   <EditRestaurant path="/restaurant/edit/:restaurantId" />,
   <RestaurantDetails path="/restaurant/:restaurantId" />,
+  <Users path="/users" />,
   <Home path="/" />,
 ];
 
@@ -47,6 +49,7 @@ const ownerRoutes = [
 
 const customerRoutes = [
   <AddReview path="/review/add/:restaurantId" />,
+  <EditReview path="/review/edit/:reviewId" />,
   <RestaurantDetails path="/restaurant/:restaurantId" />,
   <Home path="/" />,
 ];
