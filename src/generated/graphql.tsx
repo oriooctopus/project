@@ -754,6 +754,41 @@ export type EditReviewCommentDataQuery = (
   )> }
 );
 
+export type EditUserPageQueryVariables = Exact<{
+  id: Scalars['Int'];
+}>;
+
+
+export type EditUserPageQuery = (
+  { __typename?: 'Query' }
+  & { user?: Maybe<(
+    { __typename?: 'UserPayload' }
+    & { user?: Maybe<(
+      { __typename?: 'User' }
+      & Pick<User, 'id' | 'email' | 'role' | 'username'>
+    )> }
+  )> }
+);
+
+export type EditUserMutationVariables = Exact<{
+  id: Scalars['Int'];
+  role: Scalars['String'];
+  username: Scalars['String'];
+  email: Scalars['String'];
+}>;
+
+
+export type EditUserMutation = (
+  { __typename?: 'Mutation' }
+  & { editUser: (
+    { __typename?: 'UserPayload' }
+    & { user?: Maybe<(
+      { __typename?: 'User' }
+      & Pick<User, 'id' | 'role'>
+    )> }
+  ) }
+);
+
 export type OwnerHomeQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -1474,6 +1509,85 @@ export function useEditReviewCommentDataLazyQuery(baseOptions?: Apollo.LazyQuery
 export type EditReviewCommentDataQueryHookResult = ReturnType<typeof useEditReviewCommentDataQuery>;
 export type EditReviewCommentDataLazyQueryHookResult = ReturnType<typeof useEditReviewCommentDataLazyQuery>;
 export type EditReviewCommentDataQueryResult = Apollo.QueryResult<EditReviewCommentDataQuery, EditReviewCommentDataQueryVariables>;
+export const EditUserPageDocument = gql`
+    query editUserPage($id: Int!) {
+  user(id: $id) {
+    user {
+      id
+      email
+      role
+      username
+    }
+  }
+}
+    `;
+
+/**
+ * __useEditUserPageQuery__
+ *
+ * To run a query within a React component, call `useEditUserPageQuery` and pass it any options that fit your needs.
+ * When your component renders, `useEditUserPageQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useEditUserPageQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useEditUserPageQuery(baseOptions: Apollo.QueryHookOptions<EditUserPageQuery, EditUserPageQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<EditUserPageQuery, EditUserPageQueryVariables>(EditUserPageDocument, options);
+      }
+export function useEditUserPageLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<EditUserPageQuery, EditUserPageQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<EditUserPageQuery, EditUserPageQueryVariables>(EditUserPageDocument, options);
+        }
+export type EditUserPageQueryHookResult = ReturnType<typeof useEditUserPageQuery>;
+export type EditUserPageLazyQueryHookResult = ReturnType<typeof useEditUserPageLazyQuery>;
+export type EditUserPageQueryResult = Apollo.QueryResult<EditUserPageQuery, EditUserPageQueryVariables>;
+export const EditUserDocument = gql`
+    mutation editUser($id: Int!, $role: String!, $username: String!, $email: String!) {
+  editUser(input: {id: $id, role: $role, username: $username, email: $email}) {
+    user {
+      id
+      role
+    }
+  }
+}
+    `;
+export type EditUserMutationFn = Apollo.MutationFunction<EditUserMutation, EditUserMutationVariables>;
+
+/**
+ * __useEditUserMutation__
+ *
+ * To run a mutation, you first call `useEditUserMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useEditUserMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [editUserMutation, { data, loading, error }] = useEditUserMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      role: // value for 'role'
+ *      username: // value for 'username'
+ *      email: // value for 'email'
+ *   },
+ * });
+ */
+export function useEditUserMutation(baseOptions?: Apollo.MutationHookOptions<EditUserMutation, EditUserMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<EditUserMutation, EditUserMutationVariables>(EditUserDocument, options);
+      }
+export type EditUserMutationHookResult = ReturnType<typeof useEditUserMutation>;
+export type EditUserMutationResult = Apollo.MutationResult<EditUserMutation>;
+export type EditUserMutationOptions = Apollo.BaseMutationOptions<EditUserMutation, EditUserMutationVariables>;
 export const OwnerHomeDocument = gql`
     query ownerHome {
   getUnansweredReviewsForOwner(after: 0, limit: 5) {

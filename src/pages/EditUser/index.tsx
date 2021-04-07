@@ -2,99 +2,83 @@ import React, { useEffect, useState } from 'react';
 
 import { Spinner } from 'legacyComponents/Spinner';
 import { ErrorAlert } from 'legacyComponents/ErrorAlert';
-import RestaurantReviewTemplate from 'templates/RestaurantReview';
+import EditUserTemplate from 'templates/User';
 
 import {
-  useEditReviewPageQuery,
-  useEditReviewMutation,
+  useEditUserPageQuery,
+  useEditUserMutation,
 } from 'generated/graphql';
 
-const MINIMUM_REVIEW_CONTENT_LENGTH = 1;
-
-type EditRestaurantReviewProps = {
-  reviewId: string;
+type EditUserProps = {
+  userId: string;
 };
 
-const EditRestaurantReview = ({
-  reviewId: reviewIdString,
-}: EditRestaurantReviewProps) => {
-  const reviewId = Number(reviewIdString);
+const EditUser = ({ userId: userIdString }: EditUserProps) => {
+  const userId = Number(userIdString);
   const {
-    loading: reviewQueryLoading,
-    error: reviewQueryError,
-    data: reviewQuery,
-  } = useEditReviewPageQuery({
+    loading: userQueryLoading,
+    error: userQueryError,
+    data: userQuery,
+  } = useEditUserPageQuery({
     fetchPolicy: 'no-cache',
-    variables: { id: Number(reviewId) },
+    variables: { id: Number(userId) },
   });
 
-  const previousReviewContent = reviewQuery?.review?.content || '';
-  const previousRating = reviewQuery?.review?.rating || 3;
-  const restaurantId = reviewQuery?.review?.restaurant?.id || 0;
-  const title = reviewQuery?.review?.restaurant?.title || '';
+  const previousRole = userQuery?.user?.user?.role || '';
+  const previousUsername = userQuery?.user?.user?.username || '';
+  const previousEmail = userQuery?.user?.user?.email || '';
 
-  const [rating, setRating] = useState(3);
-  const [reviewContent, setReviewContent] = useState('');
+  const [role, setRole] = useState('');
+  const [username, setUsername] = useState('');
   const [canSubmit, setCanSubmit] = useState(true);
   const [errorMessage, setErrorMessage] = useState('');
+  const [email, setEmail] = useState('');
 
   const [
-    editReviewMutation,
+    editUserMutation,
     { called: submitCalled },
-  ] = useEditReviewMutation({
+  ] = useEditUserMutation({
     variables: {
-      content: reviewContent,
-      rating,
-      id: reviewId,
+      email,
+      username,
+      role,
+      id: userId,
     },
   });
 
   const onSubmit = () => {
-    editReviewMutation()
+    editUserMutation()
       .then(() => {
-        window.location.href = `/restaurant/${restaurantId}`;
+        window.location.href = `/users`;
       })
       .catch((e) => setErrorMessage(JSON.stringify(e)));
   };
 
   useEffect(() => {
-    const reviewIsSufficientLength =
-      reviewContent.length > MINIMUM_REVIEW_CONTENT_LENGTH;
-    const newCanSubmit = reviewIsSufficientLength && !submitCalled;
-
-    if (!reviewIsSufficientLength) {
-      setErrorMessage(
-        `Review content must be at least ${MINIMUM_REVIEW_CONTENT_LENGTH} characters`,
-      );
-    } else {
-      setErrorMessage('');
-    }
-
-    setCanSubmit(newCanSubmit);
-  }, [reviewContent, submitCalled]);
+    setCanSubmit(!submitCalled);
+  }, [submitCalled]);
 
   useEffect(() => {
-    setReviewContent(previousReviewContent);
-    setRating(previousRating);
-  }, [reviewQuery]);
+    setEmail(previousEmail);
+    setRole(previousRole);
+    setUsername(previousUsername);
+  }, [userQuery]);
 
-  if (reviewQueryLoading) return <Spinner />;
-  if (reviewQueryError)
-    return <ErrorAlert errorMessage={reviewQueryError.message} />;
-  if (!reviewQuery?.review) return <span>query unsucessful</span>;
+  if (userQueryLoading) return <Spinner />;
+  if (userQueryError)
+    return <ErrorAlert errorMessage={userQueryError.message} />;
+  if (!userQuery?.user) return <span>query unsucessful</span>;
 
   return (
-    <RestaurantReviewTemplate
+    <EditUserTemplate
       canSubmit={canSubmit}
       errorMessage={errorMessage}
       onSubmit={onSubmit}
-      rating={rating}
-      reviewContent={reviewContent}
-      setRating={setRating}
-      setReviewContent={setReviewContent}
-      title={title}
+      email={email}
+      role={role}
+      username={username}
     />
   );
 };
 
-export default EditRestaurantReview;
+export default EditUser;

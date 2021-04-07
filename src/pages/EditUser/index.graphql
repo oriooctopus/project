@@ -1,11 +1,31 @@
-query editReviewPage($id: Int!) {
-  review(id: $id) {
-    id
-    content
-    rating
-    restaurant {
+query editUserPage($id: Int!) {
+  user(id: $id) {
+    user {
       id
-      title
+      email
+      role
+      username
+    }
+  }
+}
+
+mutation editUser(
+  $id: Int!
+  $role: String!
+  $username: String!
+  $email: String!
+) {
+  editUser(
+    input: {
+      id: $id
+      role: $role
+      username: $username
+      email: $email
+    }
+  ) {
+    user {
+      id
+      role
     }
   }
 }
