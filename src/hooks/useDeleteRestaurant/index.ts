@@ -5,7 +5,7 @@ const useDeleteRestaurant = (id: number) => {
     variables: {
       id,
     },
-    refetchQueries: ['restaurants'],
+    refetchQueries: ['restaurants', 'ownerHome'],
   });
 
   const onDeleteRestaurant = () => {

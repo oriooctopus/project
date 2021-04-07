@@ -1,32 +1,29 @@
 import React, { useState, Fragment } from 'react';
-import { useMutation } from '@apollo/client';
-
 import SubmitBox from 'components/molecules/SubmitBox';
 import TextInput from 'components/atoms/Inputs/Text';
-
-import { LOGIN } from '../../gql/mutations/auth';
+import { useLoginMutation } from 'generated/graphql';
 
 type LoginFormProps = {
-  activateAuth: (token: string) => void;
+  activateAuth: (token: string | null | undefined) => void;
 };
 
 export const LoginForm = ({ activateAuth }: LoginFormProps) => {
   const [disabled, setDisabled] = useState(false);
-  const [authUser] = useMutation(LOGIN);
   const [error, setError] = useState('');
   const [usernameOrEmail, setUsernameOrEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [login] = useLoginMutation({
+    variables: {
+      password,
+      usernameOrEmail,
+    },
+  });
   const handleSubmit = () => {
     setDisabled(true);
 
-    const variables = {
-      usernameOrEmail,
-      password,
-    };
-
-    authUser({ variables })
+    login()
       .then(({ data }) => {
-        const { accessToken } = data.login.tokens;
+        const accessToken = data?.login?.tokens?.accessToken;
         activateAuth(accessToken);
       })
       .catch(() => setError('Invalid Credentials'));

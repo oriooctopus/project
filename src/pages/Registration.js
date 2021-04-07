@@ -8,9 +8,9 @@ export const Registration = () => {
   const { activateAuth } = useContext(AuthContext);
 
   return (
-    <Fragment>
+    <div className="simple-page">
       <h1>Create an account</h1>
       <RegisterForm activateAuth={activateAuth} />
-    </Fragment>
+    </div>
   );
 };

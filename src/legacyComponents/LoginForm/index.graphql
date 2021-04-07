@@ -1,0 +1,9 @@
+mutation login($usernameOrEmail: String!, $password: String!) {
+  login(
+    input: { usernameOrEmail: $usernameOrEmail, password: $password }
+  ) {
+    tokens {
+      accessToken
+    }
+  }
+}
