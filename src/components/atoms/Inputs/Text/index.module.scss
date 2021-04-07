@@ -1,0 +1,14 @@
+@import 'styles/shared';
+
+.label,
+.input {
+  display: block;
+}
+
+.label {
+  font-weight: bold;
+}
+
+.input {
+  margin-bottom: px(5);
+}

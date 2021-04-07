@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 import { Spinner } from 'legacyComponents/Spinner';
 import { ErrorAlert } from 'legacyComponents/ErrorAlert';
-import EditUserTemplate from 'templates/User';
+import UserTemplate from 'templates/User';
 
 import {
   useEditUserPageQuery,
@@ -70,13 +70,17 @@ const EditUser = ({ userId: userIdString }: EditUserProps) => {
   if (!userQuery?.user) return <span>query unsucessful</span>;
 
   return (
-    <EditUserTemplate
+    <UserTemplate
       canSubmit={canSubmit}
       errorMessage={errorMessage}
       onSubmit={onSubmit}
       email={email}
+      id={userId}
       role={role}
       username={username}
+      setEmail={setEmail}
+      setRole={setRole}
+      setUsername={setUsername}
     />
   );
 };
